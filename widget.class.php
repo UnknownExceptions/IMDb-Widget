@@ -1,5 +1,7 @@
 <?php
 
+use Goutte\Client;
+
 /**
  * Widget Class
  *
@@ -60,8 +62,40 @@ class IMDBWidget extends WP_Widget
          } */
 
         ob_start("HTMLCompressor");
-        require 'pieces/widget.php';
+
+        if (!isset($config['username'])) {
+            echo 'You need to first configure the plugin :)';
+        } else {
+            $info = $this->getIMDbUserInfo($config['username']);
+            require 'pieces/widget.php';
+        }
+
         ob_end_flush();
+    }
+
+    protected function getIMDbUserInfo($username)
+    {
+        $info = array();
+
+        $client = new Client();
+        $crawler = $client->request('GET', 'http://www.imdb.com/user/' . $username . '/');
+
+        $info['nick'] = $crawler->filter('.header h1')->text();
+        $info['avatar'] = $crawler->filter('#avatar-frame img')->attr('src');
+        $info['memberSince'] = $crawler->filter('.header .timestamp')->text();
+        //$info['bio'] = $crawler->filter('.header .biography')->text();
+        $info['badges'] = $this->getIMDbBadges($username);
+
+        return $info;
+    }
+
+    protected function getIMDbBadges($username)
+    {
+        $badges = array();
+
+        //TODO: complete this
+
+        return $badges;
     }
 }
 

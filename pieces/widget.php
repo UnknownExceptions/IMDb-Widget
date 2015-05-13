@@ -2,4 +2,10 @@
 
     IMDB Widget
 
+    <?php
+
+    print_r($info);
+
+    ?>
+
 </aside>
