@@ -87,6 +87,8 @@ class IMDBWidget extends WP_Widget
 
         $info['badges'] = $this->getIMDbBadges($username);
 
+        print_r($this->getIMDbUserLists($crawler));
+
         return $info;
     }
 
@@ -103,13 +105,27 @@ class IMDBWidget extends WP_Widget
         }
     }
 
-    protected function getIMDbBadges($username)
+    protected function getIMDbBadges($crawler)
     {
         $badges = array();
 
         //TODO: complete this
 
         return $badges;
+    }
+
+    protected function getIMDbUserLists($crawler)
+    {
+        //TODO: ver bem isto;
+        $this->lists = array();
+
+        $crawler->filter('.lists .user-list')->each(function ($node) {
+            if ($this->fetchIMDbInfo($node, '.list-name')) {
+                $this->lists[$this->fetchIMDbInfo($node, '.list-name')] = $node->filter('.list-meta')->text();
+            }
+        });
+
+        return $this->lists;
     }
 }
 

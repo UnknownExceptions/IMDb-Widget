@@ -1,4 +1,4 @@
-<aside class="widget">
+<aside class="widget imdb-widget">
 
     <strong>IMDB Widget</strong>
 
