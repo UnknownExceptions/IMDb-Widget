@@ -80,13 +80,27 @@ class IMDBWidget extends WP_Widget
         $client = new Client();
         $crawler = $client->request('GET', 'http://www.imdb.com/user/' . $username . '/');
 
-        $info['nick'] = $crawler->filter('.header h1')->text();
-        $info['avatar'] = $crawler->filter('#avatar-frame img')->attr('src');
-        $info['memberSince'] = $crawler->filter('.header .timestamp')->text();
-        //$info['bio'] = $crawler->filter('.header .biography')->text();
+        $info['nick'] = $this->fetchIMDbInfo($crawler, ".header h1");
+        $info['avatar'] = $this->fetchIMDbInfo($crawler, '#avatar-frame img', 'src');
+        $info['memberSince'] = $this->fetchIMDbInfo($crawler, ".header .timestamp");
+        $info['bio'] = $this->fetchIMDbInfo($crawler, ".header .biography");
+
         $info['badges'] = $this->getIMDbBadges($username);
 
         return $info;
+    }
+
+    protected function fetchIMDbInfo($crawler, $what, $attr = null)
+    {
+        try {
+            if (isset($attr)) {
+                return $crawler->filter($what)->attr($attr);
+            }
+
+            return $crawler->filter($what)->text();
+        } catch (InvalidArgumentException $e) {
+            return null;
+        }
     }
 
     protected function getIMDbBadges($username)

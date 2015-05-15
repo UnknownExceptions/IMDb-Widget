@@ -1,11 +1,10 @@
 <aside class="widget">
 
-    IMDB Widget
+    <strong>IMDB Widget</strong>
 
-    <?php
+    <p><?php echo $info['nick']; ?></p>
+    <img src="<?php echo $info['avatar']; ?>">
 
-    print_r($info);
-
-    ?>
+    <p><?php echo $info['memberSince']; ?></p>
 
 </aside>
