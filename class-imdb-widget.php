@@ -1,6 +1,7 @@
 <?php
 
-use Goutte\Client;
+use Goutte\Client as WebScrapper;
+use Symfony\Component\DomCrawler\Crawler;
 
 /**
  * Widget Class
@@ -73,7 +74,7 @@ class IMDb_Widget extends WP_Widget {
 		$info->pollsUrl      = $info->profileUrl . '#pollResponses';
 		$info->ratingsUrlRss = str_replace( 'www', 'rss', $info->ratingsUrl );
 
-		$client            = new Client();
+		$client = new WebScrapper();
 		$crawler           = $client->request( 'GET', $info->profileUrl );
 		$info->userId      = $userId;
 		$info->nick        = $this->parse_imdb_info( $crawler, ".header h1" );
@@ -93,7 +94,7 @@ class IMDb_Widget extends WP_Widget {
 	 *
 	 * @return null
 	 */
-	protected function parse_imdb_info( $crawler, $what, $attr = null ) {
+	protected function parse_imdb_info( Crawler $crawler, $what, $attr = null ) {
 		try {
 			if ( isset( $attr ) ) {
 				return $crawler->filter( $what )->attr( $attr );
@@ -106,7 +107,7 @@ class IMDb_Widget extends WP_Widget {
 	}
 
 	//TODO: complete this
-	protected function parse_imdb_badges( $crawler ) {
+	protected function parse_imdb_badges( Crawler $crawler ) {
 		$badges = array();
 
 		return $badges;
@@ -117,7 +118,7 @@ class IMDb_Widget extends WP_Widget {
 	 *
 	 * @return mixed
 	 */
-	protected function parse_imdb_lists( $crawler ) {
+	protected function parse_imdb_lists( Crawler $crawler ) {
 		try {
 			$crawler->filter( '.lists .user-list' )->each( function ( $node ) {
 
@@ -143,7 +144,7 @@ class IMDb_Widget extends WP_Widget {
 	 * @param $link
 	 * @param $meta
 	 */
-	protected function process_imdb_lists( $name, $link, $meta ) {
+	private function process_imdb_lists( $name, $link, $meta ) {
 		if ( ! isset( $this->counter ) ) {
 			$this->counter = 0;
 		}
@@ -162,7 +163,6 @@ class IMDb_Widget extends WP_Widget {
 
 		return;
 	}
-
 }
 
 add_action( 'widgets_init', create_function( '', 'return register_widget("IMDb_Widget");' ) );
