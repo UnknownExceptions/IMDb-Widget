@@ -73,10 +73,10 @@ class IMDb_Widget extends WP_Widget {
 		$crawler = $client->request( 'GET', $info->profileUrl );
 
 		$info->userId = $userId;
-		$info->nick   = $this->get_text_or_attr( $crawler, ".header h1" );
-		$info->avatar = $this->get_text_or_attr( $crawler, '#avatar-frame img', 'src' );
-		$info->memberSince = $this->get_text_or_attr( $crawler, ".header .timestamp" );
-		$info->bio         = $this->get_text_or_attr( $crawler, ".header .biography" );
+		$info->nick = $this->parse_element( $crawler, ".header h1" );
+		$info->avatar = $this->parse_element( $crawler, '#avatar-frame img', 'src' );
+		$info->memberSince = $this->parse_element( $crawler, ".header .timestamp" );
+		$info->bio = $this->parse_element( $crawler, ".header .biography" );
 
 		$badgesOptions = array(
 			'name'  => array( '.name' ),
@@ -84,7 +84,7 @@ class IMDb_Widget extends WP_Widget {
 			'image' => array( '.badge-icon', 'class' )
 		);
 
-		$info->badges = $this->multi_blocks_parser( $crawler, '.badges .badge-frame', $badgesOptions );
+		$info->badges = $this->parse_list( $crawler, '.badges .badge-frame', $badgesOptions );
 
 		$listsOptions = array(
 			'name' => array( '.list-name' ),
@@ -92,11 +92,11 @@ class IMDb_Widget extends WP_Widget {
 			'meta' => array( '.list-meta' )
 		);
 
-		$info->lists = $this->multi_blocks_parser( $crawler, '.lists .user-list', $listsOptions );
+		$info->lists = $this->parse_list( $crawler, '.lists .user-list', $listsOptions );
 		return $info;
 	}
 
-	private function get_text_or_attr( Crawler $crawler, $what, $attr = null ) {
+	private function parse_element( Crawler $crawler, $what, $attr = null ) {
 		try {
 			if ( isset( $attr ) ) {
 				return $crawler->filter( $what )->attr( $attr );
@@ -108,19 +108,18 @@ class IMDb_Widget extends WP_Widget {
 		}
 	}
 
-	private function multi_blocks_parser( Crawler $crawler, $tag, $sub_tags ) {
-		$lists   = array();
-		$counter = 0;
+	private function parse_list( Crawler $crawler, $tag, $sub_tags ) {
+		$lists = array();
 
 		try {
-			$crawler->filter( $tag )->each( function ( $node ) use ( &$lists, &$counter, $sub_tags ) {
+			$crawler->filter( $tag )->each( function ( $node ) use ( &$lists, $sub_tags ) {
+				$newItem = new stdClass();
+
 				foreach ( $sub_tags as $key => $value ) {
-					$lists[ $counter ][ $key ] = $this->get_text_or_attr( $node,
-						$value[0],
-						isset( $value[1] ) ? $value[1] : null );
+					$newItem->{$key} = $this->parse_element( $node, $value[0], isset( $value[1] ) ? $value[1] : null );
 				}
 
-				$counter ++;
+				array_push( $lists, $newItem );
 			} );
 		} catch ( InvalidArgumentException $e ) {
 			// probably the user don't have lists
