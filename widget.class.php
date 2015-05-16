@@ -71,6 +71,7 @@ class IMDBWidget extends WP_Widget {
         $client = new Client(); // TODO: evitar criar sempre um novo cliente. reutilizar cliente.
         $info = new stdClass;
         $info->profileUrl = 'http://www.imdb.com/user/' . $userId . '/';
+        $info->ratingsUrlRss = 'http://rss.imdb.com/user/' . $userId . '/ratings';
         $crawler = $client->request('GET', $info->profileUrl);
 
         $info->userId = $userId;
