@@ -61,27 +61,33 @@ class IMDBWidget extends WP_Widget {
         if (!isset($config['username'])) { // TODO: devia chamar-se userId. para nao confundir com o username
             echo 'You need to first configure the plugin :)';
         } else {
-            $info = $this->getIMDbUserInfo($config['username']);
+            $info = $this->fetchIMDbUserInfo($config['username']);
             require 'pieces/widget.php';
         }
         ob_end_flush();
     }
 
-    protected function getIMDbUserInfo($userId) {
-        $client = new Client(); // TODO: evitar criar sempre um novo cliente. reutilizar cliente.
+    protected function fetchIMDbUserInfo($userId) {
+        
         $info = new stdClass;
         $info->profileUrl = 'http://www.imdb.com/user/' . $userId . '/';
-        $info->ratingsUrlRss = 'http://rss.imdb.com/user/' . $userId . '/ratings';
+        $info->ratingsUrl = $info->profileUrl . 'ratings';
+        $info->listsUrl = $info->profileUrl . 'lists';
+        $info->boardsUrl = $info->profileUrl . 'boards';
+        $info->watchlistUrl = $info->profileUrl . 'watchlist';
+        $info->checkinsUrl = $info->profileUrl . 'checkins';
+        $info->commentsUrl = $info->profileUrl . 'comments-index';
+        $info->pollsUrl = $info->profileUrl . '#pollResponses';
+        $info->ratingsUrlRss = str_replace('www', 'rss', $info->ratingsUrl);
+       
+        $client = new Client(); // TODO: evitar criar sempre um novo cliente. reutilizar cliente.
         $crawler = $client->request('GET', $info->profileUrl);
-
         $info->userId = $userId;
         $info->nick = $this->parseIMDbInfo($crawler, ".header h1");
         $info->avatar = $this->parseIMDbInfo($crawler, '#avatar-frame img', 'src');
-        // TODO: parse para um objeto Date. mais elegante e correto
         $info->memberSince = $this->parseIMDbInfo($crawler, ".header .timestamp");
         $info->bio = $this->parseIMDbInfo($crawler, ".header .biography");
         $info->badges = $this->parseIMDbBadges($userId);
-
         return $info;
     }
 
