@@ -1,7 +1,7 @@
 <?php
 /**
  * Configuration file
- * 
+ *
  * @package HackerRank Profile Widget
  * @author Henrique Dias <hacdias@gmail.com>
  * @author Luís Soares <lsoares@gmail.com>

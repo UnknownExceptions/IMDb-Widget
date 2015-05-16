@@ -1,4 +1,4 @@
-<?php 
+<?php
 /**
  * Plugin Name: IMDB Widget
  * Description: This is a plugin that shows your IMDd profile with a simple widget.
