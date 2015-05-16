@@ -19,8 +19,9 @@ class Parser
     {
         $info                = new stdClass();
         $info->userId        = $this->userId;
-        $info->profileUrl    = 'http://www.imdb.com/user/' . $this->userId . '/';
-        $info->ratingsUrl    = $info->profileUrl . 'ratings';
+		$info->baseUrl       = 'http://www.imdb.com';
+        $info->profileUrl    = $info->baseUrl . '/user/' . $this->userId . '/';
+		$info->ratingsUrl    = $info->profileUrl . 'ratings';
         $info->listsUrl      = $info->profileUrl . 'lists';
         $info->boardsUrl     = $info->profileUrl . 'boards';
         $info->watchlistUrl  = $info->profileUrl . 'watchlist';
