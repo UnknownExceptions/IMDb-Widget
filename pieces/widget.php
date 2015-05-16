@@ -1,6 +1,4 @@
-<?php var_dump( $info ); ?>
-
-<aside class="widget">
+<aside class="widget" style="font-family: Verdana, Arial, sans-serif;">
 
 	<?php if ( isset( $config['title'] ) ) : ?>
 		<?php echo $before_title . $config['title'] . $after_title; ?>
