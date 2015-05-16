@@ -18,8 +18,6 @@ class IMDb_Widget extends WP_Widget {
 		"userId"
 	);
 
-	private $lists = array();
-
 	public function __construct() {
 		parent::__construct(
 			'IMDbWidget', 'IMDb',
@@ -39,8 +37,8 @@ class IMDb_Widget extends WP_Widget {
 		ob_end_flush();
 	}
 
-	public function update( $newInstance, $oldInstance ) {
-		return serialize( $newInstance );
+	public function update( $new_instance, $old_instance ) {
+		return serialize( $new_instance );
 	}
 
 	public function widget( $args, $config ) {
@@ -71,18 +69,30 @@ class IMDb_Widget extends WP_Widget {
 		$info->pollsUrl     = $info->profileUrl . '#pollResponses';
 		$info->ratingsUrlRss = str_replace( 'www', 'rss', $info->ratingsUrl );
 
-		$client            = new WebScrapper();
-		$crawler           = $client->request( 'GET', $info->profileUrl );
+		$client  = new WebScrapper();
+		$crawler = $client->request( 'GET', $info->profileUrl );
 
 		$info->userId = $userId;
 		$info->nick   = $this->get_text_or_attr( $crawler, ".header h1" );
 		$info->avatar = $this->get_text_or_attr( $crawler, '#avatar-frame img', 'src' );
-		//$info->avatar        = ($info->avatar) ? str_replace('http://', 'https://', $info->avatar) : $info->avatar;
 		$info->memberSince = $this->get_text_or_attr( $crawler, ".header .timestamp" );
 		$info->bio         = $this->get_text_or_attr( $crawler, ".header .biography" );
-		$info->badges      = $this->parse_imdb_badges( $crawler );
-		$info->lists       = $this->parse_imdb_lists( $crawler );
 
+		$badgesOptions = array(
+			'name'  => array( '.name' ),
+			'value' => array( '.value' ),
+			'image' => array( '.badge-icon', 'class' )
+		);
+
+		$info->badges = $this->multi_blocks_parser( $crawler, '.badges .badge-frame', $badgesOptions );
+
+		$listsOptions = array(
+			'name' => array( '.list-name' ),
+			'link' => array( '.list-name', 'href' ),
+			'meta' => array( '.list-meta' )
+		);
+
+		$info->lists = $this->multi_blocks_parser( $crawler, '.lists .user-list', $listsOptions );
 		return $info;
 	}
 
@@ -98,43 +108,25 @@ class IMDb_Widget extends WP_Widget {
 		}
 	}
 
-	private function parse_imdb_badges( Crawler $crawler ) {
-		$badges = array();
+	private function multi_blocks_parser( Crawler $crawler, $tag, $sub_tags ) {
+		$lists   = array();
+		$counter = 0;
 
-		return $badges;
-	}
-
-	private function parse_imdb_lists( Crawler $crawler ) {
 		try {
-			$crawler->filter( '.lists .user-list' )->each( function ( $node ) {
+			$crawler->filter( $tag )->each( function ( $node ) use ( &$lists, &$counter, $sub_tags ) {
+				foreach ( $sub_tags as $key => $value ) {
+					$lists[ $counter ][ $key ] = $this->get_text_or_attr( $node,
+						$value[0],
+						isset( $value[1] ) ? $value[1] : null );
+				}
 
-				$name = $this->get_text_or_attr( $node, '.list-name' );
-				$link = $this->get_text_or_attr( $node, '.list-name', 'href' );
-				$meta = $this->get_text_or_attr( $node, '.list-meta' );
-
-				$this->process_imdb_lists( $name, $link, $meta );
+				$counter ++;
 			} );
 		} catch ( InvalidArgumentException $e ) {
 			// probably the user don't have lists
 		}
 
-		return $this->lists;
-	}
-
-	private function process_imdb_lists( $name, $link, $meta ) {
-		if ( ! isset( $this->counter ) ) {
-			$this->counter = 0;
-		}
-
-		$this->lists[ $this->counter ] = array(
-			'name' => $name,
-			'link' => $link,
-			'meta' => $meta
-		);
-
-		$this->counter ++;
-
-		return;
+		return $lists;
 	}
 }
 
