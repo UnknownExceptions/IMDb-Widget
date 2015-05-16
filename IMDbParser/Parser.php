@@ -56,7 +56,7 @@ class Parser
 		
 		$ratingsOptions = array(
 			'href' => array( 'a', 'href'),
-            'img' => array( 'img', 'src' ),
+            'logo' => array( 'img', 'src' ),
             'title' => array( 'div a' )
 		);
 		$info->ratings = $this->parseList( $crawler, '.ratings .item', $ratingsOptions );
