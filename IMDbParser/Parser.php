@@ -59,11 +59,8 @@ class Parser
     private function parseElement( Crawler $crawler, $what, $attr = null )
     {
         try {
-            if (isset( $attr )) {
-                return $crawler->filter( $what )->attr( $attr );
-            }
-
-            return $crawler->filter( $what )->text();
+			$el = $crawler->filter( $what );
+			return isset ($attr) ? $el->attr( $attr ) : $el->text( $attr );
         } catch ( InvalidArgumentException $e ) {
             return null;
         }
@@ -72,15 +69,12 @@ class Parser
     private function parseList( Crawler $crawler, $tag, $sub_tags )
     {
         $lists = array();
-
         try {
             $crawler->filter( $tag )->each( function ( $node ) use ( &$lists, $sub_tags ) {
                 $newItem = new stdClass();
-
                 foreach ($sub_tags as $key => $value) {
                     $newItem->{$key} = $this->parseElement( $node, $value[0], isset( $value[1] ) ? $value[1] : null );
                 }
-
                 array_push( $lists, $newItem );
             } );
         } catch ( InvalidArgumentException $e ) {
