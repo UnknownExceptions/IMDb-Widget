@@ -2,6 +2,8 @@
 
 namespace IMDbParser;
 
+require_once 'Selector.php';
+
 use Goutte\Client as WebScrapper;
 use InvalidArgumentException;
 use stdClass;
@@ -9,85 +11,121 @@ use Symfony\Component\DomCrawler\Crawler;
 
 class Parser
 {
-
-    public function __construct( $userId )
+    public function __construct($userId)
     {
-        $this->userId = $userId;
+        $this->info = new stdClass();
+        $this->info->userId = $userId;
+        $this->info->baseUrl = 'http://www.imdb.com';
+        $this->info->profileUrl = $this->info->baseUrl . '/user/' . $userId . '/';
+        $this->info->ratingsUrl = $this->info->profileUrl . 'ratings';
+        $this->info->listsUrl = $this->info->profileUrl . 'lists';
+        $this->info->boardsUrl = $this->info->profileUrl . 'boards';
+        $this->info->watchlistUrl = $this->info->profileUrl . 'watchlist';
+        $this->info->checkinsUrl = $this->info->profileUrl . 'checkins';
+        $this->info->commentsUrl = $this->info->profileUrl . 'comments-index';
+        $this->info->pollsUrl = $this->info->profileUrl . '#pollResponses';
+        $this->info->ratingsUrlRss = str_replace('www', 'rss', $this->info->ratingsUrl);
+
+        $this->client = new WebScrapper();
+        $this->makeCrawler('profile', 'GET', $this->info->profileUrl);
+    }
+
+    private function makeCrawler($name, $method, $content)
+    {
+        if ($method === 'alreadyMade') {
+            $this->{$name . 'Crawler'} = $content;
+            return;
+        }
+
+        $this->{$name . 'Crawler'} = $this->client->request($method, $content);
+        return;
     }
 
     public function getInfo()
     {
-        $info                = new stdClass();
-        $info->userId        = $this->userId;
-		$info->baseUrl       = 'http://www.imdb.com';
-        $info->profileUrl    = $info->baseUrl . '/user/' . $this->userId . '/';
-		$info->ratingsUrl    = $info->profileUrl . 'ratings';
-        $info->listsUrl      = $info->profileUrl . 'lists';
-        $info->boardsUrl     = $info->profileUrl . 'boards';
-        $info->watchlistUrl  = $info->profileUrl . 'watchlist';
-        $info->checkinsUrl   = $info->profileUrl . 'checkins';
-        $info->commentsUrl   = $info->profileUrl . 'comments-index';
-        $info->pollsUrl      = $info->profileUrl . '#pollResponses';
-        $info->ratingsUrlRss = str_replace( 'www', 'rss', $info->ratingsUrl );
+        $this->info->nick = $this->parseElement('profile',
+            new Selector('nick', '.header h1'));
 
-        $client  = new WebScrapper();
-        $crawler = $client->request( 'GET', $info->profileUrl );
+        $this->info->avatar = $this->parseElement('profile',
+            new Selector('avatar', '#avatar-frame img', 'stc'));
 
-        $info->nick        = $this->parseElement( $crawler, ".header h1" );
-        $info->avatar      = $this->parseElement( $crawler, '#avatar-frame img', 'src' );
-        $info->memberSince = $this->parseElement( $crawler, ".header .timestamp" );
-        $info->bio         = $this->parseElement( $crawler, ".header .biography" );
+        $this->info->memberSince = $this->parseElement('profile',
+            new Selector('memberSince', '.header .timestamp'));
 
-        $badgesOptions = array(
-            'name'  => array( '.name' ),
-            'value' => array( '.value' ),
-            'image' => array( '.badge-icon', 'class' )
-        );
+        $this->info->bio = $this->parseElement('profile',
+            new Selector('bio', '.header .biography'));
 
-        $info->badges = $this->parseList( $crawler, '.badges .badge-frame', $badgesOptions );
+        $this->info->badges = $this->parseList('profile',
+            new Selector('badges', '.badges .badge-frame'),
+            new Selector('name', '.name'),
+            new Selector('value', '.value'),
+            new Selector('image', '.badge-icon', 'class'));
 
-        $listsOptions = array(
-            'name' => array( '.list-name' ),
-            'link' => array( '.list-name', 'href' ),
-            'meta' => array( '.list-meta' )
-        );
+        $this->info->lists = $this->parseList('profile',
+            new Selector('lists', '.lists .user-list'),
+            new Selector('name', '.list-name'),
+            new Selector('link', '.list-meta', 'href'),
+            new Selector('meta', '.list-meta'));
 
-        $info->lists = $this->parseList( $crawler, '.lists .user-list', $listsOptions );
-		
-		$ratingsOptions = array(
-			'href' => array( 'a', 'href'),
-            'img' => array( 'img', 'src' ),
-            'title' => array( 'div a' )
-		);
-		$info->ratings = $this->parseList( $crawler, '.ratings .item', $ratingsOptions );
-        
-        return $info;
+        $this->info->ratings = $this->parseList('profile',
+            new Selector('ratings', '.ratings .item'),
+            new Selector('href', 'a', 'href'),
+            new Selector('title', 'div a'));
+
+        return $this->info;
     }
 
-    private function parseElement( Crawler $crawler, $what, $attr = null )
+    private function parseElement($crawlerName, Selector $selector)
     {
+        $crawlerName = $crawlerName . 'Crawler';
+
+        if (!$this->{$crawlerName} instanceof Crawler) {
+            return null;
+        }
+
         try {
-			$el = $crawler->filter( $what );
-			return isset ($attr) ? $el->attr( $attr ) : $el->text( $attr );
-        } catch ( InvalidArgumentException $e ) {
+            $el = $this->{$crawlerName}->filter($selector->getTag());
+
+            return ($selector->getAttr()) ? $el->attr($selector->getAttr()) : $el->text();
+        } catch (InvalidArgumentException $e) {
             return null;
         }
     }
 
-    private function parseList( Crawler $crawler, $tag, $sub_tags )
+    private function parseList($crawlerName, Selector $tag, Selector ...$subTags)
     {
+        $crawlerName = $crawlerName . 'Crawler';
+
+        if (!$this->{$crawlerName} instanceof Crawler) {
+            return null;
+        }
+
         $lists = array();
+        $tag = $tag->getTag();
+
         try {
-            $crawler->filter( $tag )->each( function ( $node ) use ( &$lists, $sub_tags ) {
-                $newItem = new stdClass();
-                foreach ($sub_tags as $key => $value) {
-                    $newItem->{$key} = $this->parseElement( $node, $value[0], isset( $value[1] ) ? $value[1] : null );
+            $this->{$crawlerName}->filter($tag)->each(function ($node) use (&$lists, $subTags) {
+
+                $item = new stdClass();
+
+                $crawlerId = uniqid() . 'Crawler';
+                $this->makeCrawler((string)$crawlerId, 'alreadyMade', $node);
+
+                foreach ($subTags as $tag) {
+                    if (!$tag instanceof Selector) {
+                        continue;
+                    }
+
+                    $item->{$tag->getName()} = $this->parseElement($crawlerId, $tag);
                 }
-                array_push( $lists, $newItem );
-            } );
-        } catch ( InvalidArgumentException $e ) {
+
+                array_push($lists, $item);
+            });
+
+        } catch (InvalidArgumentException $e) {
             // probably the user don't have lists
         }
+
         return $lists;
     }
 }
