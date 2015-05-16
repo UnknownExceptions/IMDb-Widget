@@ -1,6 +1,6 @@
 <?php
 /**
- * Plugin Name: IMDB Widget
+ * Plugin Name: IMDb Widget
  * Description: This is a plugin that shows your IMDd profile with a simple widget.
  * Version: 0.0.1
  * Author: Henrique Dias, Luís Soares
@@ -10,4 +10,4 @@
  */
 
 require_once 'config.php';
-require_once 'widget.class.php';
+require_once 'class-imdb-widget.php';
