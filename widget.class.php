@@ -69,56 +69,49 @@ class IMDBWidget extends WP_Widget {
 
     protected function getIMDbUserInfo($userId) {
         $client = new Client(); // TODO: evitar criar sempre um novo cliente. reutilizar cliente.
-        $crawler = $client->request('GET', 'http://www.imdb.com/user/' . $userId . '/');
+        $info = new stdClass;
+        $info->profileUrl = 'http://www.imdb.com/user/' . $userId . '/';
+        $crawler = $client->request('GET', $info->profileUrl);
 
-        $client = new Client();
-        $crawler = $client->request('GET', 'http://www.imdb.com/user/' . $username . '/');
-
-        $info['nick'] = $this->fetchIMDbInfo($crawler, ".header h1");
-        $info['avatar'] = $this->fetchIMDbInfo($crawler, '#avatar-frame img', 'src');
-        $info['memberSince'] = $this->fetchIMDbInfo($crawler, ".header .timestamp");
-        $info['bio'] = $this->fetchIMDbInfo($crawler, ".header .biography");
-
-        $info['badges'] = $this->getIMDbBadges($username);
-
-        print_r($this->getIMDbUserLists($crawler));
+        $info->userId = $userId;
+        $info->nick = $this->parseIMDbInfo($crawler, ".header h1");
+        $info->avatar = $this->parseIMDbInfo($crawler, '#avatar-frame img', 'src');
+        // TODO: parse para um objeto Date. mais elegante e correto
+        $info->memberSince = $this->parseIMDbInfo($crawler, ".header .timestamp");
+        $info->bio = $this->parseIMDbInfo($crawler, ".header .biography");
+        $info->badges = $this->parseIMDbBadges($userId);
 
         return $info;
     }
 
-    protected function fetchIMDbInfo($crawler, $what, $attr = null)
-    {
+    protected function parseIMDbInfo($crawler, $what, $attr = null) {
         try {
             if (isset($attr)) {
                 return $crawler->filter($what)->attr($attr);
             }
-
             return $crawler->filter($what)->text();
         } catch (InvalidArgumentException $e) {
             return null;
         }
     }
 
-    protected function getIMDbBadges($crawler)
-    {
+    //TODO: complete this
+    protected function parseIMDbBadges($crawler) {
         $badges = array();
-        //TODO: complete this
         return $badges;
     }
 
-    protected function getIMDbUserLists($crawler)
-    {
+    protected function parseIMDbUserLists($crawler) {
         //TODO: ver bem isto;
         $this->lists = array();
-
         $crawler->filter('.lists .user-list')->each(function ($node) {
-            if ($this->fetchIMDbInfo($node, '.list-name')) {
-                $this->lists[$this->fetchIMDbInfo($node, '.list-name')] = $node->filter('.list-meta')->text();
+            if ($this->parseIMDbInfo($node, '.list-name')) {
+                $this->lists[$this->parseIMDbInfo($node, '.list-name')] = $node->filter('.list-meta')->text();
             }
         });
-
         return $this->lists;
     }
+
 }
 
 add_action('widgets_init', create_function('', 'return register_widget("IMDBWidget");'));
