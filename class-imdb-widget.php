@@ -1,7 +1,6 @@
 <?php
 
-use Goutte\Client as WebScrapper;
-use Symfony\Component\DomCrawler\Crawler;
+use IMDbParser\Parser;
 
 /**
  * Widget Class
@@ -50,82 +49,12 @@ class IMDb_Widget extends WP_Widget {
 		if ( ! isset( $config['userId'] ) ) {
 			echo 'You need to first configure the plugin :)';
 		} else {
-			$info = $this->fetch_imdb_user_info( $config['userId'] );
+            $parser = new Parser( $config['userId'] );
+            $info   = $parser->getInfo();
 			require 'pieces/widget.php';
 		}
 
 		ob_end_flush();
-	}
-
-	private function fetch_imdb_user_info( $userId ) {
-		$info               = new stdClass();
-		$info->profileUrl   = 'http://www.imdb.com/user/' . $userId . '/';
-		$info->ratingsUrl   = $info->profileUrl . 'ratings';
-		$info->listsUrl     = $info->profileUrl . 'lists';
-		$info->boardsUrl    = $info->profileUrl . 'boards';
-		$info->watchlistUrl = $info->profileUrl . 'watchlist';
-		$info->checkinsUrl  = $info->profileUrl . 'checkins';
-		$info->commentsUrl  = $info->profileUrl . 'comments-index';
-		$info->pollsUrl     = $info->profileUrl . '#pollResponses';
-		$info->ratingsUrlRss = str_replace( 'www', 'rss', $info->ratingsUrl );
-
-		$client  = new WebScrapper();
-		$crawler = $client->request( 'GET', $info->profileUrl );
-
-		$info->userId = $userId;
-		$info->nick = $this->parse_element( $crawler, ".header h1" );
-		$info->avatar = $this->parse_element( $crawler, '#avatar-frame img', 'src' );
-		$info->memberSince = $this->parse_element( $crawler, ".header .timestamp" );
-		$info->bio = $this->parse_element( $crawler, ".header .biography" );
-
-		$badgesOptions = array(
-			'name'  => array( '.name' ),
-			'value' => array( '.value' ),
-			'image' => array( '.badge-icon', 'class' )
-		);
-
-		$info->badges = $this->parse_list( $crawler, '.badges .badge-frame', $badgesOptions );
-
-		$listsOptions = array(
-			'name' => array( '.list-name' ),
-			'link' => array( '.list-name', 'href' ),
-			'meta' => array( '.list-meta' )
-		);
-
-		$info->lists = $this->parse_list( $crawler, '.lists .user-list', $listsOptions );
-		return $info;
-	}
-
-	private function parse_element( Crawler $crawler, $what, $attr = null ) {
-		try {
-			if ( isset( $attr ) ) {
-				return $crawler->filter( $what )->attr( $attr );
-			}
-
-			return $crawler->filter( $what )->text();
-		} catch ( InvalidArgumentException $e ) {
-			return null;
-		}
-	}
-
-	private function parse_list( Crawler $crawler, $tag, $sub_tags ) {
-		$lists = array();
-
-		try {
-			$crawler->filter( $tag )->each( function ( $node ) use ( &$lists, $sub_tags ) {
-				$newItem = new stdClass();
-
-				foreach ( $sub_tags as $key => $value ) {
-					$newItem->{$key} = $this->parse_element( $node, $value[0], isset( $value[1] ) ? $value[1] : null );
-				}
-
-				array_push( $lists, $newItem );
-			} );
-		} catch ( InvalidArgumentException $e ) {
-			// probably the user don't have lists
-		}
-
-		return $lists;
 	}
 }
 

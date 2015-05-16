@@ -1,3 +1,5 @@
+<?php var_dump( $info ); ?>
+
 <aside class="widget">
 
 	<?php if ( isset( $config['title'] ) ) : ?>
