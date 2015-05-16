@@ -13,10 +13,12 @@ use Symfony\Component\DomCrawler\Crawler;
  */
 class IMDb_Widget extends WP_Widget {
 
-	protected $options = array(
+	private $options = array(
 		"title",
 		"userId"
 	);
+
+	private $lists = array();
 
 	public function __construct() {
 		parent::__construct(
@@ -57,12 +59,7 @@ class IMDb_Widget extends WP_Widget {
 		ob_end_flush();
 	}
 
-	/**
-	 * @param $userId
-	 *
-	 * @return stdClass
-	 */
-	protected function fetch_imdb_user_info( $userId ) {
+	private function fetch_imdb_user_info( $userId ) {
 		$info               = new stdClass();
 		$info->profileUrl   = 'http://www.imdb.com/user/' . $userId . '/';
 		$info->ratingsUrl   = $info->profileUrl . 'ratings';
@@ -76,9 +73,11 @@ class IMDb_Widget extends WP_Widget {
 
 		$client            = new WebScrapper();
 		$crawler           = $client->request( 'GET', $info->profileUrl );
-		$info->userId      = $userId;
-		$info->nick        = $this->get_text_or_attr( $crawler, ".header h1" );
-		$info->avatar      = $this->get_text_or_attr( $crawler, '#avatar-frame img', 'src' );
+
+		$info->userId = $userId;
+		$info->nick   = $this->get_text_or_attr( $crawler, ".header h1" );
+		$info->avatar = $this->get_text_or_attr( $crawler, '#avatar-frame img', 'src' );
+		//$info->avatar        = ($info->avatar) ? str_replace('http://', 'https://', $info->avatar) : $info->avatar;
 		$info->memberSince = $this->get_text_or_attr( $crawler, ".header .timestamp" );
 		$info->bio         = $this->get_text_or_attr( $crawler, ".header .biography" );
 		$info->badges      = $this->parse_imdb_badges( $crawler );
@@ -87,16 +86,7 @@ class IMDb_Widget extends WP_Widget {
 		return $info;
 	}
 
-	//TODO: complete this
-
-	/**
-	 * @param $crawler
-	 * @param $what
-	 * @param null $attr
-	 *
-	 * @return null
-	 */
-	protected function get_text_or_attr( Crawler $crawler, $what, $attr = null ) {
+	private function get_text_or_attr( Crawler $crawler, $what, $attr = null ) {
 		try {
 			if ( isset( $attr ) ) {
 				return $crawler->filter( $what )->attr( $attr );
@@ -108,18 +98,13 @@ class IMDb_Widget extends WP_Widget {
 		}
 	}
 
-	protected function parse_imdb_badges( Crawler $crawler ) {
+	private function parse_imdb_badges( Crawler $crawler ) {
 		$badges = array();
 
 		return $badges;
 	}
 
-	/**
-	 * @param $crawler
-	 *
-	 * @return mixed
-	 */
-	protected function parse_imdb_lists( Crawler $crawler ) {
+	private function parse_imdb_lists( Crawler $crawler ) {
 		try {
 			$crawler->filter( '.lists .user-list' )->each( function ( $node ) {
 
@@ -130,28 +115,15 @@ class IMDb_Widget extends WP_Widget {
 				$this->process_imdb_lists( $name, $link, $meta );
 			} );
 		} catch ( InvalidArgumentException $e ) {
-			// what should I do here?
+			// probably the user don't have lists
 		}
 
-		if ( isset( $this->lists ) ) {
-			return $this->lists;
-		}
-
-		return array();
+		return $this->lists;
 	}
 
-	/**
-	 * @param $name
-	 * @param $link
-	 * @param $meta
-	 */
 	private function process_imdb_lists( $name, $link, $meta ) {
 		if ( ! isset( $this->counter ) ) {
 			$this->counter = 0;
-		}
-
-		if ( ! isset( $this->lists ) ) {
-			$this->lists = array();
 		}
 
 		$this->lists[ $this->counter ] = array(
