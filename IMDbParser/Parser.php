@@ -52,7 +52,14 @@ class Parser
         );
 
         $info->lists = $this->parseList( $crawler, '.lists .user-list', $listsOptions );
-
+		
+		$ratingsOptions = array(
+			'href' => array( 'a', 'href'),
+            'img' => array( 'img', 'src' ),
+            'title' => array( 'div a' )
+		);
+		$info->ratings = $this->parseList( $crawler, '.ratings .item', $ratingsOptions );
+        
         return $info;
     }
 
@@ -80,8 +87,6 @@ class Parser
         } catch ( InvalidArgumentException $e ) {
             // probably the user don't have lists
         }
-
         return $lists;
     }
-
 }

@@ -53,7 +53,6 @@ class IMDb_Widget extends WP_Widget {
             $info   = $parser->getInfo();
 			require 'pieces/widget.php';
 		}
-
 		ob_end_flush();
 	}
 }

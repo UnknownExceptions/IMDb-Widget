@@ -19,6 +19,13 @@
 		<div style="font-size: 80%; color: darkgrey">
 			<?= $info->bio ?>
 		</div>
+
+		<?php
+			for($i = 0 ; $i < count($info->ratings); $i++) {
+				echo print_r($info->ratings[$i]);
+			}
+		?>
+		
 		<a href="<?= $info->ratingsUrlRss ?>" target="_blank" title="Ratings RSS">
 			<img src='https://www.intrepidmuseum.org/App_Themes/Intrepid/images/rss_logo.gif'/>
 		</a>
