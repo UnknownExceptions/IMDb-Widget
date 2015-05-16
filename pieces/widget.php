@@ -1,12 +1,12 @@
 <aside class="widget">
 
-	<?php if ( isset( $config['title'] ) ) : ?>
-		<?php echo $before_title . $config['title'] . $after_title; ?>
+	<?php if ( isset( $config[ 'title' ] ) ) : ?>
+		<?php echo $before_title . $config[ 'title' ] . $after_title; ?>
 	<?php endif; ?>
 
 	<div>
 		<img src='http://img4.wikia.nocookie.net/__cb20130124112826/logopedia/images/8/8e/IMDB.png'
-		     style="max-height: 20px;"/>
+			 style="max-height: 20px;"/>
 		<a href="<?= $info->profileUrl ?>" target="_blank" title="View profile" style="display: block;">
 			<img src="<?= $info->avatar ?>"/>
 
