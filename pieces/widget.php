@@ -5,7 +5,7 @@
 	<?php endif; ?>
 
 	<div>
-		<img src='http://img4.wikia.nocookie.net/__cb20130124112826/logopedia/images/8/8e/IMDB.png'
+		<img src='https://img4.wikia.nocookie.net/__cb20130124112826/logopedia/images/8/8e/IMDB.png'
 			 style="max-height: 20px;"/>
 		<a href="<?= $info->profileUrl ?>" target="_blank" title="View profile" style="display: block;">
 			<img src="<?= $info->avatar ?>" style="border-radius: 3px;" />
@@ -19,7 +19,7 @@
 			<?= $info->bio ?>
 		</div>
 		<a href="<?= $info->ratingsUrlRss ?>" target="_blank" title="Ratings RSS">
-			<img src='http://www.intrepidmuseum.org/App_Themes/Intrepid/images/rss_logo.gif'/>
+			<img src='https://www.intrepidmuseum.org/App_Themes/Intrepid/images/rss_logo.gif'/>
 		</a>
 	</div>
 
