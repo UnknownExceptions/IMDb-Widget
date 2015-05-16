@@ -81,7 +81,7 @@ class IMDb_Widget extends WP_Widget {
 		$info->avatar      = $this->parse_imdb_info( $crawler, '#avatar-frame img', 'src' );
 		$info->memberSince = $this->parse_imdb_info( $crawler, ".header .timestamp" );
 		$info->bio         = $this->parse_imdb_info( $crawler, ".header .biography" );
-		$info->badges      = $this->parse_imdb_badges( $userId );
+		$info->badges = $this->parse_imdb_badges( $crawler );
 		$info->lists       = $this->parse_imdb_lists( $crawler );
 
 		return $info;
