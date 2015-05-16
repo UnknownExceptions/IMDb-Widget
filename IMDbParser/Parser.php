@@ -47,7 +47,7 @@ class Parser
             new Selector('nick', '.header h1'));
 
         $this->info->avatar = $this->parseElement('profile',
-            new Selector('avatar', '#avatar-frame img', 'stc'));
+            new Selector('avatar', '#avatar-frame img', 'src'));
 
         $this->info->memberSince = $this->parseElement('profile',
             new Selector('memberSince', '.header .timestamp'));

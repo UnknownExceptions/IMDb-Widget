@@ -36,7 +36,6 @@
 			</a>
 	</div>
 	
-	
 	<img src='https://img4.wikia.nocookie.net/__cb20130124112826/logopedia/images/8/8e/IMDB.png'
 		 style="max-height: 20px;"/>
 
