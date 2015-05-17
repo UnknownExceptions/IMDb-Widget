@@ -1,13 +1,36 @@
 <?php
 
+/*
+ * This file is part of the WebParser package.
+ *
+ * (c) Henrique Dias <hacdias@gmail.com>
+ * (c) Luís Soares <lsoares@gmail.com>
+ *
+ * Licensed under the MIT license.
+ */
+
 namespace WebParser;
 
 use Goutte\Client as Client;
 
+/**
+ * Parser
+ *
+ * @author Henrique Dias <hacdias@gmail.com>
+ * @author Luís Soares <lsoares@gmail.com>
+ */
 class Parser
 {
     private $url, $client, $crawler;
 
+    /**
+     * Constructor
+     *
+     * Defines the URL to use with the parser, creates the new Goutte
+     * client and the crawler.
+     *
+     * @param string $url The URL to use with the parser.
+     */
     public function __construct($url)
     {
         $this->url = $url;
@@ -15,9 +38,17 @@ class Parser
         $this->crawler = $this->client->request('GET', $this->url);
     }
 
+    /**
+     * Find
+     *
+     * Creates the new parsing object with the parent selector.
+     *
+     * @param string $selector The parent html selector.
+     * @return Object The parsing object.
+     */
     public function find($selector)
     {
-        $parsingObject = new ParsingObject($this->crawler, $selector);
+        $parsingObject = new Object($this->crawler, $selector);
         return $parsingObject;
     }
 }
