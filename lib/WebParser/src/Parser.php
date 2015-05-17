@@ -1,5 +1,8 @@
 <?php
 
+/**
+ *
+ */
 namespace WebParser;
 
 use Goutte\Client as WebScrapper;
