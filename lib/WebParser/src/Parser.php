@@ -42,7 +42,6 @@ class Parser
     public function fetchInformation($crawlerName, Selector ...$selectors)
     {
         $name = $selectors[0]->getName();
-
         if (count($selectors) === 1) {
             $this->info->{$name} = $this->parseElement($crawlerName, $selectors[0]);
         } else {
@@ -60,7 +59,6 @@ class Parser
 
         try {
             $el = $this->{$crawlerName}->filter($selector->getTag());
-
             return ($selector->getAttr()) ? $el->attr($selector->getAttr()) : $el->text();
         } catch (InvalidArgumentException $e) {
             return null;
@@ -98,9 +96,8 @@ class Parser
             });
 
         } catch (InvalidArgumentException $e) {
-            // probably the user don't have lists
+            // return empty
         }
-
         return $lists;
     }
 
@@ -110,8 +107,6 @@ class Parser
             $this->{$name . 'Crawler'} = $content;
             return;
         }
-
         $this->{$name . 'Crawler'} = $this->client->request($method, $content);
-        return;
     }
 }
