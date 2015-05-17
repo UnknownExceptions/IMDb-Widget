@@ -37,18 +37,17 @@ class Parser
         $this->client = new Client();
         $this->crawler = $this->client->request('GET', $this->url);
     }
-
+	
     /**
      * Find
      *
      * Creates the new parsing object with the parent selector.
      *
      * @param string $selector The parent html selector.
-     * @return Object The parsing object.
+     * @return SelectorBuilder The parsing object.
      */
     public function find($selector)
     {
-        $parsingObject = new Object($this->crawler, $selector);
-        return $parsingObject;
+        return new SelectorBuilder($this->crawler, $selector);
     }
 }

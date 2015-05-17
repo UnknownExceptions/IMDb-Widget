@@ -11,7 +11,6 @@
 
 namespace WebParser;
 
-use Goutte\Client as BaseClient;
 use InvalidArgumentException;
 use stdClass;
 use Symfony\Component\DomCrawler\Crawler;
@@ -39,27 +38,23 @@ abstract class Base
     /**
      * List parser
      *
-     * @param Selector $tag
+     * @param Selector $parentSelector
      * @param Selector ...$subTags
      * @return array
      */
-    protected function parseList(Selector $tag, Selector ...$subTags)
+    protected function parseList(Selector $parentSelector, Selector ...$subTags)
     {
         $lists = array();
-        $tag = $tag->getTag();
+        $parentSelector = $parentSelector->getTag();
 
         try {
-            $this->crawler->filter($tag)->each(function ($node) use (&$lists, $subTags) {
+            $this->crawler->filter($parentSelector)->each(function ($node) use (&$lists, $subTags) {
                 $item = new stdClass();
 
                 foreach ($subTags as $tag) {
-                    if (!$tag instanceof Selector) {
-                        continue;
-                    }
-
-                    $item->{$tag->getName()} = $this->parseElement($tag, $node);
+					$item->{$tag->getName()} = $this->parseElement($tag, $node);
                 }
-
+				
                 array_push($lists, $item);
             });
 
@@ -84,8 +79,8 @@ abstract class Base
             } else {
                 $el = $this->crawler->filter($selector->getTag());
             }
-
             return ($selector->getAttr()) ? $el->attr($selector->getAttr()) : $el->text();
+			
         } catch (InvalidArgumentException $e) {
             return null;
         }

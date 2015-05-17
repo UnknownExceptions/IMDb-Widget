@@ -1,4 +1,4 @@
-<aside class="widget" style="font-family: Verdana">
+<aside class="widget" style="font-family: Verdana; color: black;">
 
 	<?php if ( isset( $config[ 'title' ] ) ) : ?>
 		<?php echo $before_title . $config[ 'title' ] . $after_title; ?>
@@ -6,10 +6,10 @@
 
 	<div>
 		<a href="<?= $info->profileUrl ?>" target="_blank" title="View profile" 
-		   style="display: inline-block; width: 50%; vertical-align: top; ">
-			<img src="<?= $info->avatar ?>" style="border-radius: 3px;"/>/
+		   style="display: inline-block; width: 50%; vertical-align: top; position: relative;border-radius: 3px;">
+			<img src="<?= $info->avatar ?>" style="height: 80px;" />
 			<img src='https://img4.wikia.nocookie.net/__cb20130124112826/logopedia/images/8/8e/IMDB.png'
-				 style="max-height: 20px;" />
+				 style="max-height: 20px; position: absolute; left: 0; bottom: 0; opacity: 0.8;" />
 		</a>
 
 		<div style="display: inline-block; width: 50%; vertical-align: top;">
@@ -26,7 +26,7 @@
 	</div>
 
 	<div>
-		<h4>Latest ratings</h4>
+		<div style="font-weight: bold; margin-top: 8px;">Latest ratings</div>
 		<?php
 		for ( $i = 0; $i < count( $info->ratings ); $i++ ) {
 			$rating = $info->ratings[ $i ];

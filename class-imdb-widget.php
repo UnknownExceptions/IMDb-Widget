@@ -1,7 +1,6 @@
 <?php
 
 use WebParser\Parser;
-use WebParser\Selector;
 
 /**
  * Widget Class
@@ -13,7 +12,6 @@ use WebParser\Selector;
  */
 class IMDb_Widget extends WP_Widget
 {
-
     private $options = array(
         "title",
         "userId"
@@ -55,8 +53,6 @@ class IMDb_Widget extends WP_Widget
         if (!isset($config['userId'])) {
             echo 'You need to first configure the plugin :)';
         } else {
-            //$parser = new Parser($config['userId']);
-            //$info = $parser->getInfo();
             $info = $this->getInfo($config['userId']);
             require 'pieces/widget.php';
         }
@@ -71,42 +67,38 @@ class IMDb_Widget extends WP_Widget
         $info->ratingsRssUrl = str_replace('www', 'rss', $info->profileUrl);
 
         $urlsToAdd = array(
-            'ratings' => 'ratings',
-            'lists' => 'boards',
-            'watchlist' => 'watchlist',
-            'checkins' => 'checkins',
-            'comments' => 'comments-index',
-            'polls' => '#pollResponses'
+            'ratings' , 'boards', 'watchlist', 'checkins', 'comments ndex', '#pollResponses'
         );
 
-        foreach ($urlsToAdd as $name => $url) {
-            $info->{$name . 'Url'} = $info->baseUrl . $url;
+        foreach ($urlsToAdd as $url) {
+			$cleanId = preg_replace('/[^A-Za-z]/', '', $url);
+            $info->{$cleanId . 'Url'} = $info->baseUrl . $url;
         }
 
         $parser = new Parser($info->profileUrl);
-
+		
         $info->nick = $parser->find('.header h1')->get();
         $info->avatar = $parser->find('#avatar-frame img')->attr('src')->get();
         $info->memberSince = $parser->find('.header .timestamp')->get();
         $info->bio = $parser->find('.header .biography')->get();
 
-        $info->badges = $parser->find('.badges')->selectEach('.badge-frame')
-            ->getProperty('.name')->called('name')
-            ->getProperty('.value')->called('value')
-            ->getProperty('.badge-icon')->attr('class')->called('image')
+        $info->badges = $parser->find('.badges .badge-frame')
+            ->prop('.name')->named('name')
+            ->prop('.value')->named('value')
+            ->prop('.badge-icon')->attr('class')->named('image')
             ->get();
 
-        $info->lists = $parser->find('.lists')->selectEach('.user-list')
-            ->getProperty('.list-name')->called('name')
-            ->getProperty('.list-meta')->attr('href')->called('link')
-            ->getProperty('.list-meta')->called('meta')
+        $info->lists = $parser->find('.lists .user-list')
+            ->prop('.list-name')->named('name')
+            ->prop('.list-meta')->attr('href')->named('link')
+            ->prop('.list-meta')->named('meta')
             ->get();
 
-        $info->ratings = $parser->find('.ratings')->selectEach('.item')
-            ->getProperty('a')->attr('href')->called('href')
-            ->getProperty('a img')->attr('src')->called('logo')
-            ->getProperty('.title a')->called('title')
-            ->getProperty('.sub-item .only-rating')->called('rating')
+        $info->ratings = $parser->find('.ratings .item')
+            ->prop('a')->attr('href')->named('href')
+            ->prop('a img')->attr('src')->named('logo')
+            ->prop('.title a')->named('title')
+            ->prop('.sub-item .only-rating')->named('rating')
             ->get();
 
         return $info;

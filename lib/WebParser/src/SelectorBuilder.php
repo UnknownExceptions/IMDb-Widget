@@ -19,7 +19,7 @@ use Symfony\Component\DomCrawler\Crawler;
  * @author Henrique Dias <hacdias@gmail.com>
  * @author Luís Soares <lsoares@gmail.com>
  */
-class Object extends Base
+class SelectorBuilder extends Base
 {
     const parent = 'parentSelector',
         child = 'childSelectors';
@@ -37,7 +37,6 @@ class Object extends Base
     public function __construct(Crawler $crawler, $parentSelector)
     {
         parent::__construct($crawler);
-
         $this->parentSelector = new Selector('parent', $parentSelector);
         $this->lastThingModified = self::parent;
     }
@@ -69,30 +68,17 @@ class Object extends Base
         if (empty($this->childSelectors)) {
             return $this->parseElement($this->parentSelector);
         }
-
+		
         return $this->parseList($this->parentSelector, ...$this->childSelectors);
     }
-
-    /**
-     * Select Each
-     *
-     * @param string $selector
-     * @return $this
-     */
-    public function selectEach($selector)
-    {
-        $tag = $this->{$this->lastThingModified}->getTag() . ' ' . $selector;
-        $this->{$this->lastThingModified}->setTag($tag);
-        return $this;
-    }
-
+	
     /**
      * Get property
      *
      * @param string $propertyTag
      * @return $this
      */
-    public function getProperty($propertyTag)
+    public function prop($propertyTag)
     {
         array_push($this->childSelectors, new Selector(null, $propertyTag));
         $this->lastThingModified = self::child;
@@ -105,7 +91,7 @@ class Object extends Base
      * @param string $propertyName
      * @return $this
      */
-    public function called($propertyName)
+    public function named($propertyName)
     {
         $this->childSelectors[count($this->childSelectors) - 1]->setName($propertyName);
         return $this;
