@@ -1,95 +1,61 @@
 <?php
 
-/**
- *
- */
 namespace WebParser;
 
-use Goutte\Client as WebScrapper;
+use Goutte\Client as BaseClient;
 use InvalidArgumentException;
-use stdClass as Object;
+use stdClass;
 use Symfony\Component\DomCrawler\Crawler;
 
 class Parser
 {
-    public function __construct($baseUrl)
+    public function __construct($url)
     {
-        $this->info = new Object();
-        $this->info->baseUrl = rtrim($baseUrl, '/') . '/';
-        $this->client = new WebScrapper();
+        $this->url = $url;
+        $this->client = new BaseClient();
+        $this->crawler = $this->client->request('GET', $this->url);
     }
 
-    public function setUrl($name, $url, $basedOnUrl = 'base')
+    public function parse(Selector ...$selectors)
     {
-        if ($basedOnUrl) {
-            $this->info->{$name . 'Url'} = $this->info->{$basedOnUrl . 'Url'} . trim($url, '/') . '/';
-        } else {
-            $this->info->{$name . 'Url'} = $url;
-        }
-        return;
-    }
-
-    public function getUrl($name)
-    {
-        return (isset($this->info->{$name . 'Url'})) ? $this->info->{$name . 'Url'} : null;
-    }
-
-    public function getInfo()
-    {
-        return $this->info;
-    }
-
-    public function fetchInformation($crawlerName, Selector ...$selectors)
-    {
-        $name = $selectors[0]->getName();
         if (count($selectors) === 1) {
-            $this->info->{$name} = $this->parseElement($crawlerName, $selectors[0]);
+            return $this->parseElement($selectors[0]);
         } else {
-            $this->info->{$name} = $this->parseList($crawlerName, array_shift($selectors), ...$selectors);
+            return $this->parseList(array_shift($selectors), ...$selectors);
         }
     }
 
-    private function parseElement($crawlerName, Selector $selector)
+    private function parseElement(Selector $selector, Crawler $crawler = null)
     {
-        $crawlerName = $crawlerName . 'Crawler';
-
-        if (!$this->{$crawlerName} instanceof Crawler) {
-            return null;
-        }
-
         try {
-            $el = $this->{$crawlerName}->filter($selector->getTag());
+            if (isset($crawler)) {
+                $el = $crawler->filter($selector->getTag());
+            } else {
+                $el = $this->crawler->filter($selector->getTag());
+            }
+
             return ($selector->getAttr()) ? $el->attr($selector->getAttr()) : $el->text();
         } catch (InvalidArgumentException $e) {
             return null;
         }
     }
 
-    private function parseList($crawlerName, Selector $tag, Selector ...$subTags)
+    private function parseList(Selector $tag, Selector ...$subTags)
     {
-        $crawlerName = $crawlerName . 'Crawler';
-
-        if (!$this->{$crawlerName} instanceof Crawler) {
-            return null;
-        }
-
         $lists = array();
         $tag = $tag->getTag();
 
         try {
-            $this->{$crawlerName}->filter($tag)->each(function ($node) use (&$lists, $subTags) {
+            $this->crawler->filter($tag)->each(function ($node) use (&$lists, $subTags) {
 
-                $item = new Object();
-
-                $crawlerId = uniqid() . 'Crawler';
-                $this->makeCrawler((string)$crawlerId, 'alreadyMade', $node);
+                $item = new stdClass();
 
                 foreach ($subTags as $tag) {
                     if (!$tag instanceof Selector) {
                         continue;
                     }
 
-                    $item->{$tag->getName()} = $this->parseElement($crawlerId, $tag);
+                    $item->{$tag->getName()} = $this->parseElement($tag, $node);
                 }
 
                 array_push($lists, $item);
@@ -101,12 +67,4 @@ class Parser
         return $lists;
     }
 
-    public function makeCrawler($name, $method, $content)
-    {
-        if ($method === 'alreadyMade') {
-            $this->{$name . 'Crawler'} = $content;
-            return;
-        }
-        $this->{$name . 'Crawler'} = $this->client->request($method, $content);
-    }
 }

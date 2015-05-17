@@ -65,12 +65,10 @@ class IMDb_Widget extends WP_Widget
 
     private function getInfo($userId)
     {
-        $baseUrl = 'http://www.imdb.com';
-
-        $parser = new Parser($baseUrl);
-
-        $parser->setUrl('profile', 'user/' . $userId);
-        $parser->setUrl('ratingsRss', str_replace('www', 'rss', $parser->getUrl('profile')), null);
+        $info = new stdClass();
+        $info->baseUrl = 'http://www.imdb.com/';
+        $info->profileUrl = $info->baseUrl . 'user/' . $userId;
+        $info->ratingsRssUrl = str_replace('www', 'rss', $info->profileUrl);
 
         $urlsToAdd = array(
             'ratings' => 'ratings',
@@ -82,43 +80,30 @@ class IMDb_Widget extends WP_Widget
         );
 
         foreach ($urlsToAdd as $name => $url) {
-            $parser->setUrl($name, $url, 'profile');
+            $info->{$name . 'Url'} = $info->baseUrl . $url;
         }
 
-        $parser->makeCrawler('profile', 'GET', $parser->getUrl('profile'));
+        $parser = new Parser($info->profileUrl);
 
-        $parser->fetchInformation('profile',
-            new Selector('nick', '.header h1'));
-
-        $parser->fetchInformation('profile',
-            new Selector('avatar', '#avatar-frame img', 'src'));
-
-        $parser->fetchInformation('profile',
-            new Selector('memberSince', '.header .timestamp'));
-
-        $parser->fetchInformation('profile',
-            new Selector('bio', '.header .biography'));
-
-        $parser->fetchInformation('profile',
-            new Selector('badges', '.badges .badge-frame'),
+        $info->nick = $parser->parse(new Selector('nick', '.header h1'));
+        $info->avatar = $parser->parse(new Selector('avatar', '#avatar-frame img', 'src'));
+        $info->memberSince = $parser->parse(new Selector('memberSince', '.header .timestamp'));
+        $info->bio = $parser->parse(new Selector('bio', '.header .biography'));
+        $info->badges = $parser->parse(new Selector('badges', '.badges .badge-frame'),
             new Selector('name', '.name'),
             new Selector('value', '.value'),
             new Selector('image', '.badge-icon', 'class'));
-
-        $parser->fetchInformation('profile',
-            new Selector('lists', '.lists .user-list'),
+        $info->lists = $parser->parse(new Selector('lists', '.lists .user-list'),
             new Selector('name', '.list-name'),
             new Selector('link', '.list-meta', 'href'),
             new Selector('meta', '.list-meta'));
-
-        $parser->fetchInformation('profile',
-            new Selector('ratings', '.ratings .item'),
+        $info->ratings = $parser->parse(new Selector('ratings', '.ratings .item'),
             new Selector('href', 'a', 'href'),
 			new Selector('logo', 'a img', 'src'),
             new Selector('title', '.title a'),
 		    new Selector('rating', '.sub-item .only-rating'));
 
-        return $parser->getInfo();
+        return $info;
     }
 }
 
