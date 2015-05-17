@@ -1,4 +1,4 @@
-<aside class="widget">
+<aside class="widget" style="font-family: Verdana">
 
 	<?php if ( isset( $config[ 'title' ] ) ) : ?>
 		<?php echo $before_title . $config[ 'title' ] . $after_title; ?>
@@ -7,14 +7,16 @@
 	<div>
 		<a href="<?= $info->profileUrl ?>" target="_blank" title="View profile" 
 		   style="display: inline-block; width: 50%; vertical-align: top; ">
-			<img src="<?= $info->avatar ?>" style="border-radius: 3px;"/>
-
-			<h3><?= $info->nick ?></h3>
+			<img src="<?= $info->avatar ?>" style="border-radius: 3px;"/>/
+			<img src='https://img4.wikia.nocookie.net/__cb20130124112826/logopedia/images/8/8e/IMDB.png'
+				 style="max-height: 20px;" />
 		</a>
 
 		<div style="display: inline-block; width: 50%; vertical-align: top;">
-			<h3><?= $info->nick ?></h3>
-			<div style="font-size: 80%;">
+			<span style="display: block;font-size: 115%;font-weight: bold;color: black;">
+				<?= $info->nick ?>
+			</span>
+			<div style="font-size: 70%; color: black;">
 				<?= $info->memberSince ?>
 			</div>
 			<div style="font-size: 80%; color: darkgrey">
@@ -24,19 +26,23 @@
 	</div>
 
 	<div>
+		<h4>Latest ratings</h4>
 		<?php
 		for ( $i = 0; $i < count( $info->ratings ); $i++ ) {
 			$rating = $info->ratings[ $i ];
 			?>
-			<a target="_blank" href="<?= $info->baseUrl . $rating->href ?>"><?= $rating->title ?><a/>
+
+			<a target="_blank" href="<?= $info->baseUrl . $rating->href ?>" 
+			   title="<?= $rating->title ?>" style="display: inline-block;">
+				<img src="<?= $rating->logo ?>" style="height: 60px;; margin: 2px; border-radius: 2px;" />	
+				<!--<span style="font-size: 70%"></span>-->
+				<a/>
 			<?php } ?>
 
-                <a href="<?= $info->ratingsRssUrl ?>" target="_blank" title="Ratings RSS">
+			<a href="<?= $info->ratingsRssUrl ?>" target="_blank" title="Ratings RSS">
 				<img src='https://www.intrepidmuseum.org/App_Themes/Intrepid/images/rss_logo.gif'/>
 			</a>
 	</div>
-	
-	<img src='https://img4.wikia.nocookie.net/__cb20130124112826/logopedia/images/8/8e/IMDB.png'
-		 style="max-height: 20px;"/>
+
 
 </aside>

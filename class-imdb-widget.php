@@ -114,7 +114,9 @@ class IMDb_Widget extends WP_Widget
         $parser->fetchInformation('profile',
             new Selector('ratings', '.ratings .item'),
             new Selector('href', 'a', 'href'),
-            new Selector('title', 'div a'));
+			new Selector('logo', 'a img', 'src'),
+            new Selector('title', '.title a'),
+		    new Selector('rating', '.sub-item .only-rating'));
 
         return $parser->getInfo();
     }
