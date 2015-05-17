@@ -31,7 +31,7 @@
 			<a target="_blank" href="<?= $info->baseUrl . $rating->href ?>"><?= $rating->title ?><a/>
 			<?php } ?>
 
-			<a href="<?= $info->ratingsUrlRss ?>" target="_blank" title="Ratings RSS">
+                <a href="<?= $info->ratingsRssUrl ?>" target="_blank" title="Ratings RSS">
 				<img src='https://www.intrepidmuseum.org/App_Themes/Intrepid/images/rss_logo.gif'/>
 			</a>
 	</div>

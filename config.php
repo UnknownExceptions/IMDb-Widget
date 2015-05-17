@@ -16,8 +16,7 @@ define( 'IMDB_PLUGIN_DIR', dirname( __FILE__ ) . '/' );
 
 // third-party libraries
 require_once IMDB_PLUGIN_DIR . 'lib/htmlcompressor.php';
-require_once IMDB_PLUGIN_DIR . 'lib/goutte.phar';
-require_once IMDB_PLUGIN_DIR . 'IMDbParser/Parser.php';
+require_once IMDB_PLUGIN_DIR . 'lib/WebParser/index.php';
 
 // require the needed css and javascript
 function IMDb_plugin_add_javascript_and_css() {

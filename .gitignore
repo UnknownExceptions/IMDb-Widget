@@ -1,2 +1,4 @@
 .idea
 nbproject
+lib/WebParser/vendor/
+lib/WebParser/composer.lock
