@@ -85,23 +85,29 @@ class IMDb_Widget extends WP_Widget
 
         $parser = new Parser($info->profileUrl);
 
-        $info->nick = $parser->parse(new Selector('nick', '.header h1'));
-        $info->avatar = $parser->parse(new Selector('avatar', '#avatar-frame img', 'src'));
-        $info->memberSince = $parser->parse(new Selector('memberSince', '.header .timestamp'));
-        $info->bio = $parser->parse(new Selector('bio', '.header .biography'));
-        $info->badges = $parser->parse(new Selector('badges', '.badges .badge-frame'),
-            new Selector('name', '.name'),
-            new Selector('value', '.value'),
-            new Selector('image', '.badge-icon', 'class'));
-        $info->lists = $parser->parse(new Selector('lists', '.lists .user-list'),
-            new Selector('name', '.list-name'),
-            new Selector('link', '.list-meta', 'href'),
-            new Selector('meta', '.list-meta'));
-        $info->ratings = $parser->parse(new Selector('ratings', '.ratings .item'),
-            new Selector('href', 'a', 'href'),
-			new Selector('logo', 'a img', 'src'),
-            new Selector('title', '.title a'),
-		    new Selector('rating', '.sub-item .only-rating'));
+        $info->nick = $parser->find('.header h1')->get();
+        $info->avatar = $parser->find('#avatar-frame img')->attr('src')->get();
+        $info->memberSince = $parser->find('.header .timestamp')->get();
+        $info->bio = $parser->find('.header .biography')->get();
+
+        $info->badges = $parser->find('.badges')->selectEach('.badge-frame')
+            ->getProperty('.name')->called('name')
+            ->getProperty('.value')->called('value')
+            ->getProperty('.badge-icon')->attr('class')->called('image')
+            ->get();
+
+        $info->lists = $parser->find('.lists')->selectEach('.user-list')
+            ->getProperty('.list-name')->called('name')
+            ->getProperty('.list-meta')->attr('href')->called('link')
+            ->getProperty('.list-meta')->called('meta')
+            ->get();
+
+        $info->ratings = $parser->find('.ratings')->selectEach('.item')
+            ->getProperty('a')->attr('href')->called('href')
+            ->getProperty('a img')->attr('src')->called('logo')
+            ->getProperty('.title a')->called('title')
+            ->getProperty('.sub-item .only-rating')->called('rating')
+            ->get();
 
         return $info;
     }
