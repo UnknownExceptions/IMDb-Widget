@@ -22,7 +22,7 @@ use Goutte\Client as Client;
  * @author Henrique Dias <hacdias@gmail.com>
  * @author Luís Soares <lsoares@gmail.com>
  */
-class SelectorBuilder {
+class Parser {
 
 	private $crawler;
 	private $selector;
@@ -32,17 +32,6 @@ class SelectorBuilder {
 	{
 		$client			 = new Client();
 		$this->crawler	 = $client->request( 'GET', $url );
-	}
-
-	public function element( $expression, $attribute = null, Crawler $crawler = null )
-	{
-		try {
-			$context = isset( $crawler ) ? $crawler : $this->crawler;
-			$el		 = $context->filter( $expression );
-			return $attribute ? $el->attr( $attribute ) : $el->text();
-		} catch ( InvalidArgumentException $e ) {
-			return null;
-		}
 	}
 
 	public function elements( $expression )
@@ -58,13 +47,23 @@ class SelectorBuilder {
 		return $this;
 	}
 
-	public function parseList( Selector $mainSelector, Selector ...$childSelectors )
+	public function element( $expression, $attribute = null, Crawler $crawler = null )
+	{
+		try {
+			$context = isset( $crawler ) ? $crawler : $this->crawler;
+			$el		 = $context->filter( $expression );
+			return $attribute ? $el->attr( $attribute ) : $el->text();
+		} catch ( InvalidArgumentException $e ) {
+			return null;
+		}
+	}
+
+	public function get()
 	{
 		$lists			 = array();
-		$mainSelector	 = $mainSelector->getExpression();
-
+		$childSelectors	 = $this->childSelectors;
 		try {
-			$this->crawler->filter( $mainSelector )->each( function ($node) use (&$lists, $childSelectors) {
+			$this->crawler->filter( $this->selector->getExpression() )->each( function ($node) use (&$lists, $childSelectors) {
 				$item = new stdClass();
 
 				foreach ( $childSelectors as $tag ) {
@@ -77,11 +76,6 @@ class SelectorBuilder {
 			// return empty
 		}
 		return $lists;
-	}
-
-	public function get()
-	{
-		return $this->parseList( $this->selector, ...$this->childSelectors );
 	}
 
 }

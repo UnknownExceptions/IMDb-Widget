@@ -1,6 +1,6 @@
 <?php
 
-use WebParser\SelectorBuilder;
+use WebParser\Parser;
 
 /**
  * Widget Class
@@ -74,7 +74,7 @@ class IMDb_Widget extends WP_Widget {
 			$info->{$cleanId . 'Url'}	 = $info->baseUrl . $url;
 		}
 
-		$parser = new SelectorBuilder( $info->profileUrl );
+		$parser = new Parser( $info->profileUrl );
 
 		$info->nick			 = $parser->element( '.header h1' );
 		$info->avatar		 = $parser->element( '#avatar-frame img', 'src' );
