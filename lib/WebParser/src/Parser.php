@@ -26,10 +26,12 @@ class Parser extends stdClass {
 	private $crawler;
 	private $expression;
 	private $childSelectors;
+	public $url;
 
 	public function __construct( $url )
 	{
 		$client			 = new Client();
+		$this->url		 = $url;
 		$this->crawler	 = $client->request( 'GET', $url );
 	}
 
@@ -65,7 +67,7 @@ class Parser extends stdClass {
 				$item = new stdClass();
 				foreach ( $childSelectors as $tag ) {
 					// TODO: reutilizar conceito.
-					$el						 = $node->find( $tag->getExpression() );
+					$el						 = $node->filter( $tag->getExpression() );
 					$item->{$tag->getName()} = $tag->getAttr() ? $el->attr( $tag->getAttr() ) : $el->text();
 				}
 

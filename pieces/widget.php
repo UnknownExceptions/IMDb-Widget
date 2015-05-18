@@ -5,7 +5,7 @@
 	<?php endif; ?>
 
 	<div>
-		<a href="<?= $info->profileUrl ?>" target="_blank" title="View profile" 
+		<a href="<?= $info->url ?>" target="_blank" title="View profile" 
 		   style="display: inline-block; width: 50%; vertical-align: top; position: relative;border-radius: 3px;">
 			<img src="<?= $info->avatar ?>" style="height: 80px;" />
 			<img src='https://img4.wikia.nocookie.net/__cb20130124112826/logopedia/images/8/8e/IMDB.png'
@@ -33,9 +33,8 @@
 			?>
 
 			<a target="_blank" href="<?= $info->baseUrl . $rating->href ?>" 
-			   title="<?= $rating->title ?>" style="display: inline-block;">
+			   title="<?= $rating->title ?> (<?= $rating->rating ?>)" style="display: inline-block;">
 				<img src="<?= $rating->logo ?>" style="height: 60px;; margin: 2px; border-radius: 2px;" />	
-				<!--<span style="font-size: 70%"></span>-->
 				<a/>
 			<?php } ?>
 
