@@ -21,62 +21,67 @@ use stdClass;
  * @author Henrique Dias <hacdias@gmail.com>
  * @author Luís Soares <lsoares@gmail.com>
  */
-class Parser
-{
-    public $url;
-    private $crawler,
-        $listName,
-        $listExpression,
-        $childSelectors;
+class Parser {
 
-    public function __construct($url)
-    {
-        $client = new Client();
-        $this->url = $url;
-        $this->crawler = $client->request('GET', $url);
-    }
+	public $url;
+	private $crawler,
+	$listName,
+	$listExpression,
+	$childSelectors;
 
-    public function find($name, $expression)
-    {
-        $this->listName = $name;
-        $this->listExpression = $expression;
-        $this->childSelectors = array();
-        return $this;
-    }
+	public function __construct( $url )
+	{
+		$client			 = new Client();
+		$this->url		 = $url;
+		$this->crawler	 = $client->request( 'GET', $url );
+	}
 
-    public function prop($name, $selector, $attr = null)
-    {
-        array_push($this->childSelectors, new Selector($name, $selector, $attr));
-        return $this;
-    }
+	public function select( $name, $expression, $attribute = null )
+	{
+		$this->{$name} = $this->smartSelect( $this->crawler, new Selector( $name, $expression, $attribute ) );
+	}
 
-    public function select($name, $expression, $attribute = null)
-    {
-        try {
-            $el = $this->crawler->filter($expression);
-            $this->{$name} = $attribute ? $el->attr($attribute) : $el->text();
-        } catch (InvalidArgumentException $e) {
-        }
-    }
+	public function prepare( $name, $expression )
+	{
+		$this->listName			 = $name;
+		$this->listExpression	 = $expression;
+		$this->childSelectors	 = array();
+		return $this;
+	}
 
-    public function build()
-    {
-        $list = array();
-        $childSelectors = $this->childSelectors;
-        try {
-            $this->crawler->filter($this->listExpression)->each(function ($node) use (&$list, $childSelectors) {
-                $item = new stdClass();
-                foreach ($childSelectors as $tag) {
-                    // TODO: reutilizar conceito
-                    $el = $node->filter($tag->getExpression());
-                    $item->{$tag->getName()} = $tag->getAttr() ? $el->attr($tag->getAttr()) : $el->text();
-                }
+	public function with( $name, $expression, $attribute = null )
+	{
+		array_push( $this->childSelectors, new Selector( $name, $expression, $attribute ) );
+		return $this;
+	}
 
-                array_push($list, $item);
-            });
-        } catch (InvalidArgumentException $e) {
-        }
+	private function smartSelect( $context, Selector $selector )
+	{
+		try {
+			$el = $context->filter( $selector->getExpression() );
+			return $selector->getAttr() ? $el->attr( $selector->getAttr() ) : $el->text();
+		} catch ( InvalidArgumentException $e ) {
+			return null;
+		}
+	}
 
-        $this->{$this->listName} = $list;
-    }
+	public function finish()
+	{
+		$subSelections	 = array();
+		$childSelectors	 = $this->childSelectors;
+		try {
+			$this->crawler->filter( $this->listExpression )->each( function ($node) use (&$subSelections, $childSelectors) {
+				$item = new stdClass();
+				foreach ( $childSelectors as $childSelector ) {
+					$item->{$childSelector->getName()}	 = $this->smartSelect( $node, $childSelector );
+				}
+				array_push( $subSelections, $item );
+			} );
+		} catch ( InvalidArgumentException $e ) {
+			
+		}
+
+		$this->{$this->listName} = $subSelections; // keep
+	}
+
 }

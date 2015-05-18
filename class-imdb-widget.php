@@ -75,24 +75,24 @@ class IMDb_Widget extends WP_Widget
         $info->select('bio', '.header .biography');
         $info->select('ratingsCount', '.see-more a');
 
-        $info->find('ratings', '.ratings .item')
-            ->prop('href', 'a', 'href')
-            ->prop('logo', 'a img', 'src')
-            ->prop('title', '.title a')
-            ->prop('rating', '.sub-item .only-rating')
-            ->build();
+        $info->prepare('ratings', '.ratings .item')
+            ->with('href', 'a', 'href')
+            ->with('logo', 'a img', 'src')
+            ->with('title', '.title a')
+            ->with('rating', '.sub-item .only-rating')
+            ->finish();
 
-        $info->find('badges', '.badges .badge-frame')
-            ->prop('name', '.name')
-            ->prop('value', '.value')
-            ->prop('image', '.badge-icon', 'class')
-            ->build();
+        $info->prepare('badges', '.badges .badge-frame')
+            ->with('name', '.name')
+            ->with('value', '.value')
+            ->with('image', '.badge-icon', 'class')
+            ->finish();
 
-        $info->find('lists', '.lists .user-list')
-            ->prop('name', '.list-name')
-            ->prop('link', '.list-meta', 'href')
-            ->prop('meta', '.list-meta')
-            ->build();
+        $info->prepare('lists', '.lists .user-list')
+            ->with('name', '.list-name')
+            ->with('link', '.list-meta', 'href')
+            ->with('meta', '.list-meta')
+            ->finish();
 
         return $info;
     }
