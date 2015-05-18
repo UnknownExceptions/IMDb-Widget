@@ -76,29 +76,29 @@ class IMDb_Widget extends WP_Widget {
 
 		$parser = new Parser( $info->profileUrl );
 
-		$info->nick			 = $parser->element( '.header h1' );
-		$info->avatar		 = $parser->element( '#avatar-frame img', 'src' );
-		$info->memberSince	 = $parser->element( '.header .timestamp' );
-		$info->bio			 = $parser->element( '.header .biography' );
+		$info->nick			 = $parser->select( '.header h1' );
+		$info->avatar		 = $parser->select( '#avatar-frame img', 'src' );
+		$info->memberSince	 = $parser->select( '.header .timestamp' );
+		$info->bio			 = $parser->select( '.header .biography' );
 
-		$info->badges = $parser->elements( '.badges .badge-frame' )
-		->prop( 'name', '.name' )
-		->prop( 'value', '.value' )
-		->prop( 'image', '.badge-icon', 'class' )
-		->get();
+		$info->badges = $parser->selectAll( '.badges .badge-frame' )
+		->with( 'name', '.name' )
+		->with( 'value', '.value' )
+		->with( 'image', '.badge-icon', 'class' )
+		->build();
 
-		$info->lists = $parser->elements( '.lists .user-list' )
-		->prop( 'name', '.list-name' )
-		->prop( 'link', '.list-meta', 'href' )
-		->prop( 'meta', '.list-meta' )
-		->get();
+		$info->lists = $parser->selectAll( '.lists .user-list' )
+		->with( 'name', '.list-name' )
+		->with( 'link', '.list-meta', 'href' )
+		->with( 'meta', '.list-meta' )
+		->build();
 
-		$info->ratings = $parser->elements( '.ratings .item' )
-		->prop( 'href', 'a', 'href' )
-		->prop( 'logo', 'a img', 'src' )
-		->prop( 'title', '.title a' )
-		->prop( 'rating', '.sub-item .only-rating' )
-		->get();
+		$info->ratings = $parser->selectAll( '.ratings .item' )
+		->with( 'href', 'a', 'href' )
+		->with( 'logo', 'a img', 'src' )
+		->with( 'title', '.title a' )
+		->with( 'rating', '.sub-item .only-rating' )
+		->build();
 
 		return $info;
 	}

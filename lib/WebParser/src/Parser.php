@@ -25,7 +25,7 @@ use Goutte\Client as Client;
 class Parser {
 
 	private $crawler;
-	private $selector;
+	private $expression;
 	private $childSelectors;
 
 	public function __construct( $url )
@@ -34,20 +34,20 @@ class Parser {
 		$this->crawler	 = $client->request( 'GET', $url );
 	}
 
-	public function elements( $expression )
+	public function selectAll( $expression )
 	{
-		$this->selector			 = new Selector( null, $expression, null );
+		$this->expression		 = $expression;
 		$this->childSelectors	 = array(); // restart
 		return $this;
 	}
 
-	public function prop( $name, $selector, $attr = null )
+	public function with( $name, $selector, $attr = null )
 	{
 		array_push( $this->childSelectors, new Selector( $name, $selector, $attr ) );
 		return $this;
 	}
 
-	public function element( $expression, $attribute = null, Crawler $crawler = null )
+	public function select( $expression, $attribute = null, Crawler $crawler = null )
 	{
 		try {
 			$context = isset( $crawler ) ? $crawler : $this->crawler;
@@ -58,16 +58,16 @@ class Parser {
 		}
 	}
 
-	public function get()
+	public function build()
 	{
 		$lists			 = array();
 		$childSelectors	 = $this->childSelectors;
 		try {
-			$this->crawler->filter( $this->selector->getExpression() )->each( function ($node) use (&$lists, $childSelectors) {
+			$this->crawler->filter( $this->expression )->each( function ($node) use (&$lists, $childSelectors) {
 				$item = new stdClass();
 
 				foreach ( $childSelectors as $tag ) {
-					$item->{$tag->getName()} = $this->element( $tag->getExpression(), $tag->getAttr(), $node );
+					$item->{$tag->getName()} = $this->select( $tag->getExpression(), $tag->getAttr(), $node );
 				}
 
 				array_push( $lists, $item );
