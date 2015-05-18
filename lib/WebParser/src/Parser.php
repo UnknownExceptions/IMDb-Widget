@@ -34,7 +34,7 @@ class Parser extends stdClass {
 		$this->crawler	 = $client->request( 'GET', $url );
 	}
 
-	public function filter( $expression )
+	public function find( $expression )
 	{
 		$this->expression		 = $expression;
 		$this->childSelectors	 = array(); // restart
@@ -66,7 +66,7 @@ class Parser extends stdClass {
 				$item = new stdClass();
 				foreach ( $childSelectors as $tag ) {
 					// TODO: reutilizar conceito.
-					$el						 = $node->filter( $tag->getExpression() );
+					$el						 = $node->find( $tag->getExpression() );
 					$item->{$tag->getName()} = $tag->getAttr() ? $el->attr( $tag->getAttr() ) : $el->text();
 				}
 
