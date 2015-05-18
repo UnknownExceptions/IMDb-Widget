@@ -62,6 +62,7 @@ class IMDb_Widget extends WP_Widget {
 	{
 		$info				 = new stdClass();
 		$info->baseUrl		 = 'http://www.imdb.com/';
+		$info->userId        = $userId;
 		$info->profileUrl	 = $info->baseUrl . 'user/' . $userId;
 		$info->ratingsRssUrl = str_replace( 'www', 'rss', $info->profileUrl );
 
@@ -71,7 +72,7 @@ class IMDb_Widget extends WP_Widget {
 
 		foreach ( $urlsToAdd as $url ) {
 			$cleanId					 = preg_replace( '/[^A-Za-z]/', '', $url );
-			$info->{$cleanId . 'Url'}	 = $info->baseUrl . $url;
+			$info->{$cleanId . 'Url'}	 = $info->baseUrl . 'user/' . $userId . '/' . $url;
 		}
 
 		$parser = new Parser( $info->profileUrl );
@@ -80,6 +81,7 @@ class IMDb_Widget extends WP_Widget {
 		$info->avatar		 = $parser->select( '#avatar-frame img', 'src' );
 		$info->memberSince	 = $parser->select( '.header .timestamp' );
 		$info->bio			 = $parser->select( '.header .biography' );
+		$info->ratingsCount	 = $parser->select( '.see-more a' );
 
 		$info->badges = $parser->selectAll( '.badges .badge-frame' )
 		->with( 'name', '.name' )

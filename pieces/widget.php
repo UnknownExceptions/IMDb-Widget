@@ -39,8 +39,8 @@
 				<a/>
 			<?php } ?>
 
-			<a href="<?= $info->ratingsRssUrl ?>" target="_blank" title="Ratings RSS">
-				<img src='https://www.intrepidmuseum.org/App_Themes/Intrepid/images/rss_logo.gif'/>
+				<a href="<?= $info->ratingsUrl ?>" target="_blank" title="See all user ratings" style="font-size: 70%;">
+				<?= $info->ratingsCount; ?>
 			</a>
 	</div>
 
