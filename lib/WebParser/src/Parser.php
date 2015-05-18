@@ -22,7 +22,7 @@ use Goutte\Client as Client;
  * @author Henrique Dias <hacdias@gmail.com>
  * @author Luís Soares <lsoares@gmail.com>
  */
-class Parser {
+class Parser extends stdClass {
 
 	private $crawler;
 	private $expression;
@@ -34,27 +34,26 @@ class Parser {
 		$this->crawler	 = $client->request( 'GET', $url );
 	}
 
-	public function selectAll( $expression )
+	public function filter( $expression )
 	{
 		$this->expression		 = $expression;
 		$this->childSelectors	 = array(); // restart
 		return $this;
 	}
 
-	public function with( $name, $selector, $attr = null )
+	public function prop( $name, $selector, $attr = null )
 	{
 		array_push( $this->childSelectors, new Selector( $name, $selector, $attr ) );
 		return $this;
 	}
 
-	public function select( $expression, $attribute = null, Crawler $crawler = null )
+	public function select( $name, $expression, $attribute = null )
 	{
 		try {
-			$context = isset( $crawler ) ? $crawler : $this->crawler;
-			$el		 = $context->filter( $expression );
-			return $attribute ? $el->attr( $attribute ) : $el->text();
+			$el				 = $this->crawler->filter( $expression );
+			$this->{$name}	 = $attribute ? $el->attr( $attribute ) : $el->text();
 		} catch ( InvalidArgumentException $e ) {
-			return null;
+			
 		}
 	}
 
@@ -65,9 +64,10 @@ class Parser {
 		try {
 			$this->crawler->filter( $this->expression )->each( function ($node) use (&$lists, $childSelectors) {
 				$item = new stdClass();
-
 				foreach ( $childSelectors as $tag ) {
-					$item->{$tag->getName()} = $this->select( $tag->getExpression(), $tag->getAttr(), $node );
+					// TODO: reutilizar conceito.
+					$el						 = $node->filter( $tag->getExpression() );
+					$item->{$tag->getName()} = $tag->getAttr() ? $el->attr( $tag->getAttr() ) : $el->text();
 				}
 
 				array_push( $lists, $item );

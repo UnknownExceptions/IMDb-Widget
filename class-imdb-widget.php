@@ -60,46 +60,45 @@ class IMDb_Widget extends WP_Widget {
 
 	private function getInfo( $userId )
 	{
-		$info				 = new stdClass();
-		$info->baseUrl		 = 'http://www.imdb.com/';
-		$info->userId        = $userId;
-		$info->profileUrl	 = $info->baseUrl . 'user/' . $userId;
-		$info->ratingsRssUrl = str_replace( 'www', 'rss', $info->profileUrl );
+		$info			 = new Parser( 'http://www.imdb.com/' . 'user/' . $userId );
+		$info->baseUrl	 = 'http://www.imdb.com/';
 
-		$urlsToAdd = array(
-			'ratings', 'boards', 'watchlist', 'checkins', 'comments-index', '#pollResponses'
-		);
-
-		foreach ( $urlsToAdd as $url ) {
+		foreach ( array( 'ratings', 'boards', 'watchlist', 'checkins', 'comments-index', '#pollResponses' ) as $url ) {
 			$cleanId					 = preg_replace( '/[^A-Za-z]/', '', $url );
 			$info->{$cleanId . 'Url'}	 = $info->baseUrl . 'user/' . $userId . '/' . $url;
 		}
 
-		$parser = new Parser( $info->profileUrl );
+		$info->select( 'nick', '.header h1' );
+		$info->select( 'avatar', '#avatar-frame img', 'src' );
+		$info->select( 'memberSince', '.header .timestamp' );
+		$info->select( 'bio', '.header .biography' );
+		$info->select( 'ratingsCount', '.see-more a' );
 
-		$info->nick			 = $parser->select( '.header h1' );
-		$info->avatar		 = $parser->select( '#avatar-frame img', 'src' );
-		$info->memberSince	 = $parser->select( '.header .timestamp' );
-		$info->bio			 = $parser->select( '.header .biography' );
-		$info->ratingsCount	 = $parser->select( '.see-more a' );
-
-		$info->badges = $parser->selectAll( '.badges .badge-frame' )
-		->with( 'name', '.name' )
-		->with( 'value', '.value' )
-		->with( 'image', '.badge-icon', 'class' )
+		$info->ratings = $info->filter( '.ratings .item' )
+		->prop( 'href', 'a', 'href' )
+		->prop( 'logo', 'a img', 'src' )
+		->prop( 'title', '.title a' )
+		->prop( 'rating', '.sub-item .only-rating' )
 		->build();
 
-		$info->lists = $parser->selectAll( '.lists .user-list' )
-		->with( 'name', '.list-name' )
-		->with( 'link', '.list-meta', 'href' )
-		->with( 'meta', '.list-meta' )
+		// TODO transformar em:
+//		$info->selectAll( 'ratings', '.ratings .item' )
+//		->with( 'href', 'a', 'href' )
+//		->with( 'logo', 'a img', 'src' )
+//		->with( 'title', '.title a' )
+//		->with( 'rating', '.sub-item .only-rating' )
+//		->build();
+
+		$info->badges = $info->filter( '.badges .badge-frame' )
+		->prop( 'name', '.name' )
+		->prop( 'value', '.value' )
+		->prop( 'image', '.badge-icon', 'class' )
 		->build();
 
-		$info->ratings = $parser->selectAll( '.ratings .item' )
-		->with( 'href', 'a', 'href' )
-		->with( 'logo', 'a img', 'src' )
-		->with( 'title', '.title a' )
-		->with( 'rating', '.sub-item .only-rating' )
+		$info->lists = $info->filter( '.lists .user-list' )
+		->prop( 'name', '.list-name' )
+		->prop( 'link', '.list-meta', 'href' )
+		->prop( 'meta', '.list-meta' )
 		->build();
 
 		return $info;
