@@ -17,44 +17,45 @@ namespace WebParser;
  * @author Henrique Dias <hacdias@gmail.com>
  * @author Luís Soares <lsoares@gmail.com>
  */
-class Selector {
+class Selector
+{
 
-	private $name, $expression, $attribute;
+    private $name, $expression, $attribute;
 
-	public function __construct( $name, $expression, $attribute = null )
-	{
-		$this->setName( $name );
-		$this->setExpression( $expression );
-		$this->setAttr( $attribute );
-	}
+    public function __construct($name, $expression, $attribute = null)
+    {
+        $this->setName($name);
+        $this->setExpression($expression);
+        $this->setAttr($attribute);
+    }
 
-	public function setExpression( $tag )
-	{
-		$this->expression = $tag;
-	}
+    public function setExpression($tag)
+    {
+        $this->expression = $tag;
+    }
 
-	public function setAttr( $attr )
-	{
-		$this->attribute = $attr;
-	}
+    public function setAttr($attr)
+    {
+        $this->attribute = $attr;
+    }
 
-	public function getExpression()
-	{
-		return $this->expression;
-	}
+    public function getExpression()
+    {
+        return $this->expression;
+    }
 
-	public function getAttr()
-	{
-		return $this->attribute;
-	}
+    public function getAttr()
+    {
+        return $this->attribute;
+    }
 
-	public function getName()
-	{
-		return $this->name;
-	}
+    public function getName()
+    {
+        return $this->name;
+    }
 
-	public function setName( $name )
-	{
-		$this->name = $name;
-	}
+    public function setName($name)
+    {
+        $this->name = $name;
+    }
 }
