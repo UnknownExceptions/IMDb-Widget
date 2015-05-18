@@ -11,7 +11,10 @@
 
 namespace WebParser;
 
+use InvalidArgumentException;
+use stdClass;
 use Symfony\Component\DomCrawler\Crawler;
+use Goutte\Client as Client;
 
 /**
  * Object
@@ -19,81 +22,66 @@ use Symfony\Component\DomCrawler\Crawler;
  * @author Henrique Dias <hacdias@gmail.com>
  * @author Luís Soares <lsoares@gmail.com>
  */
-class SelectorBuilder extends Base
-{
-    const parent = 'parentSelector',
-        child = 'childSelectors';
+class SelectorBuilder {
 
-    private $parentSelector,
-        $childSelectors = array(),
-        $lastThingModified;
+	private $crawler;
+	private $selector;
+	private $childSelectors;
 
-    /**
-     * Constructor
-     *
-     * @param Crawler $crawler
-     * @param string $parentSelector
-     */
-    public function __construct(Crawler $crawler, $parentSelector)
-    {
-        parent::__construct($crawler);
-        $this->parentSelector = new Selector('parent', $parentSelector);
-        $this->lastThingModified = self::parent;
-    }
+	public function __construct( $url )
+	{
+		$client			 = new Client();
+		$this->crawler	 = $client->request( 'GET', $url );
+	}
 
-    /**
-     * Attribute setter
-     *
-     * @param string $attr
-     * @return $this
-     */
-    public function attr($attr)
-    {
-        if ($this->lastThingModified === self::parent) {
-            $this->parentSelector->setAttr($attr);
-            return $this;
-        }
+	public function element( $expression, $attribute = null, Crawler $crawler = null )
+	{
+		try {
+			$context = isset( $crawler ) ? $crawler : $this->crawler;
+			$el		 = $context->filter( $expression );
+			return $attribute ? $el->attr( $attribute ) : $el->text();
+		} catch ( InvalidArgumentException $e ) {
+			return null;
+		}
+	}
 
-        $this->childSelectors[count($this->childSelectors) - 1]->setAttr($attr);
-        return $this;
-    }
+	public function elements( $expression )
+	{
+		$this->selector			 = new Selector( null, $expression, null );
+		$this->childSelectors	 = array(); // restart
+		return $this;
+	}
 
-    /**
-     * Get data
-     *
-     * @return array|null|string
-     */
-    public function get()
-    {
-        if (empty($this->childSelectors)) {
-            return $this->parseElement($this->parentSelector);
-        }
-		
-        return $this->parseList($this->parentSelector, ...$this->childSelectors);
-    }
-	
-    /**
-     * Get property
-     *
-     * @param string $propertyTag
-     * @return $this
-     */
-    public function prop($propertyTag)
-    {
-        array_push($this->childSelectors, new Selector(null, $propertyTag));
-        $this->lastThingModified = self::child;
-        return $this;
-    }
+	public function prop( $name, $selector, $attr = null )
+	{
+		array_push( $this->childSelectors, new Selector( $name, $selector, $attr ) );
+		return $this;
+	}
 
-    /**
-     * Called
-     *
-     * @param string $propertyName
-     * @return $this
-     */
-    public function named($propertyName)
-    {
-        $this->childSelectors[count($this->childSelectors) - 1]->setName($propertyName);
-        return $this;
-    }
+	public function parseList( Selector $mainSelector, Selector ...$childSelectors )
+	{
+		$lists			 = array();
+		$mainSelector	 = $mainSelector->getExpression();
+
+		try {
+			$this->crawler->filter( $mainSelector )->each( function ($node) use (&$lists, $childSelectors) {
+				$item = new stdClass();
+
+				foreach ( $childSelectors as $tag ) {
+					$item->{$tag->getName()} = $this->element( $tag->getExpression(), $tag->getAttr(), $node );
+				}
+
+				array_push( $lists, $item );
+			} );
+		} catch ( InvalidArgumentException $e ) {
+			// return empty
+		}
+		return $lists;
+	}
+
+	public function get()
+	{
+		return $this->parseList( $this->selector, ...$this->childSelectors );
+	}
+
 }

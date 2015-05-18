@@ -17,81 +17,44 @@ namespace WebParser;
  * @author Henrique Dias <hacdias@gmail.com>
  * @author Luís Soares <lsoares@gmail.com>
  */
-class Selector
-{
-    private $name, $tag, $attr;
+class Selector {
 
-    /**
-     * Constructor
-     *
-     * @param string $name Selector name.
-     * @param string $tag Selector tag.
-     * @param null|string $attr Selector attribute.
-     */
-    public function __construct($name, $tag, $attr = null)
-    {
-        $this->setName($name);
-        $this->setTag($tag);
-        $this->setAttr($attr);
-    }
+	private $name, $expression, $attribute;
 
-    /**
-     * Tag setter
-     *
-     * @param string $tag
-     */
-    public function setTag($tag)
-    {
-        $this->tag = $tag;
-    }
+	public function __construct( $name, $expression, $attribute = null )
+	{
+		$this->setName( $name );
+		$this->setExpression( $expression );
+		$this->setAttr( $attribute );
+	}
 
-    /**
-     * Attribute setter.
-     *
-     * @param string $attr
-     */
-    public function setAttr($attr)
-    {
-        $this->attr = $attr;
-    }
+	public function setExpression( $tag )
+	{
+		$this->expression = $tag;
+	}
 
-    /**
-     * Tag getter
-     *
-     * @return string
-     */
-    public function getTag()
-    {
-        return $this->tag;
-    }
+	public function setAttr( $attr )
+	{
+		$this->attribute = $attr;
+	}
 
-    /**
-     * Attribute getter
-     *
-     * @return null|string
-     */
-    public function getAttr()
-    {
-        return $this->attr;
-    }
+	public function getExpression()
+	{
+		return $this->expression;
+	}
 
-    /**
-     * Name getter
-     *
-     * @return null|string
-     */
-    public function getName()
-    {
-        return $this->name;
-    }
+	public function getAttr()
+	{
+		return $this->attribute;
+	}
 
-    /**
-     * Name setter
-     *
-     * @param $name
-     */
-    public function setName($name)
-    {
-        $this->name = $name;
-    }
+	public function getName()
+	{
+		return $this->name;
+	}
+
+	public function setName( $name )
+	{
+		$this->name = $name;
+	}
 }

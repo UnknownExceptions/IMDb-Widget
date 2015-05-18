@@ -1,6 +1,6 @@
 <?php
 
-use WebParser\Parser;
+use WebParser\SelectorBuilder;
 
 /**
  * Widget Class
@@ -10,99 +10,99 @@ use WebParser\Parser;
  * @author Luís Soares <lsoares@gmail.com>
  * @version 1.0.0
  */
-class IMDb_Widget extends WP_Widget
-{
-    private $options = array(
-        "title",
-        "userId"
-    );
+class IMDb_Widget extends WP_Widget {
 
-    public function __construct()
-    {
-        parent::__construct(
-            'IMDbWidget', 'IMDb',
-            array('description' => 'A widget to show a small version of your IMDb profile.')
-        );
-    }
+	private $options = array(
+		"title",
+		"userId"
+	);
 
-    public function form($config)
-    {
-        $config = !empty($config) ? unserialize($config) : array();
+	public function __construct()
+	{
+		parent::__construct(
+		'IMDbWidget', 'IMDb', array( 'description' => 'A widget to show a small version of your IMDb profile.' )
+		);
+	}
 
-        foreach ($this->options as $option) {
-            ${$option} = isset($config[$option]) ? $config[$option] : null;
-        }
+	public function form( $config )
+	{
+		$config = !empty( $config ) ? unserialize( $config ) : array();
 
-        ob_start("HTMLCompressor");
-        require 'pieces/options.php';
-        ob_end_flush();
-    }
+		foreach ( $this->options as $option ) {
+			${$option} = isset( $config[ $option ] ) ? $config[ $option ] : null;
+		}
 
-    public function update($new_instance, $old_instance)
-    {
-        return serialize($new_instance);
-    }
+		ob_start( "HTMLCompressor" );
+		require 'pieces/options.php';
+		ob_end_flush();
+	}
 
-    public function widget($args, $config)
-    {
-        extract($args, EXTR_SKIP);
-        $config = !empty($config) ? unserialize($config) : array();
+	public function update( $new_instance, $old_instance )
+	{
+		return serialize( $new_instance );
+	}
 
-        ob_start("HTMLCompressor");
+	public function widget( $args, $config )
+	{
+		extract( $args, EXTR_SKIP );
+		$config = !empty( $config ) ? unserialize( $config ) : array();
 
-        if (!isset($config['userId'])) {
-            echo 'You need to first configure the plugin :)';
-        } else {
-            $info = $this->getInfo($config['userId']);
-            require 'pieces/widget.php';
-        }
-        ob_end_flush();
-    }
+		ob_start( "HTMLCompressor" );
 
-    private function getInfo($userId)
-    {
-        $info = new stdClass();
-        $info->baseUrl = 'http://www.imdb.com/';
-        $info->profileUrl = $info->baseUrl . 'user/' . $userId;
-        $info->ratingsRssUrl = str_replace('www', 'rss', $info->profileUrl);
+		if ( !isset( $config[ 'userId' ] ) ) {
+			echo 'You need to first configure the plugin :)';
+		} else {
+			$info = $this->getInfo( $config[ 'userId' ] );
+			require 'pieces/widget.php';
+		}
+		ob_end_flush();
+	}
 
-        $urlsToAdd = array(
-            'ratings' , 'boards', 'watchlist', 'checkins', 'comments ndex', '#pollResponses'
-        );
+	private function getInfo( $userId )
+	{
+		$info				 = new stdClass();
+		$info->baseUrl		 = 'http://www.imdb.com/';
+		$info->profileUrl	 = $info->baseUrl . 'user/' . $userId;
+		$info->ratingsRssUrl = str_replace( 'www', 'rss', $info->profileUrl );
 
-        foreach ($urlsToAdd as $url) {
-			$cleanId = preg_replace('/[^A-Za-z]/', '', $url);
-            $info->{$cleanId . 'Url'} = $info->baseUrl . $url;
-        }
+		$urlsToAdd = array(
+			'ratings', 'boards', 'watchlist', 'checkins', 'comments ndex', '#pollResponses'
+		);
 
-        $parser = new Parser($info->profileUrl);
-		
-        $info->nick = $parser->find('.header h1')->get();
-        $info->avatar = $parser->find('#avatar-frame img')->attr('src')->get();
-        $info->memberSince = $parser->find('.header .timestamp')->get();
-        $info->bio = $parser->find('.header .biography')->get();
+		foreach ( $urlsToAdd as $url ) {
+			$cleanId					 = preg_replace( '/[^A-Za-z]/', '', $url );
+			$info->{$cleanId . 'Url'}	 = $info->baseUrl . $url;
+		}
 
-        $info->badges = $parser->find('.badges .badge-frame')
-            ->prop('.name')->named('name')
-            ->prop('.value')->named('value')
-            ->prop('.badge-icon')->attr('class')->named('image')
-            ->get();
+		$parser = new SelectorBuilder( $info->profileUrl );
 
-        $info->lists = $parser->find('.lists .user-list')
-            ->prop('.list-name')->named('name')
-            ->prop('.list-meta')->attr('href')->named('link')
-            ->prop('.list-meta')->named('meta')
-            ->get();
+		$info->nick			 = $parser->element( '.header h1' );
+		$info->avatar		 = $parser->element( '#avatar-frame img', 'src' );
+		$info->memberSince	 = $parser->element( '.header .timestamp' );
+		$info->bio			 = $parser->element( '.header .biography' );
 
-        $info->ratings = $parser->find('.ratings .item')
-            ->prop('a')->attr('href')->named('href')
-            ->prop('a img')->attr('src')->named('logo')
-            ->prop('.title a')->named('title')
-            ->prop('.sub-item .only-rating')->named('rating')
-            ->get();
+		$info->badges = $parser->elements( '.badges .badge-frame' )
+		->prop( 'name', '.name' )
+		->prop( 'value', '.value' )
+		->prop( 'image', '.badge-icon', 'class' )
+		->get();
 
-        return $info;
-    }
+		$info->lists = $parser->elements( '.lists .user-list' )
+		->prop( 'name', '.list-name' )
+		->prop( 'link', '.list-meta', 'href' )
+		->prop( 'meta', '.list-meta' )
+		->get();
+
+		$info->ratings = $parser->elements( '.ratings .item' )
+		->prop( 'href', 'a', 'href' )
+		->prop( 'logo', 'a img', 'src' )
+		->prop( 'title', '.title a' )
+		->prop( 'rating', '.sub-item .only-rating' )
+		->get();
+
+		return $info;
+	}
+
 }
 
-add_action('widgets_init', create_function('', 'return register_widget("IMDb_Widget");'));
+add_action( 'widgets_init', create_function( '', 'return register_widget("IMDb_Widget");' ) );
