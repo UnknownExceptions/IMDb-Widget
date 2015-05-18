@@ -66,7 +66,7 @@ class IMDb_Widget extends WP_Widget {
 		$info->ratingsRssUrl = str_replace( 'www', 'rss', $info->profileUrl );
 
 		$urlsToAdd = array(
-			'ratings', 'boards', 'watchlist', 'checkins', 'comments ndex', '#pollResponses'
+			'ratings', 'boards', 'watchlist', 'checkins', 'comments-index', '#pollResponses'
 		);
 
 		foreach ( $urlsToAdd as $url ) {
