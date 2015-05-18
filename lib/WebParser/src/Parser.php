@@ -13,7 +13,6 @@ namespace WebParser;
 
 use InvalidArgumentException;
 use stdClass;
-use Symfony\Component\DomCrawler\Crawler;
 use Goutte\Client as Client;
 
 /**
