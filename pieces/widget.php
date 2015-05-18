@@ -26,7 +26,7 @@
 	</div>
 
 	<div>
-		<div style="font-weight: bold; margin-top: 8px;">Latest ratings</div>
+		<div style="font-weight: bold; margin-top: 8px; font-size: 80%;">Latest ratings</div>
 		<?php
 		for ( $i = 0; $i < count( $info->ratings ); $i++ ) {
 			$rating = $info->ratings[ $i ];
@@ -39,7 +39,8 @@
 				<a/>
 			<?php } ?>
 
-				<a href="<?= $info->ratingsUrl ?>" target="_blank" title="See all user ratings" style="font-size: 70%;">
+				<a href="<?= $info->ratingsUrl ?>" target="_blank"
+				   title="See all user ratings" style="font-size: 70%;float: right;">
 				<?= $info->ratingsCount; ?>
 			</a>
 	</div>
