@@ -60,12 +60,12 @@ class IMDb_Widget extends WP_Widget {
 
 	private function getInfo( $userId )
 	{
-		$info			 = new Parser( 'http://www.imdb.com/' . 'user/' . $userId );
+		$info			 = new Parser( 'http://www.imdb.com/' . 'user/' . $userId . '/');
 		$info->baseUrl	 = 'http://www.imdb.com/';
 
-		foreach ( array( 'ratings', 'boards', 'watchlist', 'checkins', 'comments-index', '#pollResponses' ) as $url ) {
-			$cleanId					 = preg_replace( '/[^A-Za-z]/', '', $url );
-			$info->{$cleanId . 'Url'}	 = $info->baseUrl . 'user/' . $userId . '/' . $url;
+		foreach ( array( 'ratings', 'boards', 'watchlist', 'checkins', 'comments-index', '#pollResponses' ) as $relativeUrl ) {
+			$cleanId					 = preg_replace( '/[^A-Za-z]/', '', $relativeUrl );
+			$info->{$cleanId . 'Url'}	 = $info->url . $relativeUrl;
 		}
 
 		$info->select( 'nick', '.header h1' );
