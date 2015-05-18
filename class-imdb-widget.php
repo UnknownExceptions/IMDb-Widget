@@ -75,20 +75,20 @@ class IMDb_Widget extends WP_Widget
         $info->select('bio', '.header .biography');
         $info->select('ratingsCount', '.see-more a');
 
-        $info->ratings = $info->find('.ratings .item')
+        $info->find('ratings', '.ratings .item')
             ->prop('href', 'a', 'href')
             ->prop('logo', 'a img', 'src')
             ->prop('title', '.title a')
             ->prop('rating', '.sub-item .only-rating')
             ->build();
 
-        $info->badges = $info->find('.badges .badge-frame')
+        $info->find('badges', '.badges .badge-frame')
             ->prop('name', '.name')
             ->prop('value', '.value')
             ->prop('image', '.badge-icon', 'class')
             ->build();
 
-        $info->lists = $info->find('.lists .user-list')
+        $info->find('lists', '.lists .user-list')
             ->prop('name', '.list-name')
             ->prop('link', '.list-meta', 'href')
             ->prop('meta', '.list-meta')

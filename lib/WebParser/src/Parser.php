@@ -21,12 +21,12 @@ use stdClass;
  * @author Henrique Dias <hacdias@gmail.com>
  * @author Luís Soares <lsoares@gmail.com>
  */
-class Parser extends stdClass
+class Parser
 {
-
     public $url;
     private $crawler,
-        $expression,
+        $listName,
+        $listExpression,
         $childSelectors;
 
     public function __construct($url)
@@ -36,10 +36,11 @@ class Parser extends stdClass
         $this->crawler = $client->request('GET', $url);
     }
 
-    public function find($expression)
+    public function find($name, $expression)
     {
-        $this->expression = $expression;
-        $this->childSelectors = array(); // restart
+        $this->listName = $name;
+        $this->listExpression = $expression;
+        $this->childSelectors = array();
         return $this;
     }
 
@@ -55,29 +56,27 @@ class Parser extends stdClass
             $el = $this->crawler->filter($expression);
             $this->{$name} = $attribute ? $el->attr($attribute) : $el->text();
         } catch (InvalidArgumentException $e) {
-
         }
     }
 
     public function build()
     {
-        $lists = array();
+        $list = array();
         $childSelectors = $this->childSelectors;
         try {
-            $this->crawler->filter($this->expression)->each(function ($node) use (&$lists, $childSelectors) {
+            $this->crawler->filter($this->listExpression)->each(function ($node) use (&$list, $childSelectors) {
                 $item = new stdClass();
                 foreach ($childSelectors as $tag) {
-                    // TODO: reutilizar conceito.
+                    // TODO: reutilizar conceito
                     $el = $node->filter($tag->getExpression());
                     $item->{$tag->getName()} = $tag->getAttr() ? $el->attr($tag->getAttr()) : $el->text();
                 }
 
-                array_push($lists, $item);
+                array_push($list, $item);
             });
         } catch (InvalidArgumentException $e) {
-            // return empty
         }
-        return $lists;
-    }
 
+        $this->{$this->listName} = $list;
+    }
 }
