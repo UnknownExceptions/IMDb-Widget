@@ -57,7 +57,7 @@
         for ($i = 0; $i < count($info->ratings); $i++) {
 			$rating = $info->ratings[$i]; ?>
 
-        <a target="_blank" href="<?= $info->baseUrl . $rating->href ?>"
+        <a target="_blank" href="<?= $info->baseUrl . $rating->link ?>"
            title="<?= $rating->title ?> (<?= $rating->rating ?>)" style="display: inline-block;">
             <img src="<?= $rating->logo ?>" style="height: 60px; margin: 1px; border-radius: 2px;"/>
             <a/>
@@ -77,7 +77,7 @@
 			$watch = $info->watchlist[$i];
         ?>
 
-        <a target="_blank" href="<?= $info->baseUrl . $watch->href ?>"
+        <a target="_blank" href="<?= $info->baseUrl . $watch->link ?>"
            title="<?= $watch->title ?>" style="display: inline-block;">
             <img src="<?= $watch->logo ?>" style="height: 60px; margin: 2px; border-radius: 2px;"/>
             <a/>
