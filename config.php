@@ -6,26 +6,24 @@
  * @package IMDb Widget
  * @author Henrique Dias <hacdias@gmail.com>
  * @author Luís Soares <lsoares@gmail.com>
- * @version 1.0.0
+ * @version 0.0.1
  */
-ini_set('display_errors', 1);
-error_reporting(E_ALL);
 
-define('IMDB_PLUGIN_URL', plugins_url() . '/' . basename(__DIR__) . '/');
-define('IMDB_PLUGIN_DIR', dirname(__FILE__) . '/');
+define( 'IMDB_PLUGIN_URL', plugins_url() . '/' . basename( __DIR__ ) . '/' );
+define( 'IMDB_PLUGIN_DIR', dirname( __FILE__ ) . '/' );
+
+// require the needed css and javascript
+function IMDb_include_scripts_and_stylesheets() {
+	wp_enqueue_style( 'imdb-main-style', IMDB_PLUGIN_URL . 'css/main.css' );
+}
+
+add_action( 'wp_print_scripts', 'IMDb_include_scripts_and_stylesheets' );
 
 // third-party libraries
 require_once __DIR__ . '/lib/htmlcompressor.php';
 require_once __DIR__ . '/lib/WebParser/index.php';
 
-// require the needed css and javascript
-function IMDb_plugin_add_javascript_and_css()
-{
-    wp_enqueue_style('main-style', __DIR__ . '/css/main.css');
-    wp_register_script('main-js', __DIR__ . '/js/app.js');
-}
 
-add_action('wp_print_scripts', 'IMDb_plugin_add_javascript_and_css');
 
 
 

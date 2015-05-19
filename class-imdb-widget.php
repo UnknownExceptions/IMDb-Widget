@@ -2,9 +2,6 @@
 
 use WebParser\Parser;
 
-require_once __DIR__ . '/lib/htmlcompressor.php';
-require_once __DIR__ . '/lib/WebParser/index.php';
-
 /**
  * Widget Class
  *
@@ -110,7 +107,6 @@ class IMDb_Widget extends WP_Widget
 
         return $info;
     }
-
 }
 
 add_action('widgets_init', create_function('', 'return register_widget("IMDb_Widget");'));
