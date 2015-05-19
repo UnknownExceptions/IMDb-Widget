@@ -1,6 +1,6 @@
 <?php
 
-use WebParser\Parser;
+use SmartScrapper\Parser;
 
 /**
  * Widget Class

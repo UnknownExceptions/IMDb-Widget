@@ -1,0 +1,5 @@
+{
+  "require": {
+    "unknown-exceptions/smart-scrapper": "dev-master"
+  }
+}

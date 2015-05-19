@@ -20,8 +20,8 @@ function IMDb_include_scripts_and_stylesheets() {
 add_action( 'wp_print_scripts', 'IMDb_include_scripts_and_stylesheets' );
 
 // third-party libraries
-require_once __DIR__ . '/lib/htmlcompressor.php';
-require_once __DIR__ . '/lib/WebParser/index.php';
+require_once 'lib/htmlcompressor.php';
+require_once 'vendor/autoload.php';
 
 
 
