@@ -46,7 +46,7 @@ class Parser
     public function html($name, $expression)
     {
         $el = $this->crawler->filter($expression);
-        $this->{$name} = $el->html();
+        $this->{$name} = $el->html(); // keep
     }
 
     public function selectList($name, $expression)
