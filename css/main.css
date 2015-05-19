@@ -1,17 +1,124 @@
+.imdb-widget {
+    font-family: Verdana;
+    color: black;
+}
+
+.imdb-widget .imdb-avatar-link {
+    display: inline-block;
+    width: 45%;
+    vertical-align: top;
+    position: relative;
+    border-radius: 3px;
+}
+
+.imdb-widget .imdb-avatar {
+    width: 100%
+}
+
+.imdb-widget .imdb-logo {
+    max-height: 20px;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    opacity: 0.8;
+}
+
+.imdb-widget .imdb-info-box {
+    display: inline-block;
+    width: 50%;
+    vertical-align: top;
+}
+
+.imdb-widget .imdb-nick {
+    display: block;
+    font-size: 115%;
+    font-weight: bold;
+    color: black;
+    margin-bottom: 0px;
+    line-height: 100%;
+}
+
+.imdb-widget .imdb-member-since {
+    font-size: 9px;
+    color: black;
+    margin-top: 0
+}
+
+.imdb-widget .imdb-bio {
+    font-size: 70%;
+    color: darkgrey
+}
+
+.imdb-widget .imdb-block {
+    margin-bottom: 8px;
+}
+
+.imdb-widget .imdb-block-title {
+    font-weight: bold;
+    margin-top: 8px;
+    font-size: 80%;
+    color: #A58500;
+}
+
+.imdb-widget .imdb-block-item-title {
+    display: inline-block;
+}
+
+.imdb-widget .imdb-block-item-logo {
+    height: 60px;
+    border-radius: 2px;
+}
+
+.imdb-ratings .imdb-block-item-logo {
+    margin: 1px;
+}
+
+.imdb-widget .imdb-ratings-url {
+    font-size: 70%;
+    display: block;
+}
+
+.imdb-widget .imdb-see-more {
+    font-size: 70%;
+    display: block;
+}
+
 .imdbWidget a:focus {
     outline: 0;
 }
-.histogram-horizontal {
+
+.imdb-histogram-horizontal {
     position: relative;
     height: 100px;
 }
 
-.histogram-horizontal .bar.shadow {
+.imdb-widget .imdb-histogram-horizontal .bar.shadow {
     box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
 }
-.histogram-horizontal .bar {
+
+.imdb-widget .imdb-histogram-horizontal .bar {
     background: #ddd;
     position: absolute;
     bottom: 0;
     display: block;
+}
+
+.imdb-widget .imdb-histogram-horizontal {
+    position: relative;
+    height: 100px;
+}
+
+.imdb-widget .imdb-histogram-horizontal .bar.shadow {
+    box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+}
+
+.imdb-widget .imdb-histogram-horizontal .bar {
+    background: #ddd;
+    position: absolute;
+    bottom: 0;
+    display: block;
+}
+
+.imdb-widget .imdb-histogram-horizontal .bar:hover {
+    background: #99d;
 }
