@@ -62,7 +62,7 @@ class IMDb_Widget extends WP_Widget
     private function get_info($userId)
     {
         $info = new Parser('http://www.imdb.com/' . 'user/' . $userId . '/');
-        $info->baseUrl = 'http://www.imdb.com/';
+        $info->baseUrl = 'http://www.imdb.com';
 
         foreach (array('ratings', 'boards', 'watchlist', 'checkins', 'comments-index', '#pollResponses') as $relativeUrl) {
             $cleanId = preg_replace('/[^A-Za-z]/', '', $relativeUrl);
@@ -75,24 +75,30 @@ class IMDb_Widget extends WP_Widget
         $info->select('bio', '.header .biography');
         $info->select('ratingsCount', '.see-more a');
 
-        $info->prepare('ratings', '.ratings .item')
+        $info->selectList('ratings', '.ratings .item')
             ->with('href', 'a', 'href')
             ->with('logo', 'a img', 'src')
             ->with('title', '.title a')
             ->with('rating', '.sub-item .only-rating')
-            ->finish();
+            ->save();
 
-        $info->prepare('badges', '.badges .badge-frame')
-            ->with('name', '.name')
+        $info->selectList('badges', '.badges .badge-frame')
+            ->with('title', '.name')
             ->with('value', '.value')
-            ->with('image', '.badge-icon', 'class')
-            ->finish();
+            ->with('logo', '.badge-icon', 'background-image')
+            ->save();
+		
+		$info->selectList('watchlist', '.watchlist .item')
+            ->with('title', '.sub-item a')
+            ->with('link', 'a', 'href')
+            ->with('logo', 'a img', 'src')
+            ->save();
 
-        $info->prepare('lists', '.lists .user-list')
-            ->with('name', '.list-name')
+        $info->selectList('lists', '.lists .user-list')
+            ->with('title', '.list-name')
             ->with('link', '.list-meta', 'href')
             ->with('meta', '.list-meta')
-            ->finish();
+            ->save();
 
         return $info;
     }

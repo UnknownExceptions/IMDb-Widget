@@ -24,6 +24,7 @@ use stdClass;
 class Parser {
 
 	public $url;
+	// TODO: ter variáveis safe...
 	private $crawler,
 	$listName,
 	$listExpression,
@@ -38,10 +39,11 @@ class Parser {
 
 	public function select( $name, $expression, $attribute = null )
 	{
+		// keep
 		$this->{$name} = $this->smartSelect( $this->crawler, new Selector( $name, $expression, $attribute ) );
 	}
 
-	public function prepare( $name, $expression )
+	public function selectList( $name, $expression )
 	{
 		$this->listName			 = $name;
 		$this->listExpression	 = $expression;
@@ -65,7 +67,7 @@ class Parser {
 		}
 	}
 
-	public function finish()
+	public function save()
 	{
 		$subSelections	 = array();
 		$childSelectors	 = $this->childSelectors;
