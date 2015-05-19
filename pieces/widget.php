@@ -67,6 +67,7 @@
 		</div>
 
 		<div class="imdb-histogram-horizontal">
+			<div class="imdb-block-title">Ratings distribution</div>
 			<?= $info->ratingsHistogram ?>
 		</div>
 

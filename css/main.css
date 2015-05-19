@@ -47,7 +47,8 @@
 
 .imdb-widget .imdb-bio {
     font-size: 70%;
-    color: darkgrey
+    color: darkgrey;
+    margin-bottom: 4px;
 }
 
 .imdb-widget .imdb-block {
