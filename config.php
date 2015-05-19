@@ -21,8 +21,8 @@ require_once __DIR__ . '/lib/WebParser/index.php';
 // require the needed css and javascript
 function IMDb_plugin_add_javascript_and_css()
 {
-    wp_enqueue_style('main-style', IMDB_PLUGIN_URL . 'css/main.css');
-    wp_register_script('main-js', IMDB_PLUGIN_URL . 'js/app.js');
+    wp_enqueue_style('main-style', __DIR__ . '/css/main.css');
+    wp_register_script('main-js', __DIR__ . '/js/app.js');
 }
 
 add_action('wp_print_scripts', 'IMDb_plugin_add_javascript_and_css');

@@ -4,6 +4,25 @@
         <?php echo $before_title . $config['title'] . $after_title; ?>
     <?php endif; ?>
 
+    <style>
+        .histogram-horizontal {
+            position: relative;
+            height: 100px;
+        }
+
+        .histogram-horizontal .bar.shadow {
+            box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+        }
+        .histogram-horizontal .bar {
+            background: #ddd;
+            position: absolute;
+            bottom: 0;
+            display: block;
+        }
+        .bar:hover {
+            background: #99d;
+          }
+    </style>
     <div>
         <a href="<?= $info->url ?>" target="_blank" title="View profile"
            style="display: inline-block; width: 45%; vertical-align: top; position: relative;border-radius: 3px;">
@@ -68,6 +87,10 @@
                title="See more" style="font-size: 70%;display: block;">
                 See all »
             </a>
+    </div>
+    
+    <div class="histogram-horizontal">
+        <?= $info->ratingsHistogram ?>
     </div>
 
 </aside>

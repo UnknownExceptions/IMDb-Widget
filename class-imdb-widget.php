@@ -81,6 +81,7 @@ class IMDb_Widget extends WP_Widget
         $info->text('memberSince', '.header .timestamp');
         $info->text('bio', '.header .biography');
         $info->text('ratingsCount', '.see-more a');
+        $info->html('ratingsHistogram', '.histogram-horizontal');
 
         $info->selectList('ratings', '.ratings .item')
                 ->with('href', 'a', 'href')

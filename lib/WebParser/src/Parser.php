@@ -12,7 +12,6 @@
 namespace WebParser;
 
 use Goutte\Client as Client;
-use InvalidArgumentException;
 use stdClass;
 
 /**
@@ -46,14 +45,8 @@ class Parser
 
     public function html($name, $expression)
     {
-        try
-        {
-            $el = $this->crawler->filter($expression);
-            $this->{$name} = $el->html();
-        } catch (InvalidArgumentException $e)
-        {
-            return null;
-        }
+        $el = $this->crawler->filter($expression);
+        $this->{$name} = $el->html();
     }
 
     public function selectList($name, $expression)
@@ -72,34 +65,22 @@ class Parser
 
     private function smartSelect($context, Selector $selector)
     {
-        try
-        {
-            $el = $context->filter($selector->getExpression());
-            return $selector->getAttribute() ? $el->attr($selector->getAttribute()) : $el->text();
-        } catch (InvalidArgumentException $e)
-        {
-            return null;
-        }
+        $el = $context->filter($selector->getExpression());
+        return $selector->getAttribute() ? $el->attr($selector->getAttribute()) : $el->text();
     }
 
     public function save()
     {
         $subSelections = array();
         $childSelectors = $this->childSelectors;
-        try
-        {
-            $this->crawler->filter($this->listExpression)->each(function ($node) use (&$subSelections, $childSelectors) {
-                $item = new stdClass();
-                foreach ($childSelectors as $childSelector)
-                {
-                    $item->{$childSelector->getName()} = $this->smartSelect($node, $childSelector);
-                }
-                array_push($subSelections, $item);
-            });
-        } catch (InvalidArgumentException $e)
-        {
-            
-        }
+        $this->crawler->filter($this->listExpression)->each(function ($node) use (&$subSelections, $childSelectors) {
+            $item = new stdClass();
+            foreach ($childSelectors as $childSelector)
+            {
+                $item->{$childSelector->getName()} = $this->smartSelect($node, $childSelector);
+            }
+            array_push($subSelections, $item);
+        });
 
         $this->{$this->listName} = $subSelections; // keep
     }
