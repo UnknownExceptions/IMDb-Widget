@@ -83,11 +83,11 @@
     display: block;
 }
 
-.imdbWidget a:focus {
+.imdb-widget a:focus {
     outline: 0;
 }
 
-.imdb-histogram-horizontal {
+.imdb-widget .imdb-histogram-horizontal {
     position: relative;
     height: 100px;
 }
