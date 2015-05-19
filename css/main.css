@@ -8,11 +8,12 @@
     width: 45%;
     vertical-align: top;
     position: relative;
-    border-radius: 3px;
+    margin-right: 6px;
 }
 
 .imdb-widget .imdb-avatar {
-    width: 100%
+    width: 100%;
+    border-radius: 3px;
 }
 
 .imdb-widget .imdb-logo {
@@ -121,4 +122,17 @@
 
 .imdb-widget .imdb-histogram-horizontal .bar:hover {
     background: #99d;
+}
+
+.imdb-widget .imdb-badge-info {
+    font-size: 10px;
+    color: gray;
+}
+
+.imdb-widget .imdb-badge-info span {
+    display: block;
+}
+
+.imdb-widget .imdb-badge-info span:first-of-type {
+    font-weight: bold;
 }
