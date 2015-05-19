@@ -1,7 +1,5 @@
 <?php
 
-require_once 'config.php';
-
 use WebParser\Parser;
 
 /**
@@ -14,7 +12,6 @@ use WebParser\Parser;
  */
 class IMDb_Widget extends WP_Widget
 {
-
     private $options = array(
         "title",
         "userId"
