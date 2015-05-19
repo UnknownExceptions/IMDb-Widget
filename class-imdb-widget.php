@@ -81,7 +81,7 @@ class IMDb_Widget extends WP_Widget
         $info->html('ratingsHistogram', '.histogram-horizontal');
 
         $info->selectList('ratings', '.ratings .item')
-                ->with('href', 'a', 'href')
+                ->with('link', 'a', 'href')
                 ->with('logo', 'a img', 'src')
                 ->with('title', '.title a')
                 ->with('rating', '.sub-item .only-rating')
