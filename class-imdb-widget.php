@@ -2,6 +2,9 @@
 
 use WebParser\Parser;
 
+require_once __DIR__ . '/lib/htmlcompressor.php';
+require_once __DIR__ . '/lib/WebParser/index.php';
+
 /**
  * Widget Class
  *
@@ -21,7 +24,7 @@ class IMDb_Widget extends WP_Widget
     public function __construct()
     {
         parent::__construct(
-            'IMDbWidget', 'IMDb', array('description' => 'A widget to show a small version of your IMDb profile.')
+                'IMDbWidget', 'IMDb', array('description' => 'A widget to show a small version of your IMDb profile.')
         );
     }
 
@@ -29,7 +32,8 @@ class IMDb_Widget extends WP_Widget
     {
         $config = !empty($config) ? unserialize($config) : array();
 
-        foreach ($this->options as $option) {
+        foreach ($this->options as $option)
+        {
             ${$option} = isset($config[$option]) ? $config[$option] : null;
         }
 
@@ -50,9 +54,11 @@ class IMDb_Widget extends WP_Widget
 
         ob_start("HTMLCompressor");
 
-        if (!isset($config['userId'])) {
+        if (!isset($config['userId']))
+        {
             echo 'You need to first configure the plugin :)';
-        } else {
+        } else
+        {
             $info = $this->get_info($config['userId']);
             require 'pieces/widget.php';
         }
@@ -64,7 +70,8 @@ class IMDb_Widget extends WP_Widget
         $info = new Parser('http://www.imdb.com/' . 'user/' . $userId . '/');
         $info->baseUrl = 'http://www.imdb.com';
 
-        foreach (array('ratings', 'boards', 'watchlist', 'checkins', 'comments-index', '#pollResponses') as $relativeUrl) {
+        foreach (array('ratings', 'boards', 'watchlist', 'checkins', 'comments-index', '#pollResponses') as $relativeUrl)
+        {
             $cleanId = preg_replace('/[^A-Za-z]/', '', $relativeUrl);
             $info->{$cleanId . 'Url'} = $info->url . $relativeUrl;
         }
@@ -76,29 +83,29 @@ class IMDb_Widget extends WP_Widget
         $info->select('ratingsCount', '.see-more a');
 
         $info->selectList('ratings', '.ratings .item')
-            ->with('href', 'a', 'href')
-            ->with('logo', 'a img', 'src')
-            ->with('title', '.title a')
-            ->with('rating', '.sub-item .only-rating')
-            ->save();
+                ->with('href', 'a', 'href')
+                ->with('logo', 'a img', 'src')
+                ->with('title', '.title a')
+                ->with('rating', '.sub-item .only-rating')
+                ->save();
 
         $info->selectList('badges', '.badges .badge-frame')
-            ->with('title', '.name')
-            ->with('value', '.value')
-            ->with('logo', '.badge-icon') // TODO http://goo.gl/hHV7gW    $('style')[1] mas agora só com parse CSS
-            ->save();
-		
-		$info->selectList('watchlist', '.watchlist .item')
-            ->with('title', '.sub-item a')
-            ->with('link', 'a', 'href')
-            ->with('logo', 'a img', 'src')
-            ->save();
+                ->with('title', '.name')
+                ->with('value', '.value')
+                ->with('logo', '.badge-icon') // TODO http://goo.gl/hHV7gW    $('style')[1] mas agora só com parse CSS
+                ->save();
+
+        $info->selectList('watchlist', '.watchlist .item')
+                ->with('title', '.sub-item a')
+                ->with('link', 'a', 'href')
+                ->with('logo', 'a img', 'src')
+                ->save();
 
         $info->selectList('lists', '.lists .user-list')
-            ->with('title', '.list-name')
-            ->with('link', '.list-meta', 'href')
-            ->with('meta', '.list-meta')
-            ->save();
+                ->with('title', '.list-name')
+                ->with('link', '.list-meta', 'href')
+                ->with('meta', '.list-meta')
+                ->save();
 
         return $info;
     }

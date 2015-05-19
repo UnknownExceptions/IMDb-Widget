@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Configuration file
  *
@@ -7,7 +8,6 @@
  * @author Luís Soares <lsoares@gmail.com>
  * @version 1.0.0
  */
-
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
 
@@ -15,8 +15,8 @@ define('IMDB_PLUGIN_URL', plugins_url() . '/' . basename(__DIR__) . '/');
 define('IMDB_PLUGIN_DIR', dirname(__FILE__) . '/');
 
 // third-party libraries
-require_once IMDB_PLUGIN_DIR . 'lib/htmlcompressor.php';
-require_once IMDB_PLUGIN_DIR . 'lib/WebParser/index.php';
+require_once __DIR__ . '/lib/htmlcompressor.php';
+require_once __DIR__ . '/lib/WebParser/index.php';
 
 // require the needed css and javascript
 function IMDb_plugin_add_javascript_and_css()
