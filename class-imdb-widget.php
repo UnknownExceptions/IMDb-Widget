@@ -76,7 +76,9 @@ class IMDb_Widget extends WP_Widget {
 		$info->text( 'memberSince', '.header .timestamp' );
 		$info->text( 'bio', '.header .biography' );
 		$info->text( 'ratingsCount', '.see-more a' );
-		$info->html( 'ratingsHistogram', '.histogram-horizontal' );
+		$info->html( 'ratingsDistribution', '.overall .histogram-horizontal' );
+		$info->html( 'ratingsByYear', '.byYear .histogram-horizontal' );
+		$info->html( 'ratingsByYearLegend', '.byYear .legend' );
 
 		$info->selectList( 'ratings', '.ratings .item' )
 		     ->with( 'link', 'a', 'href' )

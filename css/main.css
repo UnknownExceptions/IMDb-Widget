@@ -137,3 +137,12 @@
 .imdb-widget .imdb-badge-info span:first-of-type {
     font-weight: bold;
 }
+
+.imdb-widget .imdb-histogram-by-year-legend {
+  color: #999;
+  padding-top: 3px;
+  font-size: 9px;
+}
+.imdb-widget .imdb-histogram-by-year-legend div {
+  float: right;
+}

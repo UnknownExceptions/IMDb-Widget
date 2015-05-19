@@ -65,12 +65,17 @@
 				See all »
 			</a>
 		</div>
-
+		
+		<div class="imdb-block-title">Ratings distribution</div>
 		<div class="imdb-histogram-horizontal">
-			<div class="imdb-block-title">Ratings distribution</div>
-			<?= $info->ratingsHistogram ?>
+			<?= $info->ratingsDistribution ?>
 		</div>
-
+		<div class="imdb-histogram-horizontal">
+			<?= $info->ratingsByYear ?>
+		</div>
+		<div class="imdb-histogram-by-year-legend">
+			<?= $info->ratingsByYearLegend ?>
+		</div>
 	</div>
 
 </aside>
