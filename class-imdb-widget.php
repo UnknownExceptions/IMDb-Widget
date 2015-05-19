@@ -88,7 +88,6 @@ class IMDb_Widget extends WP_Widget {
 		$info->selectList( 'badges', '.badges .badge-frame' )
 		     ->with( 'title', '.name' )
 		     ->with( 'value', '.value' )
-		     ->with( 'logo', '.badge-icon' )// TODO http://goo.gl/hHV7gW    $('style')[1] mas agora só com parse CSS
 		     ->save();
 
 		$info->selectList( 'watchlist', '.watchlist .item' )
