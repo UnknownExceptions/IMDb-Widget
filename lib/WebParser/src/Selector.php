@@ -26,7 +26,7 @@ class Selector
     {
         $this->setName($name);
         $this->setExpression($expression);
-        $this->setAttr($attribute);
+        $this->setAttribute($attribute);
     }
 
     public function setExpression($tag)
@@ -34,7 +34,7 @@ class Selector
         $this->expression = $tag;
     }
 
-    public function setAttr($attr)
+    public function setAttribute($attr)
     {
         $this->attribute = $attr;
     }
@@ -44,7 +44,7 @@ class Selector
         return $this->expression;
     }
 
-    public function getAttr()
+    public function getAttribute()
     {
         return $this->attribute;
     }

@@ -31,7 +31,7 @@
         </div>
     </div>
 
-	<!-- LATEST RATINGS -->
+    <!-- LATEST RATINGS -->
     <div style="margin-bottom: 8px;">
         <div style="font-weight: bold; margin-top: 8px; font-size: 80%;color:#A58500;">Latest ratings</div>
         <?php
@@ -50,8 +50,8 @@
             </a>
     </div>
 	
-	<!-- WATCHLIST -->
-	<div style="margin-bottom: 8px;">
+    <!-- WATCHLIST -->
+    <div style="margin-bottom: 8px;">
         <div style="font-weight: bold; margin-top: 8px; font-size: 80%;color:#A58500;">Watchlist</div>
         <?php
         for ($i = 0; $i < count($info->watchlist); $i++) {
@@ -69,6 +69,5 @@
                 See all »
             </a>
     </div>
-
 
 </aside>

@@ -76,11 +76,11 @@ class IMDb_Widget extends WP_Widget
             $info->{$cleanId . 'Url'} = $info->url . $relativeUrl;
         }
 
-        $info->select('nick', '.header h1');
-        $info->select('avatar', '#avatar-frame img', 'src');
-        $info->select('memberSince', '.header .timestamp');
-        $info->select('bio', '.header .biography');
-        $info->select('ratingsCount', '.see-more a');
+        $info->text('nick', '.header h1');
+        $info->text('avatar', '#avatar-frame img', 'src');
+        $info->text('memberSince', '.header .timestamp');
+        $info->text('bio', '.header .biography');
+        $info->text('ratingsCount', '.see-more a');
 
         $info->selectList('ratings', '.ratings .item')
                 ->with('href', 'a', 'href')
