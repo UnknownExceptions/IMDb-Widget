@@ -85,7 +85,7 @@ class IMDb_Widget extends WP_Widget
         $info->selectList('badges', '.badges .badge-frame')
             ->with('title', '.name')
             ->with('value', '.value')
-            ->with('logo', '.badge-icon', 'background-image')
+            ->with('logo', '.badge-icon', 'background-image') // TODO http://goo.gl/hHV7gW
             ->save();
 		
 		$info->selectList('watchlist', '.watchlist .item')
