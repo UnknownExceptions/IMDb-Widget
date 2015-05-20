@@ -44,7 +44,7 @@
 			<?php endfor; ?>
 
 			<a href="<?= $info->ratingsUrl ?>" target="_blank"
-			   title="See all user ratings" class="imdb-ratings-url">
+			   title="See all user ratings" class="imdb-ratings-small-link">
 				<?= $info->ratingsCount; ?> »
 			</a>
 		</div>
@@ -61,20 +61,46 @@
 			<?php endfor; ?>
 
 			<a href="<?= $info->watchlistUrl ?>" target="_blank"
-			   title="See more" class="imdb-see-more">
+			   title="See more" class="imdb-ratings-small-link">
 				See all »
 			</a>
 		</div>
 		
-		<div class="imdb-block-title">Ratings distribution</div>
-		<div class="imdb-histogram-horizontal">
-			<?= $info->ratingsDistribution ?>
-		</div>
-		<div class="imdb-histogram-horizontal">
-			<?= $info->ratingsByYear ?>
-		</div>
-		<div class="imdb-histogram-by-year-legend">
-			<?= $info->ratingsByYearLegend ?>
+		<script>
+			jQuery(document).ready(function ($) {
+				$('.imdb-ratings-charts-link').click(function() {
+					var el = $(this).siblings('.imdb-widget-charts');
+					el.toggle(! el.is(":visible"));
+					return false;
+				});
+				$('.imdb-widget-charts-close').click(function(ev) {
+					$(ev.currentTarget).parent('.imdb-widget-charts').hide();
+				});
+			});
+		</script>
+		<a href="javascript:void(0);" class="imdb-ratings-charts-link imdb-ratings-small-link">
+			Ratings charts »
+		</a>
+		<div class="imdb-widget-charts">
+			<span class="imdb-widget-charts-close" title="Close">x</span>
+			<div class="imdb-block-title">Ratings charts for <?= $info->nick ?></div>
+			<div class="imdb-block-title-2">Ratings distribution</div>
+			<div class="imdb-histogram-horizontal">
+				<?= $info->ratingsDistribution ?>
+			</div>
+
+			<div class="imdb-block-title-2">By year</div>
+			<div class="imdb-histogram-horizontal">
+				<?= $info->ratingsByYear ?>
+			</div>
+			<div class="imdb-histogram-by-year-legend">
+				<?= $info->ratingsByYearLegend ?>
+			</div>
+
+			<div class="imdb-block-title-2">Top-Rated Genres</div>
+			<div class="imdb-histogram-by-genre imdb-histogram-vertical">
+				<?= $info->ratingsTopRatedGenres ?>
+			</div>
 		</div>
 	</div>
 

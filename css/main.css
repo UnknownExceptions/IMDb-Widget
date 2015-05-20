@@ -1,6 +1,7 @@
 .imdb-widget {
     font-family: Verdana;
     color: black;
+    position: relative;
 }
 
 .imdb-widget .imdb-avatar-link {
@@ -13,7 +14,7 @@
 
 .imdb-widget .imdb-avatar {
     width: 100%;
-    border-radius: 3px;
+    border-radius: 6px;
 }
 
 .imdb-widget .imdb-logo {
@@ -57,8 +58,18 @@
 
 .imdb-widget .imdb-block-title {
     font-weight: bold;
-    margin-top: 8px;
+    margin-top: 10px;
+    margin-bottom: 3px;
     font-size: 80%;
+    color: #A58500;
+}
+
+.imdb-widget .imdb-block-title-2 {
+    font-weight: bold;
+    margin-top: 8px;
+    margin-bottom: 2px;
+    margin-left: 3px;
+    font-size: 70%;
     color: #A58500;
 }
 
@@ -75,12 +86,7 @@
     margin: 1px;
 }
 
-.imdb-widget .imdb-ratings-url {
-    font-size: 70%;
-    display: block;
-}
-
-.imdb-widget .imdb-see-more {
+.imdb-widget .imdb-ratings-small-link {
     font-size: 70%;
     display: block;
 }
@@ -139,10 +145,78 @@
 }
 
 .imdb-widget .imdb-histogram-by-year-legend {
-  color: #999;
-  padding-top: 3px;
-  font-size: 9px;
+    color: #999;
+    padding-top: 3px;
+    font-size: 9px;
 }
 .imdb-widget .imdb-histogram-by-year-legend div {
-  float: right;
+    float: right;
+}
+
+.imdb-widget .imdb-histogram-vertical {
+    min-width: 260px;
+}
+
+.imdb-widget .imdb-histogram-vertical .row {
+    clear: left;
+    height: 15px;
+}
+
+.imdb-widget .imdb-histogram-vertical .count {
+    font-family: "Courier New",Courier,monospace;
+    font-size: 9px;
+    width: 30px;
+    text-align: right;
+    margin-right: 5px;
+}
+
+.imdb-widget .imdb-histogram-vertical .key {
+    font-size: 10px;
+    width: 80px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.imdb-widget .imdb-histogram-vertical .bar-frame {
+    width: 100px;
+}
+
+.imdb-widget .imdb-histogram-vertical .bar {
+    background: #ddd;
+    box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+    display: block;
+    text-decoration: none;
+    color: #eee;
+    height: 10px;
+}
+
+.imdb-widget .imdb-histogram-vertical .count {
+    font-family: "Courier New",Courier,monospace;
+    font-size: 9px;
+    width: 30px;
+    text-align: right;
+    margin-right: 5px;
+}
+.imdb-widget .imdb-histogram-vertical .row >div {
+    float: left;
+}
+
+.imdb-widget .imdb-widget-charts {
+    background-color: white;
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: none;
+    border: 1px solid #A58500; 
+    border-radius: 6px;
+    min-width: 300px;
+    padding: 6px;
+}
+
+.imdb-widget .imdb-widget-charts-close {
+    float: right;
+    cursor: pointer;
+    font-size: 10px;
+    font-weight: bold;
+    color: grey;
 }
