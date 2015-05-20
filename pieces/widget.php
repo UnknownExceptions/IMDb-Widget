@@ -44,8 +44,10 @@
 			<?php endfor; ?>
 
 			<a href="<?= $info->ratingsUrl ?>" target="_blank"
-			   title="See all user ratings" class="imdb-ratings-small-link">
+			   title="See all user ratings" class="imdb-widget-small-link">
 				<?= $info->ratingsCount; ?> »
+			</a>
+			<a href="javascript:void(0);" class="imdb-ratings-charts-link" title="Ratings charts">
 			</a>
 		</div>
 
@@ -61,25 +63,24 @@
 			<?php endfor; ?>
 
 			<a href="<?= $info->watchlistUrl ?>" target="_blank"
-			   title="See more" class="imdb-ratings-small-link">
+			   title="See more" class="imdb-widget-small-link">
 				See all »
 			</a>
 		</div>
 		
+		<!-- OVERLAY RATINGS -->
 		<script>
 			jQuery(document).ready(function ($) {
-				$('.imdb-ratings-charts-link').click(function() {
-					var el = $(this).siblings('.imdb-widget-charts');
+				$('.imdb-ratings-charts-link').click(function(ev) {
+					var el = $(ev.currentTarget).parents('.imdb-widget').find('.imdb-widget-charts');
 					el.toggle(! el.is(":visible"));
 					return false;
 				});
 				$('.imdb-widget-charts-close').click(function(ev) {
-					$(ev.currentTarget).parent('.imdb-widget-charts').hide();
+					$(ev.currentTarget).parents('.imdb-widget-charts').hide();
 				});
 			});
 		</script>
-		<a href="javascript:void(0);" class="imdb-ratings-charts-link" title="Ratings charts">
-		</a>
 		<div class="imdb-widget-charts">
 			<span class="imdb-widget-charts-close" title="Close">x</span>
 			<div class="imdb-block-title">Ratings charts for <?= $info->nick ?></div>

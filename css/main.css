@@ -83,7 +83,7 @@
     margin: 1px;
 }
 
-.imdb-widget .imdb-ratings-small-link {
+.imdb-widget .imdb-widget-small-link {
     font-size: 70%;
     display: block;
 }
@@ -203,9 +203,6 @@
     display: inline-block;
     width: 16px;
     height: 16px;
-    position: absolute;
-    top: 90px;
-    right: 0;
 }
 
 .imdb-widget .imdb-widget-charts {
