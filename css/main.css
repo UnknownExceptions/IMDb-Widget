@@ -198,11 +198,24 @@
     float: left;
 }
 
-.imdb-widget .imdb-ratings-charts-link {
-    background-image: url('chart.png');
+.imdb-widget .imdb-widget-icon {
     display: inline-block;
+    opacity: 0.7;
     width: 16px;
     height: 16px;
+}
+.imdb-widget .imdb-widget-icon:hover {
+    cursor: pointer;
+    opacity: 1;
+}
+
+.imdb-widget .imdb-ratings-charts-message-link {
+    background-image: url('message.png');
+    float: right;
+}
+
+.imdb-widget .imdb-ratings-charts-link {
+    background-image: url('chart.png');
     float: right;
 }
 

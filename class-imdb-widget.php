@@ -61,6 +61,7 @@ class IMDb_Widget extends WP_Widget {
 				'boards',
 				'watchlist',
 				'checkins',
+                                'boards/sendpm',
 				'comments-index',
 				'#pollResponses') as $relativeUrl) {
 			$cleanId                  = preg_replace( '/[^A-Za-z]/', '', $relativeUrl );
