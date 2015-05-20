@@ -206,28 +206,15 @@
     opacity: 1;
 }
 
-.imdb-widget .imdb-ratings-icon-star:hover {
-    background-color: white;
-}
-
 .imdb-widget .imdb-ratings-icon-star {
     padding: 0 5px;
-   color: white;
-  text-shadow:
-   -1px -1px 0 #000,  
-    1px -1px 0 #000,
-    -1px 1px 0 #000,
-     1px 1px 0 #000;
+    color: lightgray;
+    text-shadow:  -1px -1px 0 #000, 1px -1px 0 #000,  -1px 1px 0 #000,  1px 1px 0 #000;
     font-weight: bold;
-    background-repeat: no-repeat;
-    background-position: right;
-    width: 32px;
     font-size: 12px;
-    border-radius: 50%;
-    background-image: url('star.png');
     position: absolute;
-    bottom: 0;
     right: 0;
+    bottom: 0;
 }
 
 .imdb-widget .imdb-ratings-charts-message-link {
