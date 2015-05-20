@@ -1,16 +1,29 @@
 <?php
 
+/**
+ * Plugin Name: IMDb Widget
+ * Description: This is a plugin that shows your IMDd profile with a simple widget.
+ * Version: 1.0.0
+ * Author: Henrique Dias and Luís Soares (Unknown Exceptions)
+ * Author URI: https://github.com/unknown-exceptions
+ * Network: true
+ * License: GPL2 or later
+ */
+
+// third-party libraries
+require_once( 'lib/htmlcompressor.php' );
+require_once( 'vendor/autoload.php' );
+
 use SmartScrapper\Parser;
 
-/**
- * Widget Class
- *
- * @package IMDb Widget
- * @author Henrique Dias <hacdias@gmail.com>
- * @author Luís Soares <lsoares@gmail.com>
- * @version 1.0.0
- */
+// prevent direct file access
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 class IMDb_Widget extends WP_Widget {
+	protected $widget_slug = 'imdb-widget';
+
 	private $options = array(
 		"title",
 		"userId"
@@ -18,8 +31,20 @@ class IMDb_Widget extends WP_Widget {
 
 	public function __construct() {
 		parent::__construct(
-			'IMDbWidget', 'IMDb', array( 'description' => 'A widget to show a small version of your IMDb profile.' )
+			$this->get_widget_slug(),
+			__( 'IMDb Widget', $this->get_widget_slug() ),
+			array(
+				'classname'   => $this->get_widget_slug() . '-class',
+				'description' => __( 'A widget to show a small version of your IMDb profile.', $this->get_widget_slug() )
+			)
 		);
+
+		add_action( 'wp_enqueue_scripts', array( $this, 'register_widget_styles' ) );
+		add_action( 'wp_enqueue_scripts', array( $this, 'register_widget_scripts' ) );
+	}
+
+	public function get_widget_slug() {
+		return $this->widget_slug;
 	}
 
 	public function form( $config ) {
@@ -38,16 +63,16 @@ class IMDb_Widget extends WP_Widget {
 		return serialize( $new_instance );
 	}
 
-	public function widget( $args, $config ) {
+	public function widget( $args, $instance ) {
 		extract( $args, EXTR_SKIP );
-		$config = ! empty( $config ) ? unserialize( $config ) : array();
+		$instance = ! empty( $instance ) ? unserialize( $instance ) : array();
 
 		ob_start( "HTMLCompressor" );
 
-		if ( ! isset( $config['userId'] ) ) {
+		if ( ! isset( $instance['userId'] ) ) {
 			echo 'You need to first configure the plugin :)';
 		} else {
-			$info = $this->get_info( $config['userId'] );
+			$info = $this->get_info( $instance['userId'] );
 			require 'pieces/widget.php';
 		}
 		ob_end_flush();
@@ -57,13 +82,17 @@ class IMDb_Widget extends WP_Widget {
 		$info          = new Parser( 'http://www.imdb.com/' . 'user/' . $userId . '/' );
 		$info->baseUrl = 'http://www.imdb.com';
 
-		foreach ( array('ratings',
+		foreach (
+			array(
+				'ratings',
 				'boards',
 				'watchlist',
 				'checkins',
-                                'boards/sendpm',
+				'boards/sendpm',
 				'comments-index',
-				'#pollResponses') as $relativeUrl) {
+				'#pollResponses'
+			) as $relativeUrl
+		) {
 			$cleanId                  = preg_replace( '/[^A-Za-z]/', '', $relativeUrl );
 			$info->{$cleanId . 'Url'} = $info->url . $relativeUrl;
 		}
@@ -104,6 +133,14 @@ class IMDb_Widget extends WP_Widget {
 		     ->save();
 
 		return $info;
+	}
+
+	public function register_widget_styles() {
+		wp_enqueue_style( $this->get_widget_slug() . '-widget-styles', plugins_url( 'css/widget.css', __FILE__ ) );
+	}
+
+	public function register_widget_scripts() {
+		wp_enqueue_script( $this->get_widget_slug() . '-script', plugins_url( 'js/widget.js', __FILE__ ), array( 'jquery' ) );
 	}
 }
 
