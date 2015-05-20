@@ -26,7 +26,7 @@
                     for ( $i = 0; $i < count( $info->badges ); $i ++ ) {
                             $badge = $info->badges[ $i ]; ?>
                     <div class="imdb-badge-info">
-                            <span class='imdb-badge-info-title'><?= $badge->title ?></span>
+                            <span><?= $badge->title ?></span>
                             <span><?= $badge->value ?></span>
                     </div>
                     <?php } ?>
