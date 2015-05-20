@@ -35,6 +35,8 @@
 		<!-- LATEST RATINGS -->
 		<div class="imdb-block imdb-ratings">
 			<div class="imdb-block-title">Latest ratings</div>
+                        <a href="javascript:void(0);" class="imdb-ratings-charts-link" title="Ratings charts">
+			</a>
 			<?php for ( $i = 0; $i < count( $info->ratings ); $i ++ ) : ?>
 				<?php $rating = $info->ratings[ $i ]; ?>
 				<a target="_blank" href="<?= $info->baseUrl . $rating->link ?>"
@@ -46,8 +48,6 @@
 			<a href="<?= $info->ratingsUrl ?>" target="_blank"
 			   title="See all user ratings" class="imdb-widget-small-link">
 				<?= $info->ratingsCount; ?> »
-			</a>
-			<a href="javascript:void(0);" class="imdb-ratings-charts-link" title="Ratings charts">
 			</a>
 		</div>
 

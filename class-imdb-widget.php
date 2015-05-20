@@ -57,16 +57,12 @@ class IMDb_Widget extends WP_Widget {
 		$info          = new Parser( 'http://www.imdb.com/' . 'user/' . $userId . '/' );
 		$info->baseUrl = 'http://www.imdb.com';
 
-		foreach (
-			array(
-				'ratings',
+		foreach ( array('ratings',
 				'boards',
 				'watchlist',
 				'checkins',
 				'comments-index',
-				'#pollResponses'
-			) as $relativeUrl
-		) {
+				'#pollResponses') as $relativeUrl) {
 			$cleanId                  = preg_replace( '/[^A-Za-z]/', '', $relativeUrl );
 			$info->{$cleanId . 'Url'} = $info->url . $relativeUrl;
 		}

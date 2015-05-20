@@ -203,6 +203,7 @@
     display: inline-block;
     width: 16px;
     height: 16px;
+    float: right;
 }
 
 .imdb-widget .imdb-widget-charts {
