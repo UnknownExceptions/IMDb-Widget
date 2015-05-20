@@ -86,6 +86,7 @@
 .imdb-widget .imdb-widget-small-link {
     font-size: 70%;
     display: block;
+    color: #136cb2;
 }
 
 .imdb-widget a:focus {
