@@ -7,7 +7,7 @@
 	<div class="imdb-widget">
 		<a href="<?= $info->url ?>" target="_blank" title="View profile" class="imdb-avatar-link">
 			<img src="<?= $info->avatar ?>" class="imdb-avatar"/>
-			<img src='<?= IMDB_PLUGIN_URL . 'css/imdb-logo.png'; ?>' class="imdb-logo"/>
+			<img src='<?= plugins_url( 'css/imdb-logo.png', dirname( __FILE__ ) ); ?>' class="imdb-logo"/>
 		</a>
 
 		<div class="imdb-info-box">
