@@ -1,5 +1,5 @@
 .imdb-widget {
-    font-family: Verdana;
+    font-family: "Verdana";
     color: black;
     position: relative;
 }
@@ -80,9 +80,6 @@
 .imdb-widget .imdb-block-item-logo {
     height: 60px;
     border-radius: 2px;
-}
-
-.imdb-ratings .imdb-block-item-logo {
     margin: 1px;
 }
 
@@ -199,6 +196,16 @@
 }
 .imdb-widget .imdb-histogram-vertical .row >div {
     float: left;
+}
+
+.imdb-widget .imdb-ratings-charts-link {
+    background-image: url('chart.png');
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    position: absolute;
+    top: 90px;
+    right: 0;
 }
 
 .imdb-widget .imdb-widget-charts {

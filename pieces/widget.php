@@ -78,8 +78,7 @@
 				});
 			});
 		</script>
-		<a href="javascript:void(0);" class="imdb-ratings-charts-link imdb-ratings-small-link">
-			Ratings charts »
+		<a href="javascript:void(0);" class="imdb-ratings-charts-link" title="Ratings charts">
 		</a>
 		<div class="imdb-widget-charts">
 			<span class="imdb-widget-charts-close" title="Close">x</span>
