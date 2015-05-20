@@ -9,5 +9,5 @@
  * License: GPL2 or later
  */
 
-require_once 'config.php';
-require_once 'class-imdb-widget.php';
+require_once ('config.php');
+require_once ('class-imdb-widget.php');
