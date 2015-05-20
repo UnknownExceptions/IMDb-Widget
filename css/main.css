@@ -60,10 +60,14 @@
     font-weight: bold;
     margin-top: 10px;
     margin-bottom: 3px;
-    font-size: 80%;
+    font-size: 85%;
     color: #A58500;
 }
 
+.imdb-widget .imdb-block-item-title {
+    display: inline-block;
+    position: relative;
+}
 .imdb-widget .imdb-block-title-2 {
     font-weight: bold;
     margin-top: 8px;
@@ -71,11 +75,6 @@
     margin-left: 3px;
     font-size: 70%;
     color: #A58500;
-}
-
-.imdb-widget .imdb-block-item-title {
-    display: inline-block;
-    position: relative;
 }
 
 .imdb-widget .imdb-block-item-logo {
