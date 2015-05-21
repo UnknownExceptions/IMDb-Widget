@@ -28,8 +28,10 @@
 			for ( $i = 0; $i < count( $info->badges ); $i ++ ) {
 				$badge = $info->badges[ $i ]; ?>
 				<div class="imdb-badge-info">
-					<span><?= $badge->title ?></span>
-					<span><?= $badge->value ?></span>
+					<a href="http://www.imdb.com/badge/" title="More info »" target="_blank">
+						<?= $badge->title ?>
+					</a>
+					<span title="<?= $badge->title ?> badge"><?= $badge->value ?></span>
 				</div>
 			<?php } ?>
 		</div>
@@ -72,20 +74,10 @@
 				See all »
 			</a>
 		</div>
+		
+		<!-- USER LISTS -->
 
 		<!-- OVERLAY RATINGS -->
-		<script>
-			jQuery(document).ready(function ($) {
-				$('.imdb-ratings-charts-link').click(function (ev) {
-					var el = $(ev.currentTarget).parents('.imdb-widget').find('.imdb-widget-charts');
-					el.toggle(!el.is(":visible"));
-					return false;
-				});
-				$('.imdb-widget-charts-close').click(function (ev) {
-					$(ev.currentTarget).parents('.imdb-widget-charts').hide();
-				});
-			});
-		</script>
 		<div class="imdb-widget-charts">
 			<span class="imdb-widget-charts-close" title="Close">x</span>
 
