@@ -15,7 +15,7 @@
                             <?= $info->nick ?>
                     </span>
 			<a class="imdb-widget-icon imdb-ratings-charts-message-link" href="<?= $info->boardssendpmUrl ?>"
-			   target="_blank"></a>
+			   target="_blank" title="Send private message"></a>
 
 			<div class="imdb-member-since">
 				<?= $info->memberSince ?>
