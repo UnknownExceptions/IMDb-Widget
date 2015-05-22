@@ -83,7 +83,8 @@
 				<?php $list = $info->userLists[ $i ]; ?>
 				<a target="_blank" href="<?= $info->baseUrl . $list->link ?>"
 				   title="<?= $list->title ?>" class="imdb-block-item-title">
-					<img src="<?= $list->logo ?>" class="imdb-block-item-small-logo"/>
+					<img src="<?= (substr($list->logo,0,1) == '/' ? $info->baseUrl : '') . $list->logo ?>" 
+                                             class="imdb-block-item-small-logo" />
 					<?= $list->title ?>
 				</a>
 				
