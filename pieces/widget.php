@@ -5,25 +5,26 @@
 	<?php endif; ?>
 
 	<div class="imdb-widget">
+		
+		<span class="imdb-nick">
+			<?= $info->nick ?>
+		</span>
+		<a class="imdb-widget-icon imdb-ratings-charts-message-link" href="<?= $info->boardssendpmUrl ?>"
+			   target="_blank" title="Send private message"></a>
+		
 		<a href="<?= $info->url ?>" target="_blank" title="View profile" class="imdb-avatar-link">
 			<img src="<?= $info->avatar ?>" class="imdb-avatar"/>
 			<img src='<?= plugins_url( 'css/imdb-logo.png', dirname( __FILE__ ) ); ?>' class="imdb-logo"/>
 		</a>
 
 		<div class="imdb-info-box">
-                    <span class="imdb-nick">
-                            <?= $info->nick ?>
-                    </span>
-			<a class="imdb-widget-icon imdb-ratings-charts-message-link" href="<?= $info->boardssendpmUrl ?>"
-			   target="_blank" title="Send private message"></a>
-
+			<!-- BADGES -->
 			<div class="imdb-member-since">
 				<?= $info->memberSince ?>
 			</div>
 			<div class="imdb-bio">
 				<?= $info->bio ?>
 			</div>
-			<!-- BADGES -->
 			<?php
 			for ( $i = 0; $i < count( $info->badges ); $i ++ ) {
 				$badge = $info->badges[ $i ]; ?>
@@ -35,7 +36,6 @@
 				</div>
 			<?php } ?>
 		</div>
-
 		<!-- LATEST RATINGS -->
 		<div class="imdb-block imdb-ratings">
 			<div class="imdb-block-title">Latest ratings</div>

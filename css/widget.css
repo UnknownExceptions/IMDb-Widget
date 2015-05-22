@@ -29,10 +29,11 @@
     display: inline-block;
     width: 50%;
     vertical-align: top;
+    max-height: 110px; 
+    overflow-y: auto;
 }
 
 .imdb-widget .imdb-nick {
-    display: block;
     font-size: 115%;
     font-weight: bold;
     color: black;
