@@ -139,11 +139,8 @@
     color: gray;
 }
 
-.imdb-widget .imdb-badge-info :nth-child(1) {
+.imdb-widget .imdb-badge-info a span:nth-of-type(1) {
     margin-right: 3px;
-}
-
-.imdb-widget .imdb-badge-info :nth-child(2) {
     font-weight: bold;
 }
 

@@ -29,9 +29,9 @@
 				$badge = $info->badges[ $i ]; ?>
 				<div class="imdb-badge-info">
 					<a href="http://www.imdb.com/badge/" title="More info »" target="_blank">
-						<?= $badge->title ?>
+						<span title="<?= $badge->title ?> badge"><?= $badge->value ?></span>
+						<span><?= $badge->title ?></span>
 					</a>
-					<span title="<?= $badge->title ?> badge"><?= $badge->value ?></span>
 				</div>
 			<?php } ?>
 		</div>
