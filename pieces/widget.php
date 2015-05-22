@@ -76,6 +76,24 @@
 		</div>
 		
 		<!-- USER LISTS -->
+		<div class="imdb-user-lists">
+			<div class="imdb-block-title">Lists</div>
+			<?php for ( $i = 0; $i < count( $info->userLists ); $i ++ ) : ?>
+				<?php $list = $info->userLists[ $i ]; ?>
+				<a target="_blank" href="<?= $info->baseUrl . $list->link ?>"
+				   title="<?= $list->title ?>" class="imdb-block-item-title">
+					<img src="<?= $list->logo ?>" class="imdb-block-item-small-logo"/>
+					<?= $list->title ?>
+				</a>
+				
+			<?php endfor; ?>
+
+			<a href="<?= $info->listsUrl ?>" target="_blank"
+			   title="See more" class="imdb-widget-small-link">
+				See all »
+			</a>
+		</div>
+		
 
 		<!-- OVERLAY RATINGS -->
 		<div class="imdb-widget-charts">

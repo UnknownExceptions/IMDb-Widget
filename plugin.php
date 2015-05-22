@@ -86,6 +86,7 @@ class IMDb_Widget extends WP_Widget {
 			array(
 				'ratings',
 				'boards',
+				'lists',
 				'watchlist',
 				'checkins',
 				'boards/sendpm',
@@ -131,11 +132,12 @@ class IMDb_Widget extends WP_Widget {
 		     ->with( 'link', '.list-meta', 'href' )
 		     ->with( 'meta', '.list-meta' )
 		     ->save();
-//		
-//		$info->selectList( 'userLists', '.user-lists .user-list' )
-//			->with( 'logo', 'img', 'src' )
-//			->with( 'title', '.list-name')
-//			->with( 'description', '.list-meta');
+		
+		$info->selectList( 'userLists', '.user-lists .user-list' )
+			->with( 'logo', 'img', 'src' )
+			->with( 'title', '.list-name')
+			->with( 'description', '.list-meta')
+			->save();
 
 		return $info;
 	}
