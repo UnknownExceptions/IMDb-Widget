@@ -219,6 +219,7 @@
     opacity: 0.7;
     width: 16px;
     height: 16px;
+    float: right;
 }
 .imdb-widget .imdb-widget-icon:hover {
     cursor: pointer;
