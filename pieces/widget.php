@@ -36,6 +36,7 @@
 				</div>
 			<?php } ?>
 		</div>
+		
 		<!-- LATEST RATINGS -->
 		<div class="imdb-block imdb-ratings">
 			<div class="imdb-block-title">Latest ratings</div>

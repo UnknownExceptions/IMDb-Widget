@@ -136,6 +136,7 @@ class IMDb_Widget extends WP_Widget {
 		$info->selectList( 'userLists', '.user-lists .user-list' )
 			->with( 'logo', 'img', 'src' )
 			->with( 'title', '.list-name')
+			->with( 'link', 'a' , 'href' )
 			->with( 'description', '.list-meta')
 			->save();
 

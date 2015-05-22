@@ -261,4 +261,9 @@
     font-size: 70%;
     font-weight: bold;
     color: #136cb2;
+    white-space: nowrap;
+    width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: block;
 }
