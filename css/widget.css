@@ -256,9 +256,10 @@
 
 .imdb-widget .imdb-user-lists .imdb-block-item-small-logo {
     margin-right: 6px;
+    width: 20px;
 }
-.imdb-widget .imdb-user-lists .imdb-block-item-title {
-    font-size: 70%;
+.imdb-widget .imdb-user-lists .imdb-block-item-title , .imdb-widget .imdb-user-reviews .imdb-block-item-title {
+    font-size: 0.7em;
     font-weight: bold;
     color: #136cb2;
     white-space: nowrap;
@@ -266,4 +267,30 @@
     overflow: hidden;
     text-overflow: ellipsis;
     display: block;
+}
+
+.imdb-widget .imdb-user-reviews-left , .imdb-widget .imdb-user-reviews-right {
+    width: 48%; 
+    display: inline-block;
+    font-size: 0.7em;
+    max-height: 100px;
+    overflow-y: auto;
+    vertical-align: top;
+}
+.imdb-widget .imdb-user-reviews-left {
+    width: 20%;
+}
+.imdb-widget .imdb-user-reviews-right {
+    width: 75%;
+}
+.imdb-widget .imdb-user-reviews .imdb-user-review-title {
+    font-size: 0.8em;
+    font-style: italic;
+}
+.imdb-widget .imdb-user-review {
+    margin-bottom: 6px;
+    border-bottom: 1px solid #ddd;
+}
+.imdb-widget .imdb-user-reviews-right span:nth-of-type(2) {
+    color: gray;
 }
