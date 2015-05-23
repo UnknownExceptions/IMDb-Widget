@@ -147,10 +147,10 @@
 				<?php $board = $info->boards[ $i ]; 
 				   if (! empty($board->commentTitle)) : ?>
 				<div class="imdb-user-board-message">
-					<a href='<?= $board->boardLink ?>' target="_blank" class="imdb-block-item-title">
+					<a href='<?= $info->baseUrl . $board->boardLink ?>' target="_blank" class="imdb-block-item-title">
 						<?= $board->boardTitle ?>
 					</a>
-					<a href='<?= $board->commentLink ?>' target="_blank" 
+					<a href='<?= $info->baseUrl . $board->commentLink ?>' target="_blank" 
 					   title="<?= $board->when ?>" class="imdb-user-board-message-comment">
 						<?= $board->commentTitle ?>
 					</a>
