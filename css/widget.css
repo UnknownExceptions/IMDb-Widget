@@ -277,13 +277,21 @@
     margin-right: 6px;
     width: 20px;
 }
-.imdb-widget .imdb-user-lists .imdb-block-item-title , .imdb-widget .imdb-user-reviews .imdb-block-item-title {
+.imdb-widget .imdb-user-lists .imdb-block-item-title ,
+.imdb-widget .imdb-user-reviews .imdb-block-item-title ,
+.imdb-widget .imdb-user-board-messages .imdb-block-item-title {
     font-size: 0.7em;
     font-weight: bold;
     white-space: nowrap;
     width: 100%;
     overflow: hidden;
     text-overflow: ellipsis;
+    display: block;
+}
+
+.imdb-widget .imdb-user-board-message-comment {
+    font-size: 0.75em;
+    margin-left: 8px;
     display: block;
 }
 

@@ -110,34 +110,60 @@
         <!-- REVIEWS -->
         <?php if (count( $info->reviews )) { ?>
         <div class="imdb-user-reviews">
-                <div class="imdb-block-title">Reviews</div>
-                <?php for ( $i = 0; $i < count( $info->reviews ); $i ++ ) : ?>
-                    <?php $review = $info->reviews[ $i ]; ?>
-                     <div class="imdb-block-item-title">
-						<a title="<?= $review->movieTitle ?>" href="<?= $info->baseUrl . $review->movieLink ?>" target="_blank">
-							 <span title="<?= $review->movieTitle ?> <?= $review->movieYear ?>"><?= $review->movieTitle ?></span>
-						</a><?= $review->movieYear ?>
-                    </div>
-                    <div class="imdb-user-review-title"><?= $review->title ?></div>       
-                    <div class="imdb-user-review">                                                  
-                        <div class="imdb-user-reviews-left">
-                           <a title="<?= $review->movieTitle ?>" href="<?= $info->baseUrl . $review->movieLink ?>"
-                              class="imdb-block-item-title" target="_blank">
-                                <img src="<?= $review->movieLogo ?>" style="" />
-                           </a>
-                        </div>
-                        <div class="imdb-user-reviews-right">
-                            <span><?= $review->text ?></span>                                
-                            <span><?= $review->meta ?></span>
-                        </div>
-                    </div>
-                <?php endfor; ?>
-                <a href="<?= $info->commentsindexUrl ?>" target="_blank"
-                   title="See all reviews" class="imdb-widget-small-link">
-                        See all »
-                </a>
+			<div class="imdb-block-title">Reviews</div>
+			<?php for ( $i = 0; $i < count( $info->reviews ); $i ++ ) : ?>
+				<?php $review = $info->reviews[ $i ]; ?>
+				 <div class="imdb-block-item-title">
+					<a title="<?= $review->movieTitle ?>" href="<?= $info->baseUrl . $review->movieLink ?>" target="_blank">
+						 <span title="<?= $review->movieTitle ?> <?= $review->movieYear ?>"><?= $review->movieTitle ?></span>
+					</a><?= $review->movieYear ?>
+				</div>
+				<div class="imdb-user-review-title"><?= $review->title ?></div>       
+				<div class="imdb-user-review">                                                  
+					<div class="imdb-user-reviews-left">
+					   <a title="<?= $review->movieTitle ?>" href="<?= $info->baseUrl . $review->movieLink ?>"
+						  class="imdb-block-item-title" target="_blank">
+							<img src="<?= $review->movieLogo ?>" style="" />
+					   </a>
+					</div>
+					<div class="imdb-user-reviews-right">
+						<span><?= $review->text ?></span>                                
+						<span><?= $review->meta ?></span>
+					</div>
+				</div>
+			<?php endfor; ?>
+			<a href="<?= $info->commentsindexUrl ?>" target="_blank"
+			   title="See all reviews" class="imdb-widget-small-link">
+					See all »
+			</a>
         </div>
         <?php } ?>
+		
+		<!-- BOARDS -->
+		<?php if (count( $info->boards )) { ?>
+        <div class="imdb-user-board-messages">
+			<div class="imdb-block-title">Board posts</div>
+			<?php for ( $i = 0; $i < count( $info->boards ); $i ++ ) : ?>
+				<?php $board = $info->boards[ $i ]; 
+				   if (! empty($board->commentTitle)) : ?>
+				<div class="imdb-user-board-message">
+					<a href='<?= $board->boardLink ?>' target="_blank" class="imdb-block-item-title">
+						<?= $board->boardTitle ?>
+					</a>
+					<a href='<?= $board->commentLink ?>' target="_blank" 
+					   title="<?= $board->when ?>" class="imdb-user-board-message-comment">
+						<?= $board->commentTitle ?>
+					</a>
+				</div>
+				<?php endif; ?>
+			<?php endfor; ?>
+			<a href="<?= $info->boardsUrl ?>/" target="_blank"
+			   title="See all board messages" class="imdb-widget-small-link">
+					See all messages »
+			</a>
+        </div>
+        <?php } ?>
+		
 
         <!-- OVERLAY RATINGS -->
         <div class="imdb-widget-charts">

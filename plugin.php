@@ -149,12 +149,13 @@ class IMDb_Widget extends WP_Widget
                 ->with('text', 'p')
                 ->saveList('reviews');
 	
-//		$info->at( '.boards-comments .row' )
-//                ->with('link', '.board a', 'href')
-//                ->with('commentTitle', '.title a')
-//                ->with('commentLink', '.title a' , 'href')
-//                ->with('when', '.when')
-//                ->saveList('boards');
+		$info->at( '.boards-comments .row' )
+                ->with('boardLink', '.board a', 'href')
+				->with('boardTitle', '.board a')
+                ->with('commentTitle', '.title a')
+                ->with('commentLink', '.title a' , 'href')
+                ->with('when', '.when')
+                ->saveList('boards');
 		
         return $info;
     }
