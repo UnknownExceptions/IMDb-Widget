@@ -18,12 +18,12 @@
     background-image: url('message.png');
     position: absolute;
     bottom: 2px;
-    right: 2px;
+    right: 4px;
 }
 
 .imdb-widget .imdb-avatar {
     width: 100%;
-    border-radius: 6px;
+    border-radius: 4px;
 }
 
 .imdb-widget .imdb-logo {

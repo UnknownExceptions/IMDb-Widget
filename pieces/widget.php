@@ -7,9 +7,9 @@
     <div class="imdb-widget">
 		<div class="imdb-logo"></div>
 		
-        <div class="imdb-nick">
-            <?= $info->nick ?>
-        </div>
+		<a href="<?= $info->url ?>" target="_blank" title="View profile" class="imdb-nick">
+			<?= $info->nick ?>
+		</a>
 		<div class="imdb-member-since">
 			<?= $info->memberSince ?>
 		</div>
