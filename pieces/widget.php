@@ -34,11 +34,11 @@
                             </a>
                     </div>
             <?php } ?>
+			<div class="imdb-bio">
+				<?= $info->bio ?>
+			</div>
         </div>
 		
-		<div class="imdb-bio">
-			<?= $info->bio ?>
-		</div>
 		
         <!-- LATEST RATINGS -->
 		<?php if (count( $info->ratings )) { ?>
