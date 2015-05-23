@@ -137,7 +137,7 @@
                         See all »
                 </a>
         </div>
-        <?php } ?>	
+        <?php } ?>
 
         <!-- OVERLAY RATINGS -->
         <div class="imdb-widget-charts">

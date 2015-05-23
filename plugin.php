@@ -97,49 +97,49 @@ class IMDb_Widget extends WP_Widget
             $info->{$cleanId . 'Url'} = $info->url . $relativeUrl;
         }
 
-        $info->text('nick', '.header h1');
-        $info->text('avatar', '#avatar-frame img', 'src');
-        $info->text('memberSince', '.header .timestamp');
-        $info->text('bio', '.header .biography');
-        $info->text('ratingsCount', '.see-more a');
-        $info->html('ratingsDistribution', '.overall .histogram-horizontal');
-        $info->html('ratingsByYear', '.byYear .histogram-horizontal');
-        $info->html('ratingsByYearLegend', '.byYear .legend');
-        $info->html('ratingsTopRatedGenres', '.histogram-vertical');
-	 // $info->html( 'ratingsTopRatedYears', '.histogram-vertical' , 1 ); // TODO.
+        $info->saveText('nick', '.header h1');
+        $info->saveText('avatar', '#avatar-frame img', 'src');
+        $info->saveText('memberSince', '.header .timestamp');
+        $info->saveText('bio', '.header .biography');
+        $info->saveText('ratingsCount', '.see-more a');
+        $info->saveHtml('ratingsDistribution', '.overall .histogram-horizontal');
+        $info->saveHtml('ratingsByYear', '.byYear .histogram-horizontal');
+        $info->saveHtml('ratingsByYearLegend', '.byYear .legend');
+        $info->saveHtml('ratingsTopRatedGenres', '.histogram-vertical');
+//		$info->saveHtml( 'ratingsTopRatedYears', '.histogram-vertical' , 1 ); // TODO.
 
-        $info->selectList('ratings', '.ratings .item')
+        $info->at('.ratings .item')
                 ->with('link', 'a', 'href')
                 ->with('logo', 'a img', 'src')
                 ->with('title', '.title a')
                 ->with('rating', '.sub-item .only-rating')
-                ->save();
+                ->saveList('ratings');
 
-        $info->selectList('badges', '.badges .badge-frame')
+        $info->at('.badges .badge-frame')
                 ->with('title', '.name')
                 ->with('value', '.value')
-                ->save();
+                ->saveList('badges');
 
-        $info->selectList('watchlist', '.watchlist .item')
+        $info->at('.watchlist .item')
                 ->with('title', '.sub-item a')
                 ->with('link', 'a', 'href')
                 ->with('logo', 'a img', 'src')
-                ->save();
+                ->saveList('watchlist');
 
-        $info->selectList('lists', '.lists .user-list')
+        $info->at('.lists .user-list')
                 ->with('title', '.list-name')
                 ->with('link', '.list-meta', 'href')
                 ->with('meta', '.list-meta')
-                ->save();
+                ->saveList('lists');
 
-        $info->selectList('userLists', '.user-lists .user-list')
+        $info->at( '.user-lists .user-list')
                 ->with('logo', 'img', 'src')
                 ->with('title', '.list-name')
                 ->with('link', 'a', 'href')
                 ->with('description', '.list-meta')
-                ->save();
+                ->saveList('userLists');
 
-        $info->selectList('reviews', '.reviews .item')
+        $info->at( '.reviews .item')
                 ->with('movieLogo', '.image img', 'src')
                 ->with('movieLink', '.image a', 'href')
                 ->with('movieTitle', 'h3 a')
@@ -147,8 +147,15 @@ class IMDb_Widget extends WP_Widget
                 ->with('title', 'h4')
                 ->with('meta', '.details')
                 ->with('text', 'p')
-                ->save();
-
+                ->saveList('reviews');
+	
+//		$info->at( '.boards-comments .row' )
+//                ->with('link', '.board a', 'href')
+//                ->with('commentTitle', '.title a')
+//                ->with('commentLink', '.title a' , 'href')
+//                ->with('when', '.when')
+//                ->saveList('boards');
+		
         return $info;
     }
 
