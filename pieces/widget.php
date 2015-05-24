@@ -26,13 +26,13 @@
 			<!-- BADGES -->
             <?php
             for ( $i = 0; $i < count( $info->badges ); $i ++ ) {
-                    $badge = $info->badges[ $i ]; ?>
-                    <div class="imdb-badge-info">
-                            <a href="http://www.imdb.com/badge/" target="_blank">
-                                    <span title="<?= $badge->title ?> badge"><?= $badge->value ?></span>
-                                    <span><?= $badge->title ?></span>
-                            </a>
-                    </div>
+				$badge = $info->badges[ $i ]; ?>
+				<div class="imdb-badge-info">
+					<a href="http://www.imdb.com/badge/" target="_blank">
+						<span title="<?= $badge->title ?> badge"><?= $badge->value ?></span>
+						<span><?= $badge->title ?></span>
+					</a>
+				</div>
             <?php } ?>
 			<div class="imdb-bio">
 				<?= $info->bio ?>
@@ -51,7 +51,7 @@
 			<?php for ( $i = 0; $i < count( $info->ratings ); $i ++ ) : ?>
 					<?php $rating = $info->ratings[ $i ]; ?>
 					<a target="_blank" href="<?= $info->baseUrl . $rating->link ?>"
-					   title="<?= $rating->title ?> (<?= $rating->rating ?>)" class="imdb-block-item-title">
+					   title="<?= $rating->title ?> (<?= $rating->rating ?> ★)" class="imdb-block-item-title">
 						<img src="<?= $rating->logo ?>" class="imdb-block-item-logo"/>
 						<span class="imdb-ratings-icon-star" title="Rating by <?= $info->nick ?>">
 							<?= $rating->rating ?>
