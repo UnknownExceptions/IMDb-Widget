@@ -171,28 +171,36 @@
 
 			<div class="imdb-block-title">Ratings charts for <?= $info->nick ?></div>
 			
-			<div class="imdb-widget-chart">
-				<div class="imdb-histogram-horizontal">
-					<?= $info->ratingsDistribution ?>
+				<div class="imdb-widget-chart">
+					<h4>Ratings distribution</h4>
+					<div class="imdb-histogram-horizontal">
+						<?= $info->ratingsDistribution ?>
+					</div>
 				</div>
-				<h4>Ratings distribution</h4>
-			</div>
 			
-			<div class="imdb-widget-chart">
-				<div class="imdb-histogram-horizontal">
-					<?= $info->ratingsByYear ?>
+				<div class="imdb-widget-chart">
+					<h4>By year</h4>
+					<div class="imdb-histogram-horizontal">
+						<?= $info->ratingsByYear ?>
+					</div>
+					<div class="imdb-histogram-by-year-legend">
+						<?= $info->ratingsByYearLegend ?>
+					</div>
 				</div>
-				<div class="imdb-histogram-by-year-legend">
-					<?= $info->ratingsByYearLegend ?>
-				</div>
-				<h4>By year</h4>
-			</div>
 			
-			<div class="imdb-widget-chart">
-				<div class="imdb-histogram-by-genre imdb-histogram-vertical">
-					<?= $info->ratingsTopRatedGenres ?>
+				<div class="imdb-widget-chart">
+					<h4>Top-Rated Genres</h4>
+					<div class="imdb-histogram-by-genre imdb-histogram-vertical">
+						<?= $info->ratingsTopRatedGenres ?>
+					</div>
 				</div>
-				<h4>Top-Rated Genres</h4>
+			
+				<div class="imdb-widget-chart">
+					<h4>Top-Rated Years</h4>
+					<div class="imdb-histogram-vertical">
+						<?= $info->ratingsTopRatedYears ?>
+					</div>
+				</div>
 			</div>
 		</div>
     </div>

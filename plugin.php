@@ -105,8 +105,8 @@ class IMDb_Widget extends WP_Widget
         $info->saveHtml('ratingsDistribution', '.overall .histogram-horizontal');
         $info->saveHtml('ratingsByYear', '.byYear .histogram-horizontal');
         $info->saveHtml('ratingsByYearLegend', '.byYear .legend');
-        $info->saveHtml('ratingsTopRatedGenres', '.histogram-vertical');
-//		$info->saveHtml( 'ratingsTopRatedYears', '.histogram-vertical' , 1 ); // TODO.
+        $info->saveHtml('ratingsTopRatedGenres', '.histogram-vertical', 0);
+		$info->saveHtml('ratingsTopRatedYears', '.histogram-vertical' , 1 );
 
         $info->at('.ratings .item')
                 ->with('link', 'a', 'href')
