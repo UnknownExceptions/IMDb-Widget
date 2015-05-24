@@ -4,8 +4,8 @@
  * Plugin Name: IMDb Widget
  * Description: This is a plugin that shows your IMDd profile with a simple widget.
  * Version: 1.0.0
- * Author: Henrique Dias and Luís Soares (Unknown Exceptions)
- * Author URI: https://github.com/unknown-exceptions
+ * Author: Henrique Dias and Luís Soares (Refactors)
+ * Author URI: https://github.com/refactors
  * Network: true
  * License: GPL2 or later
  *
@@ -96,6 +96,7 @@ class IMDb_Widget extends WP_Widget {
 			$info = $this->get_info( $instance['userId'] );
 			require 'views/widget.php';
 		}
+
 		ob_end_flush();
 	}
 
