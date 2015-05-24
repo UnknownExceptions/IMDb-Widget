@@ -20,7 +20,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-function HTMLCompressor( $buffer ) {
+function IMDB_HTMLCompressor( $buffer ) {
 	$buffer = preg_replace( '/<!--([^\[|(<!)].*)/', '', $buffer );
 	$buffer = preg_replace( '/(?<!\S)\/\/\s*[^\r\n]*/', '', $buffer );
 

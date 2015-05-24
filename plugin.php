@@ -75,7 +75,7 @@ class IMDb_Widget extends WP_Widget {
 			${$option} = isset( $config[ $option ] ) ? $config[ $option ] : null;
 		}
 
-		ob_start( "HTMLCompressor" );
+		ob_start( "IMDB_HTMLCompressor" );
 		require 'views/options.php';
 		ob_end_flush();
 	}
@@ -88,7 +88,7 @@ class IMDb_Widget extends WP_Widget {
 		extract( $args, EXTR_SKIP );
 		$instance = ! empty( $instance ) ? unserialize( $instance ) : array();
 
-		ob_start( "HTMLCompressor" );
+		ob_start( "IMDB_HTMLCompressor" );
 
 		if ( ! isset( $instance['userId'] ) ) {
 			echo 'You need to first configure the plugin :)';
