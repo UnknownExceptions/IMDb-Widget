@@ -46,8 +46,7 @@
     top: 0;
     min-height: 20px;
     min-width: 30px;
-    background-size: contain;
-    background: url('imdb-logo.png') no-repeat right top;
+    background: url('imdb-logo.png') no-repeat right top / contain;
 }
 
 .imdb-widget .imdb-info-box {
