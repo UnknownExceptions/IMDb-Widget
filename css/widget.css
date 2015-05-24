@@ -19,19 +19,19 @@
  */
 
 .imdb-widget {
-    font-family: Helvetica, sans-serif;
     color: black;
     position: relative;
-    background-color: #FFF3CA;
+    background-color: #FCF5DD;
     padding: .6em;
     border-radius: 5px;
-    border: .5em solid rgba(255, 193, 7, 0.66);
+    border: .5em solid rgba(255, 193, 7, 0.26);
 }
 
 .imdb-widget .imdb-avatar-wrapper {
     display: inline-block;
     width: 40%;
     position: relative;
+    line-height: 1;
 }
 
 .imdb-widget .imdb-avatar {
@@ -43,8 +43,8 @@
     position: absolute;
     right: 0;
     top: 0;
-    min-height: 20px;
-    min-width: 30px;
+    min-height: 1.25em;
+    min-width: 2.5em;
     background: url('imdb-logo.png') no-repeat right top / contain;
 }
 
@@ -83,10 +83,11 @@
 
 .imdb-widget .imdb-block-title {
     font-weight: bold;
-    margin-top: 0.750em;
-    margin-bottom: 0.188em;
     font-size: 0.9em;
     color: #A58500;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.15);
+    padding: 0 0 0.188em 0;
+    margin: 0.750em 0 0.45em 0;
 }
 
 .imdb-widget a {
@@ -122,7 +123,7 @@
 }
 
 .imdb-widget .imdb-widget-small-link {
-    font-size: 60%;
+    font-size: 0.6em;
     display: block;
     color: #136cb2;
 }
@@ -249,16 +250,24 @@
 }
 
 .imdb-widget .imdb-ratings-icon-star {
-    background-color: #FFC107;
+    background: url('star.svg');
+    background-size: contain;
     border-radius: 50%;
     position: absolute;
-    right: 0.5em;
-    bottom: 0.6em;
+    right: 0.25em;
+    bottom: 0.25em;
     color: #000;
-    padding: .6em;
+    padding: 1em;
     font-size: 0.5em;
     font-weight: bold;
     line-height: 1em;
+    opacity: .8;
+    transition: .2s ease all;
+}
+
+.imdb-widget .imdb-ratings-icon-star:hover,
+.imdb-widget .imdb-block-item-logo:hover + .imdb-ratings-icon-star {
+    opacity: 0;
 }
 
 .imdb-widget .imdb-user-lists .imdb-block-item-small-logo {
@@ -347,8 +356,8 @@
 .imdb-widget .imdb-ratings-charts-message-link {
     background-image: url('message.png');
     position: absolute;
-    bottom: 2px;
-    right: 4px;
+    bottom: .25em;
+    right: .25em;
 }
 
 .imdb-widget .imdb-widget-chart {
