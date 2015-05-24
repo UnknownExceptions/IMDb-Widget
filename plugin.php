@@ -8,7 +8,26 @@
  * Author URI: https://github.com/unknown-exceptions
  * Network: true
  * License: GPL2 or later
+ *
+ * IMDB Widget for WordPress
+ *
+ *     Copyright (C) 2015 Henrique Dias <hacdias@gmail.com>
+ *     Copyright (C) 2015 Luís Soares <lsoares@gmail.com>
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 // third-party libraries
 require_once( 'lib/htmlcompressor.php' );
 require_once( 'vendor/autoload.php' );
@@ -58,7 +77,7 @@ class IMDb_Widget extends WP_Widget
         }
 
         ob_start("HTMLCompressor");
-        require 'pieces/options.php';
+	    require 'views/options.php';
         ob_end_flush();
     }
 
@@ -80,7 +99,7 @@ class IMDb_Widget extends WP_Widget
         } else
         {
             $info = $this->get_info($instance['userId']);
-            require 'pieces/widget.php';
+	        require 'views/widget.php';
         }
         ob_end_flush();
     }

@@ -1,3 +1,4 @@
+<?php
 /*
  * IMDB Widget for WordPress
  *
@@ -17,17 +18,23 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+?>
+<p>
+	<label for="<?= $this->get_field_id( 'title' ); ?>"/>
+	<input class="widefat"
+	       id="<?= $this->get_field_id( 'title' ); ?>"
+	       name="<?= $this->get_field_name( 'title' ); ?>"
+	       type="text"
+	       placeholder="Title"
+	       value="<?= esc_attr( $title ); ?>"/>
+</p>
 
-jQuery( document ).ready( function ( $ ) {
-    $( '.imdb-ratings-charts-link' ).click( function ( ev ) {
-        $( ev.currentTarget )
-            .parents( '.imdb-widget' )
-            .find( '.imdb-widget-charts' )
-            .show();
-        return false;
-    } );
-    $( '.imdb-widget-charts-close' ).click( function ( ev ) {
-        $( ev.currentTarget ).parents( '.imdb-widget-charts' ).hide();
-    } );
-} );
-
+<p>
+	<label for="<?= $this->get_field_id( 'userId' ); ?>"/>
+	<input class="widefat"
+	       id="<?= $this->get_field_id( 'userId' ); ?>"
+	       name="<?= $this->get_field_name( 'userId' ); ?>"
+	       type="text"
+	       placeholder="User id. (e.g. ur0840624)"
+	       value="<?= esc_attr( $userId ); ?>"/>
+</p>
