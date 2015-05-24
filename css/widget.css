@@ -19,7 +19,7 @@
  */
 
 .imdb-widget {
-    font-family: "Verdana";
+    font-family: "Verdana", sans-serif;
     color: black;
     position: relative;
     background-color: #FFFBED;
@@ -40,7 +40,7 @@
 }
 
 .imdb-widget .imdb-logo {
-    border-top-right-radius: 6px; 
+    border-top-right-radius: 6px;
     position: absolute;
     right: 0;
     top: 0;
@@ -57,7 +57,7 @@
     width: 53%;
     margin-left: 2%;
     vertical-align: top;
-    max-height: 90px; 
+    max-height: 90px;
     overflow-y: auto;
 }
 
@@ -93,7 +93,7 @@
     color: #A58500;
 }
 
-.imdb-widget a {    
+.imdb-widget a {
     color: #136cb2;
 }
 
@@ -101,6 +101,7 @@
     display: inline-block;
     position: relative;
 }
+
 .imdb-widget .imdb-block-title-2 {
     font-weight: bold;
     margin-top: 8px;
@@ -118,7 +119,7 @@
     height: 20px;
 }
 
-.imdb-widget img {    
+.imdb-widget img {
     border-radius: 2px;
 }
 
@@ -178,6 +179,7 @@
     padding-top: 3px;
     font-size: 9px;
 }
+
 .imdb-widget .imdb-histogram-by-year-legend div {
     float: right;
 }
@@ -192,7 +194,7 @@
 }
 
 .imdb-widget .imdb-histogram-vertical .count {
-    font-family: "Courier New",Courier,monospace;
+    font-family: "Courier New", Courier, monospace;
     font-size: 9px;
     width: 30px;
     text-align: right;
@@ -220,13 +222,14 @@
 }
 
 .imdb-widget .imdb-histogram-vertical .count {
-    font-family: "Courier New",Courier,monospace;
+    font-family: "Courier New", Courier, monospace;
     font-size: 9px;
     width: 30px;
     text-align: right;
     margin-right: 5px;
 }
-.imdb-widget .imdb-histogram-vertical .row >div {
+
+.imdb-widget .imdb-histogram-vertical .row > div {
     float: left;
 }
 
@@ -241,6 +244,7 @@
     height: 16px;
     float: right;
 }
+
 .imdb-widget .imdb-widget-icon:hover {
     cursor: pointer;
     opacity: 1;
@@ -249,7 +253,7 @@
 .imdb-widget .imdb-ratings-icon-star {
     padding: 0 5px;
     color: lightgray;
-    text-shadow:  -1px -1px 0 #000, 1px -1px 0 #000,  -1px 1px 0 #000,  1px 1px 0 #000;
+    text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
     font-weight: bold;
     font-size: 12px;
     position: absolute;
@@ -261,8 +265,9 @@
     margin-right: 6px;
     width: 20px;
 }
-.imdb-widget .imdb-user-lists .imdb-block-item-title ,
-.imdb-widget .imdb-user-reviews .imdb-block-item-title ,
+
+.imdb-widget .imdb-user-lists .imdb-block-item-title,
+.imdb-widget .imdb-user-reviews .imdb-block-item-title,
 .imdb-widget .imdb-user-board-messages .imdb-block-item-title {
     font-size: 0.7em;
     font-weight: bold;
@@ -290,6 +295,7 @@
     margin-right: 3px;
     margin-bottom: 3px;
 }
+
 .imdb-widget .imdb-user-reviews .imdb-user-reviews-right {
     font-size: 0.7em;
 }
@@ -300,6 +306,7 @@
     overflow-y: auto;
     height: 150px;
 }
+
 .imdb-widget .imdb-user-reviews-right span:nth-of-type(2) {
     color: gray;
 }
@@ -315,7 +322,7 @@
     top: 0;
     left: 0;
     display: none;
-    border: 1px solid #A58500; 
+    border: 1px solid #A58500;
     border-radius: 6px;
     z-index: 100;
     padding: 6px;
