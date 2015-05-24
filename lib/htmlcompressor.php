@@ -1,7 +1,7 @@
 <?php
 
 /*
- * IMDB Widget for WordPress
+ * IMDb Widget for WordPress
  *
  *     Copyright (C) 2015 Henrique Dias <hacdias@gmail.com>
  *     Copyright (C) 2015 Luís Soares <lsoares@gmail.com>
