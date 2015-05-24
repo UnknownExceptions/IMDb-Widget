@@ -1,5 +1,5 @@
 {
   "require": {
-    "unknown-exceptions/smart-scrapper": "dev-master"
+    "refactors/smart-scrapper": "dev-master"
   }
 }
