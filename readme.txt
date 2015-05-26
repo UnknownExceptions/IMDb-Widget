@@ -12,7 +12,7 @@ Your IMDb Profile, in your website.
 
 == Description ==
 
-This is a simple plugin which gives you a widget to show your IMDb profile in your page. It's very simple to use. You just have to put your IMDb user id.
+This is a simple plugin which gives you a widget to show your IMDb profile in your blog. It's very simple to use. You just have to put your IMDb user id.
 
 **Features include:**
 
