@@ -20,6 +20,7 @@ This is a simple plugin which gives you a widget to show your IMDb profile in yo
 * Your latest ratings (includes charts);
 * Your watchlist;
 * Your lists;
+* Your reviews;
 * Your board posts;
 * etc.
 
