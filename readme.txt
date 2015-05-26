@@ -1,0 +1,30 @@
+=== IMDb Widget ===
+
+Contributors: hacdias, lsoares
+Tags: widget, imdb, profile, information
+Requires at least: 3.3.1
+Tested up to: 4.4.1
+Stable tag: 1.0.0
+License: GPLv2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
+
+Your IMDb Profile, in your website.
+
+== Description ==
+
+This is a simple plugin which gives you a widget to show your IMDb profile in your page. It's very simple to use. You just have to put your IMDb user ID.
+
+**Features include:**
+
+* A small version of your profile;
+* Your latest ratings;
+* Your watchlist;
+* Your lists;
+* Your posts;
+* Etc.
+
+== Installation ==
+
+1. Install IMDb Widget via the WordPress.org plugin directory or uploading the files to your server.
+2. Go to your widgets dashboard and add "IMDb Widget".
+3. Select your options.
