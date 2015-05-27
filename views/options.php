@@ -20,29 +20,29 @@
  */
 ?>
 <p>
-	<label for="<?= $this->get_field_id( 'title' ); ?>"/>
-	<input class="widefat"
-		   id="<?= $this->get_field_id( 'title' ); ?>"
-		   name="<?= $this->get_field_name( 'title' ); ?>"
-		   type="text"
-		   placeholder="Title"
-		   value="<?= $title ?>" />
+    <label for="<?php echo $this->get_field_id( 'title' ); ?>"/>
+    <input class="widefat"
+               id="<?php echo $this->get_field_id( 'title' ); ?>"
+               name="<?php echo $this->get_field_name( 'title' ); ?>"
+               type="text"
+               placeholder="Title"
+               value="<?php echo $title ?>" />
 </p>
 
 <p>
-	<label for="<?= $this->get_field_id( 'userId' ); ?>"/>
-	<input class="widefat"
-		   id="<?= $this->get_field_id( 'userId' ); ?>"
-		   name="<?= $this->get_field_name( 'userId' ); ?>"
-		   type="text"
-		   style="width: 70%"
-		   placeholder="User id. (e.g. ur0840624)"
-		   value="<?= $userId ?>" />
-	<?php if (isset($userId)) { ?>
-		<a href='http://imdb.com/user/<?= $userId ?>' target='_blank'>
-			<img src='https://cdn4.iconfinder.com/data/icons/cc_mono_icon_set/blacks/16x16/top_right_expand.png' />
-		</a>
-	<?php } ?>
+    <label for="<?php echo $this->get_field_id( 'userId' ); ?>"/>
+    <input class="widefat"
+               id="<?php echo $this->get_field_id( 'userId' ); ?>"
+               name="<?php echo $this->get_field_name( 'userId' ); ?>"
+               type="text"
+               style="width: 70%"
+               placeholder="User id. (e.g. ur0840624)"
+               value="<?php echo $userId ?>" />
+    <?php if (isset($userId)) { ?>
+            <a href='http://imdb.com/user/<?php echo $userId ?>' target='_blank'>
+                    <img src='https://cdn4.iconfinder.com/data/icons/cc_mono_icon_set/blacks/16x16/top_right_expand.png' />
+            </a>
+    <?php } ?>
 </p>
 
 <div>Show:</div>
@@ -50,10 +50,10 @@
 	<?php foreach ( $this->optionsShow as $option ): ?>
 		<input class="checkbox" type="checkbox" 
 			   <?php checked( ${$option}, 'on' ); ?>
-			   id="<?= $this->get_field_id( $option ) ?>"
-			   name="<?= $this->get_field_name( $option ) ?>" />
-		<label for="<?= $this->get_field_id( $option ) ?>">
-			<?= ucfirst( $option ) ?>
+			   id="<?php echo $this->get_field_id( $option ) ?>"
+			   name="<?php echo $this->get_field_name( $option ) ?>" />
+		<label for="<?php echo $this->get_field_id( $option ) ?>">
+			<?php echo ucfirst( $option ) ?>
 		</label>
 		<br />
 	<?php endforeach; ?>
