@@ -22,7 +22,6 @@ This is a simple plugin which gives you a widget to show your IMDb profile in yo
 * Your lists;
 * Your reviews;
 * Your board posts;
-* etc.
 
 == Installation ==
 
