@@ -38,12 +38,18 @@
                style="width: 70%"
                placeholder="User id. (e.g. ur0840624)"
                value="<?php echo $userId ?>" />
-    <?php if (isset($userId)) { ?>
+    <?php if (!empty($userId)) { ?>
             <a href='http://imdb.com/user/<?php echo $userId ?>' target='_blank'>
                     <img src="<?php echo plugins_url( 'css/expand.png', dirname( __FILE__ ) ); ?>" />
             </a>
     <?php } ?>
 </p>
+                   
+<?php if (!empty ($userId)) { ?>
+     <a href='http://imdb.com/user/<?php echo $userId ?>' target='_blank' style="font-size: 90%;display: block; margin-bottom: 8px;">
+           Note: some elements need to be made public.
+     </a>
+<?php } ?>
 
 <div>Show:</div>
 <div style="margin-left: 8px; margin-bottom: 8px;">
@@ -57,7 +63,5 @@
 		</label>
 		<br />
 	<?php endforeach; ?>
-	<p style="color: dimgrey; font-size: 90%;">	
-		Note: some elements need to be made public, in IMDb.
-	</p>
+
 </div>
