@@ -1,6 +1,6 @@
-=== IMDb profile Widget ===
+=== IMDb Profile Widget ===
 
-Contributors: hacdias, lsoares
+Contributors: hacdias, lsoares13
 Tags: widget, imdb, profile, information
 Requires at least: 3.3.1
 Tested up to: 4.4.1

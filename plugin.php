@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Plugin Name: IMDb Widget
+ * Plugin Name: IMDb Profile Widget
  * Description: This is a plugin that shows your IMDd profile with a simple widget.
  * Version: 1.0.0
  * Author: Henrique Dias and Luís Soares (Refactors)
@@ -27,6 +27,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 // third-party libraries
 require_once( 'lib/htmlcompressor.php' );
 require_once( 'vendor/autoload.php' );
@@ -105,27 +106,22 @@ class IMDb_Widget extends WP_Widget {
 
 		ob_end_flush();
 	}
-	
-	public function isChecked( $conf, $name ) {
-	   return isset($conf[$name]) && $conf[$name] == 'on';
-	}
 
-	private function get_info( $userId )
-	{
-		$info			 = new Parser( 'http://www.imdb.com/' . 'user/' . $userId . '/' );
-		$info->baseUrl	 = 'http://www.imdb.com';
+	private function get_info( $userId ) {
+		$info          = new Parser( 'http://www.imdb.com/' . 'user/' . $userId . '/' );
+		$info->baseUrl = 'http://www.imdb.com';
 
 		foreach (
-		array(
-			'ratings',
-			'boards',
-			'lists',
-			'watchlist',
-			'checkins',
-			'boards/sendpm',
-			'comments-index',
-			'#pollResponses'
-		) as $relativeUrl
+			array(
+				'ratings',
+				'boards',
+				'lists',
+				'watchlist',
+				'checkins',
+				'boards/sendpm',
+				'comments-index',
+				'#pollResponses'
+			) as $relativeUrl
 		) {
 			$cleanId                  = preg_replace( '/[^A-Za-z]/', '', $relativeUrl );
 			$info->{$cleanId . 'Url'} = $info->url . $relativeUrl;
@@ -143,55 +139,59 @@ class IMDb_Widget extends WP_Widget {
 		$info->saveHtml( 'ratingsTopRatedYears', '.histogram-vertical', 1 );
 
 		$info->at( '.ratings .item' )
-		->with( 'link', 'a', 'href' )
-		->with( 'logo', 'a img', 'src' )
-		->with( 'title', '.title a' )
-		->with( 'rating', '.sub-item .only-rating' )
-		->saveList( 'ratings' );
+		     ->with( 'link', 'a', 'href' )
+		     ->with( 'logo', 'a img', 'src' )
+		     ->with( 'title', '.title a' )
+		     ->with( 'rating', '.sub-item .only-rating' )
+		     ->saveList( 'ratings' );
 
 		$info->at( '.badges .badge-frame' )
-		->with( 'title', '.name' )
-		->with( 'value', '.value' )
-		->saveList( 'badges' );
+		     ->with( 'title', '.name' )
+		     ->with( 'value', '.value' )
+		     ->saveList( 'badges' );
 
 		$info->at( '.watchlist .item' )
-		->with( 'title', '.sub-item a' )
-		->with( 'link', 'a', 'href' )
-		->with( 'logo', 'a img', 'src' )
-		->saveList( 'watchlist' );
+		     ->with( 'title', '.sub-item a' )
+		     ->with( 'link', 'a', 'href' )
+		     ->with( 'logo', 'a img', 'src' )
+		     ->saveList( 'watchlist' );
 
 		$info->at( '.lists .user-list' )
-		->with( 'title', '.list-name' )
-		->with( 'link', '.list-meta', 'href' )
-		->with( 'meta', '.list-meta' )
-		->saveList( 'lists' );
+		     ->with( 'title', '.list-name' )
+		     ->with( 'link', '.list-meta', 'href' )
+		     ->with( 'meta', '.list-meta' )
+		     ->saveList( 'lists' );
 
 		$info->at( '.user-lists .user-list' )
-		->with( 'logo', 'img', 'src' )
-		->with( 'title', '.list-name' )
-		->with( 'link', 'a', 'href' )
-		->with( 'description', '.list-meta' )
-		->saveList( 'userLists' );
+		     ->with( 'logo', 'img', 'src' )
+		     ->with( 'title', '.list-name' )
+		     ->with( 'link', 'a', 'href' )
+		     ->with( 'description', '.list-meta' )
+		     ->saveList( 'userLists' );
 
 		$info->at( '.reviews .item' )
-		->with( 'movieLogo', '.image img', 'src' )
-		->with( 'movieLink', '.image a', 'href' )
-		->with( 'movieTitle', 'h3 a' )
-		->with( 'movieYear', 'h3 span' )
-		->with( 'title', 'h4' )
-		->with( 'meta', '.details' )
-		->with( 'text', 'p' )
-		->saveList( 'reviews' );
+		     ->with( 'movieLogo', '.image img', 'src' )
+		     ->with( 'movieLink', '.image a', 'href' )
+		     ->with( 'movieTitle', 'h3 a' )
+		     ->with( 'movieYear', 'h3 span' )
+		     ->with( 'title', 'h4' )
+		     ->with( 'meta', '.details' )
+		     ->with( 'text', 'p' )
+		     ->saveList( 'reviews' );
 
 		$info->at( '.boards-comments .row' )
-		->with( 'boardLink', '.board a', 'href' )
-		->with( 'boardTitle', '.board a' )
-		->with( 'commentTitle', '.title a' )
-		->with( 'commentLink', '.title a', 'href' )
-		->with( 'when', '.when' )
-		->saveList( 'boards' );
+		     ->with( 'boardLink', '.board a', 'href' )
+		     ->with( 'boardTitle', '.board a' )
+		     ->with( 'commentTitle', '.title a' )
+		     ->with( 'commentLink', '.title a', 'href' )
+		     ->with( 'when', '.when' )
+		     ->saveList( 'boards' );
 
 		return $info;
+	}
+
+	public function isChecked( $conf, $name ) {
+	   return isset($conf[$name]) && $conf[$name] == 'on';
 	}
 
 	public function register_widget_styles()
