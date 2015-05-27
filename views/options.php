@@ -22,19 +22,33 @@
 <p>
 	<label for="<?= $this->get_field_id( 'title' ); ?>"/>
 	<input class="widefat"
-	       id="<?= $this->get_field_id( 'title' ); ?>"
-	       name="<?= $this->get_field_name( 'title' ); ?>"
-	       type="text"
-	       placeholder="Title"
-	       value="<?= esc_attr( $title ); ?>"/>
+		   id="<?= $this->get_field_id( 'title' ); ?>"
+		   name="<?= $this->get_field_name( 'title' ); ?>"
+		   type="text"
+		   placeholder="Title"
+		   value="<?= $title ?>" />
 </p>
 
 <p>
 	<label for="<?= $this->get_field_id( 'userId' ); ?>"/>
 	<input class="widefat"
-	       id="<?= $this->get_field_id( 'userId' ); ?>"
-	       name="<?= $this->get_field_name( 'userId' ); ?>"
-	       type="text"
-	       placeholder="User id. (e.g. ur0840624)"
-	       value="<?= esc_attr( $userId ); ?>"/>
+		   id="<?= $this->get_field_id( 'userId' ); ?>"
+		   name="<?= $this->get_field_name( 'userId' ); ?>"
+		   type="text"
+		   placeholder="User id. (e.g. ur0840624)"
+		   value="<?= $userId ?>" />
 </p>
+
+<div>Show:</div>
+<div style="margin-left: 8px;">
+	<?php foreach ( $this->optionsShow as $option ): ?>
+		<input class="checkbox" type="checkbox" 
+			   <?php checked( ${$option}, 'on' ); ?>
+			   id="<?= $this->get_field_id( $option ) ?>"
+			   name="<?= $this->get_field_name( $option ) ?>" />
+		<label for="<?= $this->get_field_id( $option ) ?>">
+			<?= ucfirst( $option ) ?>
+		</label>
+		<br />
+	<?php endforeach; ?>
+</div>

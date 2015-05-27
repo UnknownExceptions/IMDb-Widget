@@ -75,7 +75,7 @@
 					<a target="_blank" href="<?= $info->baseUrl . $rating->link ?>"
 					   title="<?= $rating->title ?> (<?= $rating->rating ?> ★)" class="imdb-block-item-title">
 						<img src="<?= $rating->logo ?>" class="imdb-block-item-logo"/>
-						<span class="imdb-ratings-icon-star" title="Rating by <?= $info->nick ?>">
+						<span class="imdb-ratings-icon-star">
 							<?= $rating->rating ?>
 						</span>
 					</a>
