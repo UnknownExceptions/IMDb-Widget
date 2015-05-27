@@ -1,4 +1,4 @@
-=== IMDb profile Widget ===
+=== IMDb Profile Widget ===
 
 Contributors: hacdias, lsoares
 Tags: widget, imdb, profile, information
