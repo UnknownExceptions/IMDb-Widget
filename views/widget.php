@@ -37,11 +37,11 @@
 				<?php echo $info->memberSince ?>
 			</div>
 		<?php } ?>
-		
+                
 		<?php if($this->isChecked($config, 'picture')) { ?>
 			<div class="imdb-avatar-wrapper">
 				<a href="<?php echo $info->url ?>" target="_blank" title="View profile" class="imdb-avatar-link">
-					<img src="<?php echo $info->avatar ?>" class="imdb-avatar"/>
+					<img src="<?php echo $this->serveImage($info->avatar); ?>" class="imdb-avatar"/>
 					<a class="imdb-widget-icon imdb-ratings-charts-message-link" href="<?php echo $info->boardssendpmUrl ?>"
 					   target="_blank" title="Send private message"></a>
 				</a>
@@ -82,7 +82,7 @@
 					<?php $rating = $info->ratings[ $i ]; ?>
 					<a target="_blank" href="<?php echo $info->baseUrl . $rating->link ?>"
 					   title="<?php echo $rating->title ?> (<?php echo $rating->rating ?> ★)" class="imdb-block-item-title">
-						<img src="<?php echo $rating->logo ?>" class="imdb-block-item-logo"/>
+						<img src="<?php echo $this->serveImage($rating->logo) ?>" class="imdb-block-item-logo"/>
 						<span class="imdb-ratings-icon-star">
 							<?php echo $rating->rating ?>
 						</span>
@@ -104,7 +104,7 @@
 					<?php $watch = $info->watchlist[ $i ]; ?>
 					<a target="_blank" href="<?php echo $info->baseUrl . $watch->link ?>"
 					   title="<?php echo $watch->title ?>" class="imdb-block-item-title">
-						<img src="<?php echo $watch->logo ?>" class="imdb-block-item-logo"/>
+						<img src="<?php echo $this->serveImage($watch->logo) ?>" class="imdb-block-item-logo"/>
 					</a>
 				<?php endfor; ?>
 
@@ -123,7 +123,7 @@
 					<?php $list = $info->userLists[ $i ]; ?>
 					<a target="_blank" href="<?php echo $info->baseUrl . $list->link ?>"
 					   title="List: <?php echo $list->title ?>" class="imdb-block-item-title">
-						<img src="<?php echo ( substr( $list->logo, 0, 1 ) == '/' ? $info->baseUrl : '' ) . $list->logo ?>"
+						<img src="<?php echo $this->serveImage(( substr( $list->logo, 0, 1 ) == '/' ? $info->baseUrl : '' ) . $list->logo) ?>"
 						     class="imdb-block-item-small-logo"/>
 						<?php echo $list->title ?>
 					</a>
@@ -155,7 +155,7 @@
 						<div class="imdb-user-reviews-left">
 							<a title="<?php echo $review->movieTitle ?>" href="<?php echo $info->baseUrl . $review->movieLink ?>"
 							   class="imdb-block-item-title" target="_blank">
-								<img src="<?php echo $review->movieLogo ?>" style=""/>
+								<img src="<?php echo $this->serveImage($review->movieLogo) ?>" style=""/>
 							</a>
 						</div>
 						<div class="imdb-user-reviews-right">
