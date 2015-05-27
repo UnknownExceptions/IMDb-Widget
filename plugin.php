@@ -50,7 +50,8 @@ class IMDb_Widget extends WP_Widget {
 		"title",
 		"userId"
 	);
-	protected $optionsShow = array('bio', 'badges', 'watchlist', 'lists', 'picture', 'ratings', 'reviews', 'boards');
+	protected $config;
+	protected $optionsShow = array('bio', 'member since', 'picture', 'badges', 'watchlist', 'lists', 'ratings', 'reviews', 'boards');
 
 	public function __construct()
 	{
@@ -88,21 +89,25 @@ class IMDb_Widget extends WP_Widget {
 		return serialize( $new_instance );
 	}
 
-	public function widget( $args, $instance )
+	public function widget( $args, $config )
 	{
 		extract( $args, EXTR_SKIP );
-		$instance = !empty( $instance ) ? unserialize( $instance ) : array();
+		$config = !empty( $config ) ? unserialize( $config ) : array();
 
 		ob_start( "IMDB_HTMLCompressor" );
 
-		if ( !isset( $instance[ 'userId' ] ) ) {
+		if ( !isset( $config[ 'userId' ] ) ) {
 			echo 'You need to first configure the plugin :)';
 		} else {
-			$info = $this->get_info( $instance[ 'userId' ] );
+			$info = $this->get_info( $config[ 'userId' ] );
 			require 'views/widget.php';
 		}
 
 		ob_end_flush();
+	}
+	
+	public function isChecked( $conf, $name ) {
+	   return isset($conf[$name]) && $conf[$name] == 'on';
 	}
 
 	private function get_info( $userId )

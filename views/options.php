@@ -40,7 +40,7 @@
 </p>
 
 <div>Show:</div>
-<div style="margin-left: 8px;">
+<div style="margin-left: 8px; margin-bottom: 8px;">
 	<?php foreach ( $this->optionsShow as $option ): ?>
 		<input class="checkbox" type="checkbox" 
 			   <?php checked( ${$option}, 'on' ); ?>

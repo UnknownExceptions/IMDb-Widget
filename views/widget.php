@@ -32,21 +32,25 @@
 			<?= $info->nick ?>
 		</a>
 
-		<div class="imdb-member-since">
-			<?= $info->memberSince ?>
-		</div>
-
-		<div class="imdb-avatar-wrapper">
-			<a href="<?= $info->url ?>" target="_blank" title="View profile" class="imdb-avatar-link">
-				<img src="<?= $info->avatar ?>" class="imdb-avatar"/>
-				<a class="imdb-widget-icon imdb-ratings-charts-message-link" href="<?= $info->boardssendpmUrl ?>"
-				   target="_blank" title="Send private message"></a>
-			</a>
-		</div>
+		<?php if($this->isChecked($config, 'member since')) { ?>
+			<div class="imdb-member-since">
+				<?= $info->memberSince ?>
+			</div>
+		<?php } ?>
+		
+		<?php if($this->isChecked($config, 'picture')) { ?>
+			<div class="imdb-avatar-wrapper">
+				<a href="<?= $info->url ?>" target="_blank" title="View profile" class="imdb-avatar-link">
+					<img src="<?= $info->avatar ?>" class="imdb-avatar"/>
+					<a class="imdb-widget-icon imdb-ratings-charts-message-link" href="<?= $info->boardssendpmUrl ?>"
+					   target="_blank" title="Send private message"></a>
+				</a>
+			</div>
+		<?php } ?>
 
 		<div class="imdb-info-box">
 			<!-- BADGES -->
-			<?php
+			<?php if($this->isChecked($config, 'watchlist')) {
 			for ( $i = 0; $i < count( $info->badges ); $i ++ ) {
 				$badge = $info->badges[ $i ]; ?>
 				<div class="imdb-badge-info">
@@ -55,15 +59,19 @@
 						<span><?= $badge->title ?></span>
 					</a>
 				</div>
+			<?php }
+			} ?>
+			<!-- BIO -->
+			<?php if ($this->isChecked($config, 'bio')) { ?>
+				<div class="imdb-bio">
+					<?= $info->bio ?>
+				</div>
 			<?php } ?>
-			<div class="imdb-bio">
-				<?= $info->bio ?>
-			</div>
 		</div>
 
 
 		<!-- LATEST RATINGS -->
-		<?php if ( count( $info->ratings ) ) { ?>
+		<?php if ( count( $info->ratings ) && $this->isChecked($config, 'ratings') ) { ?>
 			<div class="imdb-block imdb-ratings">
 				<div class="imdb-block-title">Latest ratings
 					<a href="javascript:void(0);" class="imdb-ratings-charts-link imdb-widget-icon"
@@ -89,7 +97,7 @@
 		<?php } ?>
 
 		<!-- WATCHLIST -->
-		<?php if ( count( $info->watchlist ) ) { ?>
+		<?php if ( count( $info->watchlist ) && $this->isChecked($config, 'watchlist') ) { ?>
 			<div class="imdb-block imdb-watchlist">
 				<div class="imdb-block-title">Watchlist</div>
 				<?php for ( $i = 0; $i < count( $info->watchlist ); $i ++ ) : ?>
@@ -108,7 +116,7 @@
 		<?php } ?>
 
 		<!-- LISTS -->
-		<?php if ( count( $info->userLists ) ) { ?>
+		<?php if ( count( $info->userLists ) && $this->isChecked($config, 'lists') ) { ?>
 			<div class="imdb-user-lists">
 				<div class="imdb-block-title">Lists</div>
 				<?php for ( $i = 0; $i < count( $info->userLists ); $i ++ ) : ?>
@@ -130,7 +138,7 @@
 		<?php } ?>
 
 		<!-- REVIEWS -->
-		<?php if ( count( $info->reviews ) ) { ?>
+		<?php if ( count( $info->reviews ) && $this->isChecked($config, 'reviews') ) { ?>
 			<div class="imdb-user-reviews">
 				<div class="imdb-block-title">Reviews</div>
 				<?php for ( $i = 0; $i < count( $info->reviews ); $i ++ ) : ?>
@@ -164,7 +172,7 @@
 		<?php } ?>
 
 		<!-- BOARDS -->
-		<?php if ( count( $info->boards ) ) { ?>
+		<?php if ( count( $info->boards ) && $this->isChecked($config, 'boards') ) { ?>
 			<div class="imdb-user-board-messages">
 				<div class="imdb-block-title">Board posts</div>
 				<?php for ( $i = 0; $i < count( $info->boards ); $i ++ ) : ?>
