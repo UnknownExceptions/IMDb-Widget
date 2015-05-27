@@ -35,8 +35,14 @@
 		   id="<?= $this->get_field_id( 'userId' ); ?>"
 		   name="<?= $this->get_field_name( 'userId' ); ?>"
 		   type="text"
+		   style="width: 70%"
 		   placeholder="User id. (e.g. ur0840624)"
 		   value="<?= $userId ?>" />
+	<?php if (isset($userId)) { ?>
+		<a href='http://imdb.com/user/<?= $userId ?>' target='_blank'>
+			<img src='https://cdn4.iconfinder.com/data/icons/cc_mono_icon_set/blacks/16x16/top_right_expand.png' />
+		</a>
+	<?php } ?>
 </p>
 
 <div>Show:</div>
@@ -51,4 +57,7 @@
 		</label>
 		<br />
 	<?php endforeach; ?>
+	<p style="color: dimgrey; font-size: 90%;">	
+		Note: some elements need to be made public, in IMDb.
+	</p>
 </div>
