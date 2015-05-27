@@ -31,7 +31,7 @@
 require_once( 'lib/htmlcompressor.php' );
 require_once( 'vendor/autoload.php' );
 
-use SmartScrapper\Parser;
+use SmartScraper\Parser;
 
 // prevent direct file access
 if ( !defined( 'ABSPATH' ) ) {
