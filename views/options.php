@@ -40,7 +40,7 @@
                value="<?php echo $userId ?>" />
     <?php if (isset($userId)) { ?>
             <a href='http://imdb.com/user/<?php echo $userId ?>' target='_blank'>
-                    <img src='https://cdn4.iconfinder.com/data/icons/cc_mono_icon_set/blacks/16x16/top_right_expand.png' />
+                    <img src="<?php echo plugins_url( 'css/expand.png', dirname( __FILE__ ) ); ?>" />
             </a>
     <?php } ?>
 </p>
