@@ -28,7 +28,7 @@
 	<div class="imdb-widget">
 		<div class="imdb-logo"></div>
 
-		<a href="<?php echo $info->url ?>" target="_blank" title="View profile" class="imdb-nick">
+		<a href="<?php echo $info->url ?>" target="_blank" title="View profile" class="imdb-widget-nick">
 			<?php echo $info->nick ?>
 		</a>
 
