@@ -57,18 +57,19 @@
     overflow-y: auto;
 }
 
-.imdb-widget .imdb-nick {
+.imdb-widget .imdb-widget-nick {
     font-size: 115%;
     font-weight: bold;
     color: black;
     line-height: 100%;
+    display: block;
+    margin-bottom: 4px;
 }
 
 .imdb-widget .imdb-member-since {
     font-size: 9px;
     color: black;
-    margin-top: 3px;
-    margin-bottom: 10px;
+    margin-bottom: 6px;
 }
 
 .imdb-widget .imdb-bio {
@@ -86,8 +87,8 @@
     font-size: 0.9em;
     color: #A58500;
     border-bottom: 1px solid rgba(0, 0, 0, 0.15);
-    padding: 0 0 0.188em 0;
-    margin: 0.750em 0 0.45em 0;
+    padding: 0 0 0.12em 0;
+    margin: 0.750em 0 0.55em 0;
 }
 
 .imdb-widget a {
