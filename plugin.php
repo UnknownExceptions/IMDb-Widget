@@ -106,10 +106,6 @@ class IMDb_Widget extends WP_Widget {
 
 		ob_end_flush();
 	}
-        
-        private function serveImage($imageUrl) {
-            return plugins_url( 'pic.php', __FILE__ ) . '?url=' . $imageUrl;
-        }
 
 	private function get_info( $userId ) {
 		$info          = new Parser( 'http://www.imdb.com/' . 'user/' . $userId . '/' );
@@ -206,6 +202,10 @@ class IMDb_Widget extends WP_Widget {
 	public function register_widget_scripts()
 	{
 		wp_enqueue_script( $this->get_widget_slug() . '-script', plugins_url( 'js/widget.js', __FILE__ ), array( 'jquery' ) );
+	}
+
+	private function serveImage( $imageUrl ) {
+		return plugins_url( 'pic.php', __FILE__ ) . '?url=' . $imageUrl;
 	}
 
 }
