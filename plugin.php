@@ -57,7 +57,7 @@ class IMDb_Widget extends WP_Widget {
 	public function __construct()
 	{
 		parent::__construct(
-		$this->get_widget_slug(), __( 'IMDb Widget', $this->get_widget_slug() ), array(
+			$this->get_widget_slug(), __( 'IMDb Profile ', $this->get_widget_slug() ), array(
 			'classname'		 => $this->get_widget_slug() . '-class',
 			'description'	 => __( 'A widget to show a small version of your IMDb profile.', $this->get_widget_slug() )
 		)
