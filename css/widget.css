@@ -17,14 +17,16 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+@import url(http://fonts.googleapis.com/css?family=Roboto:400,700);
 
 .imdb-widget {
-    color: black;
-    position: relative;
-    background-color: #FCF5DD;
-    padding: .6em;
-    border-radius: 5px;
-    border: .5em solid rgba(255, 193, 7, 0.26);
+    border: 0.313em solid #FFD54F;
+    color: rgb(57, 66, 78);
+    background-color: #FFF8E1;
+}
+
+.imdb-widget .refactors-widget-header {
+    background-color: #FFD54F;
 }
 
 .imdb-widget .imdb-avatar-wrapper {
