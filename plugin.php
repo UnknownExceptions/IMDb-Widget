@@ -201,7 +201,7 @@ class IMDb_Widget extends WP_Widget {
 
 	public function register_widget_scripts()
 	{
-		wp_enqueue_script( $this->get_widget_slug() . '-script', plugins_url( 'js/widget.js', __FILE__ ), array( 'jquery' ) );
+		wp_enqueue_script( $this->get_widget_slug() . '-script', plugins_url( 'js/widget.js', __FILE__ ), array( 'jquery' ), null, true );
 	}
 
 	private function serveImage( $imageUrl ) {
