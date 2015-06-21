@@ -1,0 +1,19 @@
+{
+  "increase": "build",
+  "main": "plugin.php",
+  "readme": "readme.txt",
+  "wordpress-svn": "https://plugins.svn.wordpress.org/imdb-widget/",
+  "ignore": [
+    ".git",
+    ".idea",
+    "nbproject",
+    "bower.json",
+    ".bowerrc",
+    ".gitignore",
+    ".editorconfig",
+    ".wpsync",
+    "README.md",
+    "test",
+    "tests"
+  ]
+}

@@ -1,7 +1,7 @@
 <?php
 
 /*
- * IMDb Widget for WordPress
+ * Widget Name
  *
  *     Copyright (C) 2015 Henrique Dias <hacdias@gmail.com>
  *     Copyright (C) 2015 Luís Soares <lsoares@gmail.com>
@@ -20,19 +20,21 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-function IMDB_HTMLCompressor( $buffer ) {
-	$buffer = preg_replace( '/<!--([^\[|(<!)].*)/', '', $buffer );
-	$buffer = preg_replace( '/(?<!\S)\/\/\s*[^\r\n]*/', '', $buffer );
+if (!function_exists("refactors_HTMLCompressor")) {
+	function refactors_HTMLCompressor( $buffer ) {
+		$buffer = preg_replace( '/<!--([^\[|(<!)].*)/', '', $buffer );
+		$buffer = preg_replace( '/(?<!\S)\/\/\s*[^\r\n]*/', '', $buffer );
 
-	$search = array(
-		'/\>[^\S ]+/s',  // strip whitespaces after tags, except space
-		'/[^\S ]+\</s',  // strip whitespaces before tags, except space
-		'/(\s)+/s'       // shorten multiple whitespace sequences
-	);
+		$search = array(
+			'/\>[^\S ]+/s',  // strip whitespaces after tags, except space
+			'/[^\S ]+\</s',  // strip whitespaces before tags, except space
+			'/(\s)+/s'       // shorten multiple whitespace sequences
+		);
 
-	$replace = array( '>', '<', '\\1' );
+		$replace = array( '>', '<', '\\1' );
 
-	$buffer = preg_replace( $search, $replace, $buffer );
+		$buffer = preg_replace( $search, $replace, $buffer );
 
-	return $buffer;
+		return $buffer;
+	}
 }
