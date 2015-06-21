@@ -15,18 +15,10 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
-@import url(http://fonts.googleapis.com/css?family=Roboto:400,700);
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>. */
 
 .imdb-widget {
-    border: 0.313em solid #FFD54F;
-    color: rgb(57, 66, 78);
-    background-color: #FFF8E1;
-}
-
-.imdb-widget .refactors-widget-header {
-    background-color: #FFD54F;
+    background-color: #FFEDBF !important;
 }
 
 .imdb-widget .imdb-avatar-wrapper {
@@ -41,14 +33,6 @@
     border-radius: 4px;
 }
 
-.imdb-widget .imdb-logo {
-    position: absolute;
-    right: 0;
-    top: 0;
-    min-height: 1.25em;
-    min-width: 2.5em;
-    background: url('imdb-logo.png') no-repeat right top / contain;
-}
 
 .imdb-widget .imdb-info-box {
     display: inline-block;
@@ -60,7 +44,6 @@
 }
 
 .imdb-widget .imdb-widget-nick {
-    font-size: 115%;
     font-weight: bold;
     color: black;
     line-height: 100%;
@@ -85,12 +68,7 @@
 }
 
 .imdb-widget .imdb-block-title {
-    font-weight: bold;
-    font-size: 0.9em;
     color: #A58500;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.15);
-    padding: 0 0 0.12em 0;
-    margin: 0.750em 0 0.55em 0;
 }
 
 .imdb-widget a {
@@ -100,9 +78,9 @@
 .imdb-widget .imdb-block-item-title {
     display: inline-block;
     position: relative;
-    margin-right: 2%;
+    margin: 2% 2% 0 0;
     line-height: 1em;
-    width: 18%;
+    width: 23%;
 }
 
 .imdb-widget .imdb-block-title-2 {
@@ -321,7 +299,6 @@
 
 .imdb-widget .imdb-ratings-charts-link {
     background-image: url('chart.png');
-    float: right;
 }
 
 .imdb-widget .imdb-widget-charts {
@@ -362,4 +339,3 @@
 .imdb-widget .imdb-widget-chart {
     margin-bottom: 25px;
 }
-  */

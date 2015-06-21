@@ -50,30 +50,31 @@
 			<div class="refactors-widget-profile-info">
 
 				<?php if ( $this->isChecked( $config, 'picture' ) ) { ?>
-					<a href='<?php echo $info->url ?>' target='_blank' title='Check profile'
-					   class='refactors-widget-pi-left'>
+					<div class="refactors-widget-pi-left" style="position:relative; display: inline-block">
+					<a href='<?php echo $info->url ?>' target='_blank' title='Check profile' >
 						<img src='<?php echo $this->serveImage( $info->avatar ); ?>' class='refactors-widget-avatar'/>
 						<a class="imdb-widget-icon imdb-ratings-charts-message-link"
 						   href="<?php echo $info->boardssendpmUrl ?>"
 						   target="_blank" title="Send private message"></a>
 					</a>
+					</div>
 				<?php } ?>
 
-				<div class='refactors-widget-pi-right'>
+				<div class='refactors-widget-pi-right refactors-shadowed'>
 					<div class="hrUserRealName"><strong><?php echo $info->nick ?></strong></div>
 					<?php if ( $this->isChecked( $config, 'member since' ) ) { ?>
 						<div class="imdb-member-since">
 							<?php echo $info->memberSince ?>
 						</div>
 					<?php } ?>
-
-					<!-- BIO -->
-					<?php if ( $this->isChecked( $config, 'bio' ) ) { ?>
-						<div class="imdb-bio">
-							<?php echo $info->bio ?>
-						</div>
-					<?php } ?>
 				</div>
+
+				<!-- BIO -->
+				<?php if ( $this->isChecked( $config, 'bio' ) ) { ?>
+					<div class="imdb-bio">
+						<?php echo $info->bio ?>
+					</div>
+				<?php } ?>
 			</div>
 
 			<div class="imdb-info-box">
@@ -96,7 +97,7 @@
 			<!-- LATEST RATINGS -->
 			<?php if ( count( $info->ratings ) && $this->isChecked( $config, 'ratings' ) ) { ?>
 				<div class="imdb-block imdb-ratings">
-					<div class="imdb-block-title">Latest ratings
+					<div class="imdb-block-title"><h2>Latest ratings</h2>
 						<a href="javascript:void(0);" class="imdb-ratings-charts-link imdb-widget-icon"
 						   title="Ratings charts"></a>
 					</div>
@@ -123,7 +124,7 @@
 			<!-- WATCHLIST -->
 			<?php if ( count( $info->watchlist ) && $this->isChecked( $config, 'watchlist' ) ) { ?>
 				<div class="imdb-block imdb-watchlist">
-					<div class="imdb-block-title">Watchlist</div>
+					<div class="imdb-block-title"><h2>Watchlist</h2></div>
 					<?php for ( $i = 0; $i < count( $info->watchlist ); $i ++ ) : ?>
 						<?php $watch = $info->watchlist[ $i ]; ?>
 						<a target="_blank" href="<?php echo $info->baseUrl . $watch->link ?>"
@@ -142,7 +143,7 @@
 			<!-- LISTS -->
 			<?php if ( count( $info->userLists ) && $this->isChecked( $config, 'lists' ) ) { ?>
 				<div class="imdb-user-lists">
-					<div class="imdb-block-title">Lists</div>
+					<div class="imdb-block-title"><h2>Lists</h2></div>
 					<?php for ( $i = 0; $i < count( $info->userLists ); $i ++ ) : ?>
 						<?php $list = $info->userLists[ $i ]; ?>
 						<a target="_blank" href="<?php echo $info->baseUrl . $list->link ?>"
@@ -165,7 +166,7 @@
 			<!-- REVIEWS -->
 			<?php if ( count( $info->reviews ) && $this->isChecked( $config, 'reviews' ) ) { ?>
 				<div class="imdb-user-reviews">
-					<div class="imdb-block-title">Reviews</div>
+					<div class="imdb-block-title"><h2>Reviews</h2></div>
 					<?php for ( $i = 0; $i < count( $info->reviews ); $i ++ ) : ?>
 						<?php $review = $info->reviews[ $i ]; ?>
 						<div class="imdb-block-item-title">
@@ -201,7 +202,7 @@
 			<!-- BOARDS -->
 			<?php if ( count( $info->boards ) && $this->isChecked( $config, 'boards' ) ) { ?>
 				<div class="imdb-user-board-messages">
-					<div class="imdb-block-title">Board posts</div>
+					<div class="imdb-block-title"><h2>Board posts</h2></div>
 					<?php for ( $i = 0; $i < count( $info->boards ); $i ++ ) : ?>
 						<?php $board = $info->boards[ $i ];
 						if ( ! empty( $board->commentTitle ) ) : ?>
@@ -229,7 +230,7 @@
 			<div class="imdb-widget-charts">
 				<span class="imdb-widget-charts-close" title="Close">x</span>
 
-				<div class="imdb-block-title">Ratings charts for <?php echo $info->nick ?></div>
+				<div class="imdb-block-title"><h2>Ratings charts for <?php echo $info->nick ?></h2></div>
 
 				<div class="imdb-widget-chart">
 					<h4>Ratings distribution</h4>
