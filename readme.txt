@@ -29,3 +29,10 @@ This is a simple plugin which gives you a widget to show your IMDb profile in yo
 2. Go to your widgets dashboard and add "IMDb Widget".
 3. Select your options.
    To get your id., go to your IMDb profile (e.g. http://www.imdb.com/user/ur1234567) and copy the last part (in this case, ur1234567).
+
+== Screenshots ==
+
+1. IMDb Profile Widget
+2. IMDb Profile Widget
+3. IMDb Profile Widget
+4. IMDb Profile Widget
