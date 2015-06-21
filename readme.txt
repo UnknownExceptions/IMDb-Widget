@@ -32,7 +32,5 @@ This is a simple plugin which gives you a widget to show your IMDb profile in yo
 
 == Screenshots ==
 
-1. IMDb Profile Widget
-2. IMDb Profile Widget
-3. IMDb Profile Widget
-4. IMDb Profile Widget
+1. The Widget
+2. Rating Charts

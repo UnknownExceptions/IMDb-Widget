@@ -97,8 +97,8 @@
 			<!-- LATEST RATINGS -->
 			<?php if ( count( $info->ratings ) && $this->isChecked( $config, 'ratings' ) ) { ?>
 				<div class="imdb-block imdb-ratings">
-					<div class="imdb-block-title"><h2>Latest ratings</h2>
-						<a href="javascript:void(0);" class="imdb-ratings-charts-link imdb-widget-icon"
+					<div class="imdb-block-title"><h2 style="display: inline-block">Latest ratings</h2>
+						<a href="javascript:void(0);" class="imdb-ratings-charts-link imdb-widget-icon" style="margin-top:1em"
 						   title="Ratings charts"></a>
 					</div>
 
