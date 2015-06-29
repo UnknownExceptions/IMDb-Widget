@@ -26,16 +26,16 @@
 		<?php echo $before_title . $config['title'] . $after_title; ?>
 	<?php endif; ?>
 
-	<div class="imdb-widget refactors-widget"
+	<div class="imdb-widget"
 	     id='<?php echo $this->id; ?>'>
 
 		<?php if ( ! isset( $config['hideBuiltInHeader'] ) || ! $config['hideBuiltInHeader'] == 'on' ) : ?>
-			<header class="refactors-widget-header">
-				<img class="refactors-widget-company-logo"
+			<header class="imdb-widget-header">
+				<img class="imdb-widget-company-logo"
 				     src="<?php echo plugins_url( 'css/imdb-logo.png', dirname( __FILE__ ) ); ?>"/>
 
-				<div class="refactors-widget-header-text">
-					<a class='refactors-widget-header-link' target='_blank'
+				<div class="imdb-widget-header-text">
+					<a class='imdb-widget-header-link' target='_blank'
 					   href="<?php echo $info->url ?>" target="_blank" title="View profile">
 						<?php echo $info->nick ?>
 					</a>
@@ -45,14 +45,14 @@
 			</header>
 		<?php endif; ?>
 
-		<div class="refactors-widget-content">
+		<div class="imdb-widget-content">
 
-			<div class="refactors-widget-profile-info">
+			<div class="imdb-widget-profile-info">
 
 				<?php if ( $this->isChecked( $config, 'picture' ) ) { ?>
-					<div class="refactors-widget-pi-left" style="position:relative; display: inline-block">
+					<div class="imdb-widget-pi-left" style="position:relative; display: inline-block">
 					<a href='<?php echo $info->url ?>' target='_blank' title='Check profile' >
-						<img src='<?php echo $this->serveImage( $info->avatar ); ?>' class='refactors-widget-avatar'/>
+						<img src='<?php echo $this->serveImage( $info->avatar ); ?>' class='imdb-widget-avatar'/>
 						<a class="imdb-widget-icon imdb-ratings-charts-message-link"
 						   href="<?php echo $info->boardssendpmUrl ?>"
 						   target="_blank" title="Send private message"></a>
@@ -60,21 +60,20 @@
 					</div>
 				<?php } ?>
 
-				<div class='refactors-widget-pi-right refactors-shadowed'>
+				<div class='imdb-widget-pi-right imdb-shadowed'>
 					<div class="hrUserRealName"><strong><?php echo $info->nick ?></strong></div>
 					<?php if ( $this->isChecked( $config, 'member since' ) ) { ?>
 						<div class="imdb-member-since">
 							<?php echo $info->memberSince ?>
 						</div>
 					<?php } ?>
+					<!-- BIO -->
+					<?php if ( $this->isChecked( $config, 'bio' ) ) { ?>
+						<div class="imdb-bio">
+							<?php echo $info->bio ?>
+						</div>
+					<?php } ?>
 				</div>
-
-				<!-- BIO -->
-				<?php if ( $this->isChecked( $config, 'bio' ) ) { ?>
-					<div class="imdb-bio">
-						<?php echo $info->bio ?>
-					</div>
-				<?php } ?>
 			</div>
 
 			<div class="imdb-info-box">

@@ -20,8 +20,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-if (!function_exists("refactors_HTMLCompressor")) {
-	function refactors_HTMLCompressor( $buffer ) {
+if (!function_exists("imdb_HTMLCompressor")) {
+	function imdb_HTMLCompressor( $buffer ) {
 		$buffer = preg_replace( '/<!--([^\[|(<!)].*)/', '', $buffer );
 		$buffer = preg_replace( '/(?<!\S)\/\/\s*[^\r\n]*/', '', $buffer );
 

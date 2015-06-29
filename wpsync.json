@@ -1,0 +1,24 @@
+{
+	"increase": "build",
+	"plugin": {
+		"file": "plugin.php",
+		"svn": "https://plugins.svn.wordpress.org/imdb-widget/"
+	},
+	"dependencies": {
+		"bower": false,
+		"composer": true
+	},
+	"ignore": [
+    ".git",
+    ".idea",
+    "nbproject",
+    "composer.json",
+    "composer.lock",
+    ".gitignore",
+    ".editorconfig",
+    "wpsync.json",
+    "README.md",
+    "test",
+    "tests"
+  ]
+}
