@@ -3,7 +3,7 @@
 /**
  * Plugin Name: IMDb Profile Widget
  * Description: This is a plugin that shows your IMDd profile with a simple widget.
- * Version: 1.0.7
+ * Version: 1.0.8
  * Author: Henrique Dias and Luís Soares (imdb)
  * Author URI: https://github.com/imdb
  * Network: true
